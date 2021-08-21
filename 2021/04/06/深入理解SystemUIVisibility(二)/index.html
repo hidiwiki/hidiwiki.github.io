@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Hello World | 哈哈迪的小站</title>
-  <meta name="keywords" content="">
-  <meta name="description" content="Hello World | 哈哈迪的小站">
+  <title>深入理解SystemUiVisibility(二) | 哈哈迪的小站</title>
+  <meta name="keywords" content=" SystemUI , WMS ">
+  <meta name="description" content="深入理解SystemUiVisibility(二) | 哈哈迪的小站">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta property="og:type" content="article">
 <meta property="og:title" content="我的博客">
@@ -316,24 +316,41 @@
 </aside>
 <div id="post">
     <div class="pjax">
-        <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-深入理解SystemUIVisibility(二)" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">Hello World</h1>
+        <h1 class="article-title">深入理解SystemUiVisibility(二)</h1>
     
     <div class="article-meta">
         
         
         
+        <span class="book">
+            <i class="iconfont icon-category"></i>
+            
+            
+            <a  data-rel="android">android</a>
+            
+        </span>
+        
+        
+        <span class="tag">
+            <i class="iconfont icon-tag"></i>
+            
+            <a class="color4">SystemUI</a>
+            
+            <a class="color4">WMS</a>
+            
+        </span>
         
     </div>
     <div class="article-meta">
         
-            发布时间 : <time class="date" title='最后更新: 2021-08-21 11:44:04'>2021-08-15 12:58</time>
+            发布时间 : <time class="date" title='最后更新: 2021-08-21 11:44:04'>2021-04-06 16:13</time>
         
     </div>
     <div class="article-meta">
         
-        <span>字数:75</span>
+        <span>字数:1.2k</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -352,7 +369,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Quick-Start"><span class="toc-text">Quick Start</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Create-a-new-post"><span class="toc-text">Create a new post</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Run-server"><span class="toc-text">Run server</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Generate-static-files"><span class="toc-text">Generate static files</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Deploy-to-remote-sites"><span class="toc-text">Deploy to remote sites</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3SystemUIVisibility-%E4%BA%8C"><span class="toc-text">深入理解SystemUIVisibility(二)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E6%8E%A7%E4%BB%B6%E6%A0%91%E8%AE%BE%E7%BD%AESystemUIVisibility"><span class="toc-text">一、控件树设置SystemUIVisibility</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81WMS%E8%B0%83%E6%95%B4SystemUIVisibility"><span class="toc-text">二、WMS调整SystemUIVisibility</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81SystemUI%E5%A4%84%E7%90%86SystemUIVisibility"><span class="toc-text">三、SystemUI处理SystemUIVisibility</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81WMS%E6%9B%B4%E6%96%B0SystemUIVisibility%E8%87%B3%E6%8E%A7%E4%BB%B6%E6%A0%91"><span class="toc-text">四、WMS更新SystemUIVisibility至控件树</span></a></li></ol></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -368,19 +385,183 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre><code class="bash">$ hexo new &quot;My New Post&quot;
+        <p><div class='inner-toc'><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3SystemUIVisibility-%E4%BA%8C"><span class="toc-text">深入理解SystemUIVisibility(二)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E6%8E%A7%E4%BB%B6%E6%A0%91%E8%AE%BE%E7%BD%AESystemUIVisibility"><span class="toc-text">一、控件树设置SystemUIVisibility</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81WMS%E8%B0%83%E6%95%B4SystemUIVisibility"><span class="toc-text">二、WMS调整SystemUIVisibility</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81SystemUI%E5%A4%84%E7%90%86SystemUIVisibility"><span class="toc-text">三、SystemUI处理SystemUIVisibility</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81WMS%E6%9B%B4%E6%96%B0SystemUIVisibility%E8%87%B3%E6%8E%A7%E4%BB%B6%E6%A0%91"><span class="toc-text">四、WMS更新SystemUIVisibility至控件树</span></a></li></ol></li></ol></div></p>
+<h1 id="深入理解SystemUIVisibility-二"><a href="#深入理解SystemUIVisibility-二" class="headerlink" title="深入理解SystemUIVisibility(二)"></a>深入理解SystemUIVisibility(二)</h1><p>在深入理解SystemUIVisiblity(一)中，介绍了SystemUI的属性的基本定义，本章将对SystemUIVisibility在系统中的调用过程进行分析，探索其消费过程，从整体来看，其调用过程可以划分为如下四个阶段</p>
+<ol>
+<li> 控件树设置SystemUIVisibility</li>
+<li> WMS调整SystemUIVisibility</li>
+<li> SystemUI处理SystemUIVisibility，并通知WMS</li>
+<li> WMS更新SystemUIVisibility至控件树</li>
+</ol>
+<p>大致的流程可以参考一下模块交互图</p>
+<p><img src="/img/pic/systemUI_2/SystemUIVisibility%E4%BA%A4%E4%BA%92%E5%9B%BE.png" alt="SystemUIVisibility交互图"></p>
+<h2 id="一、控件树设置SystemUIVisibility"><a href="#一、控件树设置SystemUIVisibility" class="headerlink" title="一、控件树设置SystemUIVisibility"></a>一、控件树设置SystemUIVisibility</h2><ol>
+<li><p> 各个控件通过View提供的接口<strong>setSystemUiVisibility()<strong>把<code>systemUIVisibility</code>设置进来，然后在更新到ViewRootImpl中,更新的方法为</strong>recomputeViewAttributes()</strong></p>
+</li>
+<li><p>**recomputeViewAttributes()**会沿着控件树向根部回溯，会触发一次遍历动作</p>
+<pre><code class="java">@Override
+public void recomputeViewAttributes(View child) &#123;
+    checkThread();
+    if (mView == child) &#123;
+        mAttachInfo.mRecomputeGlobalAttributes = true;
+        if (!mWillDrawSoon) &#123;
+            scheduleTraversals(); // 触发一次遍历
+        &#125;
+    &#125;
+&#125;
 </code></pre>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre><code class="bash">$ hexo server
+</li>
+<li><p> 在遍历的过程中，ViewRootImpl会收集控件树内所有View所期望的mSystemUIVisibility属性，并将其记录在AttachInfo.mSystemUiVisibility中，并保存到当前窗口的LayoutParams.subtreeSystemUiVisibility中，作为本窗口所期望的SystemUiVisibility,然后再通过调用WMS的relayoutWindow(), 将LayoutParams.systemUiVisibility 和LayoutParams.subtreeSystemUiVisibility 一同更新到WMS中</p>
+</li>
+</ol>
+<p>调用时序图如下所示</p>
+<p><img src="/img/pic/systemUI_2/View-_WMS.png" alt="View-_WMS"></p>
+<h2 id="二、WMS调整SystemUIVisibility"><a href="#二、WMS调整SystemUIVisibility" class="headerlink" title="二、WMS调整SystemUIVisibility"></a>二、WMS调整SystemUIVisibility</h2><p>一个窗口所期望的SystemUiVisibility通过调用WMS.relayoutWindow()方法将SystemUiVisibility属性更新进WMS，在该方法中，有两步比较重要：</p>
+<ol>
+<li> 将从控件树中收集的subtreeSystemUiVisibility 和 systemUiVisibility进行整合</li>
+<li> 将其更新到控件树所在Window的mSystemUiVisibility中</li>
+</ol>
+<pre><code class="java">public int relayoutWindow(Session session, IWindow client, int seq, LayoutParams attrs,
+                          int requestedWidth, int requestedHeight, int viewVisibility,
+                          int flags,long frameNumber, Rect outFrame,
+                          Rect outOverscanInsets, Rect outContentInsets,
+                          Rect outVisibleInsets, Rect outStableInsets, 
+                          Rect outOutsets, Rect outBackdropFrame,
+                          DisplayCutout.ParcelableWrapper outCutout, 
+                          MergedConfiguration mergedConfiguration,
+                          Surface outSurface) &#123;
+            ......
+            
+            mPolicy.adjustWindowParamsLw(win, attrs, hasStatusBarServicePermission);
+            // if they don&#39;t have the permission, mask out the status bar bits
+            if (seq == win.mSeq) &#123;
+                // 将从控件树中收集的subtreeSystemUiVisibility 和
+                // systemUiVisibility进行整合
+                int systemUiVisibility = attrs.systemUiVisibility
+                    | attrs.subtreeSystemUiVisibility;
+                if ((systemUiVisibility &amp; DISABLE_MASK) != 0) &#123;
+                    if (!hasStatusBarPermission) &#123;
+                        systemUiVisibility &amp;= ~DISABLE_MASK;
+                    &#125;
+                &#125;
+                // 将其更新到win.mSystemUiVisibility
+                win.mSystemUiVisibility = systemUiVisibility;
+            &#125;
+             ......
+
+&#125;
 </code></pre>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre><code class="bash">$ hexo generate
+<p>SystemUiVisibility 的一个消费者有是WMS的军师PhoneWindowManager， PhoneWindowManager可以通过WindowState.getSystemUiVisibility()对窗口进行布局，显示和隐藏statue bar 和 navigation bar</p>
+<p>除了PWM，SystemUiVisibility 的另一个消费者是SystemUi中的StatusBar，WMS不会像ViewRootImpl一样收集所有窗口的systemUiVisibility，然后将他们整合在一起，而是将焦点窗口的SystemUiVisibility 传递给StatusBar, 传递的实机有两个，一是当窗口焦点发生变化时，调用PWM.focusChangedLw()，另一个是在WMS在布局过程中调用PWM.finishPostLayoutLw()，这两个方法都会调用PWM.updateSystemUiVisibilityLw()，将焦点窗口的SystemUiVisibility 传递给SystemUi，PWM.updateSystemUiVisibilityLw()代码如下</p>
+<pre><code class="java">private int updateSystemUiVisibilityLw() &#123;
+    // If there is no window focused, there will be nobody to handle the events
+    // anyway, so just hang on in whatever state we&#39;re in until things settle down.
+    WindowState winCandidate = mFocusedWindow != null ? mFocusedWindow
+        : mTopFullscreenOpaqueWindowState;
+    
+    ......
+    
+    final WindowState win = winCandidate;
+    
+    ......
+    // 从焦点窗口中获取它所期望的SystemUiVisibility
+    int tmpVisibility = PolicyControl.getSystemUiVisibility(win, null)
+        &amp; ~mResettingSystemUiFlags
+        &amp; ~mForceClearedSystemUiFlags;
+
+    ......
+    
+    // 将过滤后的SystemUiVisibility更新到PWM.mLastSystemUiFlags中
+    mLastSystemUiFlags = visibility;
+
+    ......
+    
+    mHandler.post(new Runnable() &#123;
+        @Override
+        public void run() &#123;
+            StatusBarManagerInternal statusbar = getStatusBarManagerInternal();
+            if (statusbar != null) &#123;
+                // 将SystemUIVisibility设置给SystemUi进程中StatusBar
+                statusbar.setSystemUiVisibility(visibility, fullscreenVisibility,
+                                                dockedVisibility, 0xffffffff, 
+                                                fullscreenStackBounds,
+                                                dockedStackBounds, win.toString());
+                statusbar.topAppWindowChanged(needsMenu);
+            &#125;
+        &#125;
+    &#125;);
+    return diff;
+&#125;
 </code></pre>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre><code class="bash">$ hexo deploy
+<p>调用过程总结如下:</p>
+<p><img src="/img/pic/systemUI_2/WMS-_SBMS.png" alt="WMS-&gt;SBMS"></p>
+<p>WMS 会通过StatusBarManagerService与SystemUi进程进行交互，SystemUI通过CommandQueue与WMS进行交互，大致流程如下：SystemUI进程起来后，会在内部创建CommandQueue对象， 该对象继承IStatueBar.Stub， 可以进行跨进程通信，创建完成后，在StatusBar.start()方法中，会将其注册到StatusBarManagerService中， 这样WMS就保存了SystemUi的binder对象， 用于回调SystemUI的方法，各个类之间的关系如下：</p>
+<p><img src="/img/pic/systemUI_2/SystemUI%E7%B1%BB%E5%9B%BE.png" alt="SystemUI类图"></p>
+<h2 id="三、SystemUI处理SystemUIVisibility"><a href="#三、SystemUI处理SystemUIVisibility" class="headerlink" title="三、SystemUI处理SystemUIVisibility"></a>三、SystemUI处理SystemUIVisibility</h2><p>在SystemUI进程中， 由StatusBar.</p>
+<pre><code class="java">public void setSystemUiVisibility(int vis, int fullscreenStackVis, int dockedStackVis,
+                                  int mask, Rect fullscreenStackBounds,
+                                  Rect dockedStackBounds) &#123;
+    final int oldVal = mSystemUiVisibility;
+    final int newVal = (oldVal&amp;~mask) | (vis&amp;mask);
+    final int diff = newVal ^ oldVal;
+
+    ......
+    
+    boolean sbModeChanged = false;
+    if (diff != 0) &#123;
+        // 将运算后的新的newVal更新到mSystemUiVisibility
+        mSystemUiVisibility = newVal;
+
+        // 更新低调模式
+        if ((diff &amp; View.SYSTEM_UI_FLAG_LOW_PROFILE) != 0) &#123;
+            setAreThereNotifications();
+        &#125;
+
+        ......
+
+        // 将运算后新的mSystemUiVisibility通知WindowManager，再更新的各个Window的控件树中
+        notifyUiVisibilityChanged(mSystemUiVisibility);
+    &#125;
+
+    mLightBarController.onSystemUiVisibilityChanged(fullscreenStackVis, dockedStackVis,
+                                                    mask, fullscreenStackBounds, dockedStackBounds, sbModeChanged, mStatusBarMode);
+&#125;
 </code></pre>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+<p>调用过程比较简单，在此不再分析，具体调用过程如下：</p>
+<p><img src="/img/pic/systemUI_2/StatusBar-View.png" alt="StatusBar-View"></p>
+<h2 id="四、WMS更新SystemUIVisibility至控件树"><a href="#四、WMS更新SystemUIVisibility至控件树" class="headerlink" title="四、WMS更新SystemUIVisibility至控件树"></a>四、WMS更新SystemUIVisibility至控件树</h2><p>StatusBar 会将PWM传递过来的SystemUIVisibility保存到mSystemUiVisibility，然后又调用notifyUiVisibilityChanged()将mSystemUiVisibility通知给WMS， WMS对于mSystemUiVisibility的处理如下：</p>
+<pre><code class="java">@Override
+public void statusBarVisibilityChanged(int visibility) &#123;
+    if (mContext.checkCallingOrSelfPermission(android.Manifest.permission.STATUS_BAR)
+        != PackageManager.PERMISSION_GRANTED) &#123;
+        throw new SecurityException(&quot;Caller does not hold permission &quot;
+                                    + android.Manifest.permission.STATUS_BAR);
+    &#125;
+
+    synchronized (mWindowMap) &#123;
+        mLastStatusBarVisibility = visibility;
+        visibility = mPolicy.adjustSystemUiVisibilityLw(visibility);
+        // 将修正后的visibility更新到各个窗口
+        updateStatusBarVisibilityLocked(visibility);
+    &#125;
+&#125;
+</code></pre>
+<p>在WMS中，会将visibility传递给PWM，在PWM中会清除mForceClearingStatusBarVisibility 以及 mResettingSystemUiFlags 中的标记</p>
+<pre><code class="java">@Override
+public int adjustSystemUiVisibilityLw(int visibility) &#123;
+    mStatusBarController.adjustSystemUiVisibilityLw(mLastSystemUiFlags, visibility);
+    mNavigationBarController.adjustSystemUiVisibilityLw(mLastSystemUiFlags, visibility);
+
+    // Reset any bits in mForceClearingStatusBarVisibility that
+    // are now clear.
+    mResettingSystemUiFlags &amp;= visibility;
+    // Clear any bits in the new visibility that are currently being
+    // force cleared, before reporting it.
+    return visibility &amp; ~mResettingSystemUiFlags
+        &amp; ~mForceClearedSystemUiFlags;
+&#125;
+</code></pre>
+<p>在更新完visibility后， WMS将visibility更新到各个控件树中，至此，mSystemUiVisibility在系统中的处理过程分析完毕，中间省略了很多细节，后续文章继续补充</p>
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 liu_haidy@163.com </span>

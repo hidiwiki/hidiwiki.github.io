@@ -1,0 +1,1044 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Activity的动流程分析(二) | 哈哈迪的小站</title>
+  <meta name="keywords" content=" WMS , AMS , Activity ">
+  <meta name="description" content="Activity的动流程分析(二) | 哈哈迪的小站">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta property="og:type" content="article">
+<meta property="og:title" content="我的博客">
+<meta property="og:url" content="http://hidiwiki.github.io/2021/08/15/%E6%88%91%E7%9A%84%E5%8D%9A%E5%AE%A2/index.html">
+<meta property="og:site_name" content="哈哈迪的小站">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-08-15T07:09:52.000Z">
+<meta property="article:modified_time" content="2021-08-15T07:09:52.861Z">
+<meta property="article:author" content="Liu Haidi">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="icon" href="/img/dog.png">
+
+<link href="/css/style.css?v=1.1.0" rel="stylesheet">
+
+<link href="/css/hl_theme/atom-light.css?v=1.1.0" rel="stylesheet">
+
+<link href="//cdn.jsdelivr.net/npm/animate.css@4.1.0/animate.min.css" rel="stylesheet">
+
+<script src="//cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+<script src="/js/titleTip.js?v=1.1.0" ></script>
+
+<script src="//cdn.jsdelivr.net/npm/highlightjs@9.16.2/highlight.pack.min.js"></script>
+<script>
+    hljs.initHighlightingOnLoad();
+</script>
+
+<script src="//cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js"></script>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/jquery.cookie@1.4.1/jquery.cookie.min.js" ></script>
+
+<script src="/js/iconfont.js?v=1.1.0" ></script>
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<div style="display: none">
+  <input class="theme_disqus_on" value="false">
+  <input class="theme_preload_comment" value="">
+  <input class="theme_blog_path" value="">
+  <input id="theme_shortcut" value="true" />
+  <input id="theme_highlight_on" value="true" />
+  <input id="theme_code_copy" value="false" />
+</div>
+
+
+
+<body>
+<aside class="nav">
+    <div class="nav-left">
+        <a href="/"
+   class="avatar_target">
+    <img class="avatar"
+         src="/img/dog.png"/>
+</a>
+<div class="author">
+    <span>Liu Haidi</span>
+</div>
+
+<div class="icon">
+    
+        
+            <a title="rss"
+               href="/atom.xml"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-rss"></use>
+                    </svg>
+                
+            </a>
+        
+    
+        
+            <a title="github"
+               href="https://github.com"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-github"></use>
+                    </svg>
+                
+            </a>
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+            <a title="email"
+               href="mailto:liu_haidy@163.com"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-email"></use>
+                    </svg>
+                
+            </a>
+        
+    
+        
+            <a title="qq"
+               href="http://wpa.qq.com/msgrd?v=3&uin=1099924038&site=qq&menu=yes"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-qq"></use>
+                    </svg>
+                
+            </a>
+        
+    
+        
+    
+        
+    
+</div>
+
+
+
+
+<ul>
+    <li>
+        <div class="all active" data-rel="全部文章">全部文章
+            
+                <small>(5)</small>
+            
+        </div>
+    </li>
+    
+        
+            
+                <li>
+                    <div data-rel="android">
+                        
+                        android
+                        <small>(3)</small>
+                        
+                    </div>
+                    
+                </li>
+            
+        
+    
+</ul>
+<div class="left-bottom">
+    <div class="menus">
+        
+            
+            
+            
+    </div>
+    <div>
+        
+            <a class="about  hasFriend  site_url"
+               
+               href="/about">关于</a>
+        
+        <a style="width: 50%"
+                
+                                           class="friends">友链</a>
+        
+    </div>
+</div>
+<input type="hidden" id="yelog_site_posts_number" value="5">
+<input type="hidden" id="yelog_site_word_count" value="5.2k">
+<div style="display: none">
+    <span id="busuanzi_value_site_uv"></span>
+    <span id="busuanzi_value_site_pv"></span>
+</div>
+
+    </div>
+    <div class="nav-right">
+        <div class="friends-area">
+    <div class="friends-title">
+        友情链接
+        <i class="iconfont icon-left"></i>
+    </div>
+    <div class="friends-content">
+        <ul>
+            
+            <li><a target="_blank" href="http://hidiwiki.github.io/">wiki</a></li>
+            
+        </ul>
+    </div>
+</div>
+        <div class="title-list">
+    <div class="right-top">
+        <div id="default-panel">
+            <i class="iconfont icon-search" data-title="搜索 快捷键 i"></i>
+            <div class="right-title">全部文章</div>
+            <i class="iconfont icon-file-tree" data-title="切换到大纲视图 快捷键 w"></i>
+        </div>
+        <div id="search-panel">
+            <i class="iconfont icon-left" data-title="返回"></i>
+            <input id="local-search-input" autocomplete="off"/>
+            <label class="border-line" for="input"></label>
+            <i class="iconfont icon-case-sensitive" data-title="大小写敏感"></i>
+            <i class="iconfont icon-tag" data-title="标签"></i>
+        </div>
+        <div id="outline-panel" style="display: none">
+            <div class="right-title">大纲</div>
+            <i class="iconfont icon-list" data-title="切换到文章列表"></i>
+        </div>
+    </div>
+
+    <div class="tags-list">
+    <input id="tag-search" />
+    <div class="tag-wrapper">
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Activity</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>AMS</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>SystemUI</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>WMS</a>
+            </li>
+        
+    </div>
+
+</div>
+
+    
+    <nav id="title-list-nav">
+        
+        <a  class="全部文章 "
+           href="/2021/08/15/%E6%88%91%E7%9A%84%E5%8D%9A%E5%AE%A2/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="我的博客">我的博客</span>
+            <span class="post-date" title="2021-08-15 15:09:52">2021/08/15</span>
+        </a>
+        
+        <a  class="全部文章 "
+           href="/2021/08/15/hello-world/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Hello World">Hello World</span>
+            <span class="post-date" title="2021-08-15 12:58:31">2021/08/15</span>
+        </a>
+        
+        <a  class="全部文章 android "
+           href="/2021/04/24/Activity%E7%9A%84%E5%90%AF%E5%8A%A8%E6%B5%81%E7%A8%8B%E5%88%86%E6%9E%90(%E4%BA%8C)/"
+           data-tag="WMS,AMS,Activity"
+           data-author="" >
+            <span class="post-title" title="Activity的动流程分析(二)">Activity的动流程分析(二)</span>
+            <span class="post-date" title="2021-04-24 16:00:00">2021/04/24</span>
+        </a>
+        
+        <a  class="全部文章 android "
+           href="/2021/04/06/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3SystemUIVisibility(%E4%BA%8C)/"
+           data-tag="SystemUI,WMS"
+           data-author="" >
+            <span class="post-title" title="深入理解SystemUiVisibility(二)">深入理解SystemUiVisibility(二)</span>
+            <span class="post-date" title="2021-04-06 16:13:47">2021/04/06</span>
+        </a>
+        
+        <a  class="全部文章 android "
+           href="/2021/04/06/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3SystemUiVisibility(%E4%B8%80)/"
+           data-tag="SystemUI,WMS"
+           data-author="" >
+            <span class="post-title" title="深入理解SystemUiVisibility(一)">深入理解SystemUiVisibility(一)</span>
+            <span class="post-date" title="2021-04-06 16:13:47">2021/04/06</span>
+        </a>
+        
+        <div id="no-item-tips">
+
+        </div>
+    </nav>
+    <div id="outline-list">
+    </div>
+</div>
+
+    </div>
+    <div class="hide-list">
+        <div class="semicircle" data-title="切换全屏 快捷键 s">
+            <div class="brackets first"><</div>
+            <div class="brackets">&gt;</div>
+        </div>
+    </div>
+</aside>
+<div id="post">
+    <div class="pjax">
+        <article id="post-Activity的启动流程分析(二)" class="article article-type-post" itemscope itemprop="blogPost">
+    
+        <h1 class="article-title">Activity的动流程分析(二)</h1>
+    
+    <div class="article-meta">
+        
+        
+        
+        <span class="book">
+            <i class="iconfont icon-category"></i>
+            
+            
+            <a  data-rel="android">android</a>
+            
+        </span>
+        
+        
+        <span class="tag">
+            <i class="iconfont icon-tag"></i>
+            
+            <a class="color4">WMS</a>
+            
+            <a class="color4">AMS</a>
+            
+            <a class="color4">Activity</a>
+            
+        </span>
+        
+    </div>
+    <div class="article-meta">
+        
+            发布时间 : <time class="date" title='最后更新: 2021-08-21 11:44:04'>2021-04-24 16:00</time>
+        
+    </div>
+    <div class="article-meta">
+        
+        <span>字数:2.6k</span>
+        
+        
+        <span id="busuanzi_container_page_pv">
+            阅读 :<span id="busuanzi_value_page_pv">
+                <span class="count-comment">
+                    <span class="spinner">
+                      <div class="cube1"></div>
+                      <div class="cube2"></div>
+                    </span>
+                </span>
+            </span>
+        </span>
+        
+        
+    </div>
+    
+    <div class="toc-ref">
+    
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Activity%E7%9A%84%E5%8A%A8%E6%B5%81%E7%A8%8B%E5%88%86%E6%9E%90-%E4%BA%8C"><span class="toc-text">Activity的动流程分析(二)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E6%A6%82%E8%BF%B0"><span class="toc-text">一、概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E8%B0%83%E7%94%A8%E8%BF%87%E7%A8%8B"><span class="toc-text">二、调用过程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#startActivityUnchecked"><span class="toc-text">startActivityUnchecked</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#resumeFocusedStackTopActivityLocked"><span class="toc-text">resumeFocusedStackTopActivityLocked</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E6%80%BB%E7%BB%93"><span class="toc-text">三、总结</span></a></li></ol></li></ol>
+    
+<style>
+    .left-col .switch-btn,
+    .left-col .switch-area {
+        display: none;
+    }
+    .toc-level-3 i,
+    .toc-level-3 ol {
+        display: none !important;
+    }
+</style>
+</div>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><div class='inner-toc'><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Activity%E7%9A%84%E5%8A%A8%E6%B5%81%E7%A8%8B%E5%88%86%E6%9E%90-%E4%BA%8C"><span class="toc-text">Activity的动流程分析(二)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E6%A6%82%E8%BF%B0"><span class="toc-text">一、概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E8%B0%83%E7%94%A8%E8%BF%87%E7%A8%8B"><span class="toc-text">二、调用过程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#startActivityUnchecked"><span class="toc-text">startActivityUnchecked</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#resumeFocusedStackTopActivityLocked"><span class="toc-text">resumeFocusedStackTopActivityLocked</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E6%80%BB%E7%BB%93"><span class="toc-text">三、总结</span></a></li></ol></li></ol></div></p>
+<h1 id="Activity的动流程分析-二"><a href="#Activity的动流程分析-二" class="headerlink" title="Activity的动流程分析(二)"></a>Activity的动流程分析(二)</h1><h2 id="一、概述"><a href="#一、概述" class="headerlink" title="一、概述"></a>一、概述</h2><p>从启动顺序上可以把Activity的启动流程分为两种，一种是根Activity的启动，如点击桌面图标，由Launcher向AMS申请目标Activity及其所在进程的创建，可以简单理解为程序启动的第一个Activity, 另一种是普通Activity的启动，Activity启动流程需要考虑的因素非常之多，因此其其复杂性也不言而喻，两种Activity的启动过程相似，但根Activity的启动过程则更具代表性，因此本系列的文章也主要分析根Activity的启动流程。</p>
+<p>根Activity的启动流程可以划分为几个阶段：</p>
+<ul>
+<li>Launcher向AMS请求启动根Activity</li>
+<li>AMS初始化Activity信息的过程</li>
+<li>AMS向Zygote请求创建APP进程</li>
+<li>ActivityThread启动Activity</li>
+</ul>
+<p>本文目前将对<strong>AMS初始化Activity信息的过程</strong>进行分析</p>
+<h2 id="二、调用过程"><a href="#二、调用过程" class="headerlink" title="二、调用过程"></a>二、调用过程</h2><p>当AMS收到Launcher启动Activity的请求后，AMS会首先出完成需要启动的Activity的初始化工作，如权限检查，创建相应的ActivityRecord等，总体的调用时序如下：</p>
+<p><img src="/img/pic/startActivity/Activity%E5%90%AF%E5%8A%A8%E6%B5%81%E7%A8%8B%E5%88%86%E6%9E%90Entry.png" alt="Activity启动流程分析Entry"></p>
+<p>AMS初始化Activity的过程是从startActivity()方法开始的，代码实现如下：</p>
+<pre><code class="java">public final int startActivity(IApplicationThread caller, String callingPackage,
+                               Intent intent, String resolvedType, IBinder resultTo, String resultWho, int requestCode,
+                               int startFlags, ProfilerInfo profilerInfo, Bundle bOptions) &#123;
+    return startActivityAsUser(caller, callingPackage, intent, resolvedType, resultTo,
+                               resultWho, requestCode, startFlags, profilerInfo, bOptions,
+                               UserHandle.getCallingUserId());
+&#125;
+</code></pre>
+<p>从上面的代码我们可以看出，startActivity()方法又调用了AMS的成员方法startActivityAsUser()，且又通过调用<code>UserHandle.getCallingUserId()</code>增加了一个参数，也即是获取调用者的userId，后面AMS会通过该userId来判断调用者是否有权限拉起该Activity及其所在进程</p>
+<pre><code class="java">public final int startActivityAsUser(IApplicationThread caller, String callingPackage,
+                                     Intent intent, String resolvedType, IBinder resultTo, String resultWho, int requestCode,
+                                     int startFlags, ProfilerInfo profilerInfo, Bundle bOptions, int userId,
+                                     boolean validateIncomingUser) &#123;
+    enforceNotIsolatedCaller(&quot;startActivity&quot;); // 1
+
+    userId = mActivityStartController.checkTargetUser(userId, validateIncomingUser, // 2
+                                                      Binder.getCallingPid(), Binder.getCallingUid(), &quot;startActivityAsUser&quot;);
+
+    // TODO: Switch to user app stacks here.
+    return mActivityStartController.obtainStarter(intent, &quot;startActivityAsUser&quot;) // 3
+        .setCaller(caller)
+        .setCallingPackage(callingPackage)
+        .setResolvedType(resolvedType)
+        .setResultTo(resultTo)
+        .setResultWho(resultWho)
+        .setRequestCode(requestCode)
+        .setStartFlags(startFlags)
+        .setProfilerInfo(profilerInfo)
+        .setActivityOptions(bOptions)
+        .setMayWait(userId)
+        .execute();
+
+&#125;
+</code></pre>
+<p>在完成了注释 1， 2处的权限检查后，AMS 把启动Activity的工作迁移到了ActivityStarter类中，在调用完ActivityStarter.execute()方法之后，Activity的启动流程就从AMS中脱离，由ActivityStarter负责实施，ActivityStarter是Activity加载的控制类，会收集所有的逻辑来决定如何将Intent和Flags转换为Activity，并将Activity和Task以及Stack相关联， 在这里我们需要注意倒数第二个调用：<code>setMayWait(userId)</code>，该方法的调用会影响到后续的调用过程</p>
+<pre><code class="java">ActivityStarter setMayWait(int userId) &#123;
+    mRequest.mayWait = true;
+    mRequest.userId = userId;
+
+    return this;
+&#125;
+</code></pre>
+<p>在execute()方法中，会通过<code>mRequest.mayWait</code>来决定走哪一条分支，代码如下，从上面的代码可知，<code>mRequest.mayWait = true;</code>因此，将会调用startActivityMayWait()方法</p>
+<pre><code class="java">int execute() &#123;
+    try &#123;
+        // TODO(b/64750076): Look into passing request directly to these methods to allow
+        // for transactional diffs and preprocessing.
+        if (mRequest.mayWait) &#123;
+            return startActivityMayWait(mRequest.caller, mRequest.callingUid,
+                                        mRequest.callingPackage, mRequest.intent, mRequest.resolvedType,
+                                        mRequest.voiceSession, mRequest.voiceInteractor, mRequest.resultTo,
+                                        mRequest.resultWho, mRequest.requestCode, mRequest.startFlags,
+                                        mRequest.profilerInfo, mRequest.waitResult, mRequest.globalConfig,
+                                        mRequest.activityOptions, mRequest.ignoreTargetSecurity, mRequest.userId,
+                                        mRequest.inTask, mRequest.reason,
+                                        mRequest.allowPendingRemoteAnimationRegistryLookup,
+                                        mRequest.originatingPendingIntent);
+        &#125; else &#123;
+            return startActivity(mRequest.caller, mRequest.intent, mRequest.ephemeralIntent,
+                                 mRequest.resolvedType, mRequest.activityInfo, mRequest.resolveInfo,
+                                 mRequest.voiceSession, mRequest.voiceInteractor, mRequest.resultTo,
+                                 mRequest.resultWho, mRequest.requestCode, mRequest.callingPid,
+                                 mRequest.callingUid, mRequest.callingPackage, mRequest.realCallingPid,
+                                 mRequest.realCallingUid, mRequest.startFlags, mRequest.activityOptions,
+                                 mRequest.ignoreTargetSecurity, mRequest.componentSpecified,
+                                 mRequest.outActivity, mRequest.inTask, mRequest.reason,
+                                 mRequest.allowPendingRemoteAnimationRegistryLookup,
+                                 mRequest.originatingPendingIntent);
+        &#125;
+    &#125; finally &#123;
+        onExecutionComplete();
+    &#125;
+&#125;
+</code></pre>
+<p>ActivityStarter的startActivityMayWait()方法调用过程非常长，如下所示</p>
+<pre><code class="java">private int startActivityMayWait(IApplicationThread caller, int callingUid,
+                                 String callingPackage, Intent intent, String resolvedType,
+                                 IVoiceInteractionSession voiceSession, IVoiceInteractor voiceInteractor,
+                                 IBinder resultTo, String resultWho, int requestCode, int startFlags,
+                                 ProfilerInfo profilerInfo, WaitResult outResult,
+                                 Configuration globalConfig, SafeActivityOptions options, boolean ignoreTargetSecurity,
+                                 int userId, TaskRecord inTask, String reason,
+                                 boolean allowPendingRemoteAnimationRegistryLookup,
+                                 PendingIntentRecord originatingPendingIntent) &#123;
+    ······
+
+    final int realCallingPid = Binder.getCallingPid();
+    final int realCallingUid = Binder.getCallingUid();
+
+    int callingPid;
+    if (callingUid &gt;= 0) &#123;
+        callingPid = -1;
+    &#125; else if (caller == null) &#123;
+        callingPid = realCallingPid;
+        callingUid = realCallingUid;
+    &#125; else &#123;
+        callingPid = callingUid = -1;
+    &#125;
+
+    ······
+    // 通过PMS解析Intent, 从Intent中收集启动目标的信息，并生成解析信息rInfo
+    ResolveInfo rInfo = mSupervisor.resolveIntent(intent, resolvedType, userId,
+                                                  0 /* matchFlags */,
+                                                  computeResolveFilterUid(
+                                                      callingUid, realCallingUid, mRequest.filterCallingUid));
+    
+    // // 根据获取的解析信息rInfo以及flag，生成目标Activity的aInfo
+    ActivityInfo aInfo = mSupervisor.resolveActivity(intent, rInfo, startFlags, profilerInfo);
+
+    synchronized (mService) &#123;
+
+        ......
+
+        final ActivityRecord[] outRecord = new ActivityRecord[1];
+        int res = startActivity(caller, intent, ephemeralIntent, resolvedType, aInfo, rInfo,
+                                voiceSession, voiceInteractor, resultTo, resultWho, requestCode, callingPid,
+                                callingUid, callingPackage, realCallingPid, realCallingUid, startFlags, options,
+                                ignoreTargetSecurity, componentSpecified, outRecord, inTask, reason,
+                                allowPendingRemoteAnimationRegistryLookup, originatingPendingIntent);
+
+        ......
+        // outResult输出activity的启动结果，一般自动化测试的中使用
+        if (outResult != null) &#123;
+
+        &#125;
+    &#125;
+&#125;
+</code></pre>
+<ol>
+<li>获取调用者的pid和uid,并进行相应的判断</li>
+<li>解析传进来的Intent</li>
+<li>从Intent中收集启动目标的信息</li>
+<li>调用startActivity()继续处理</li>
+</ol>
+<p>先解析意图，和activity的Info，使用AMS的startActivity传递的outResult参数一般都是null，故不会等待结果，自动化测试中使用的是AMS的startActivityAndWait，里面传递的WaitResult对象不为null，此时会等到界面绘制完成才会返回结果</p>
+<p>startActivity()又会调用同名方法，我们继续往下看</p>
+<pre><code class="java">private int startActivity(IApplicationThread caller, Intent intent, Intent ephemeralIntent,
+                          String resolvedType, ActivityInfo aInfo, ResolveInfo rInfo,
+                          IVoiceInteractionSession voiceSession, IVoiceInteractor voiceInteractor,
+                          IBinder resultTo, String resultWho, int requestCode, int callingPid, int callingUid,
+                          String callingPackage, int realCallingPid, int realCallingUid, int startFlags,
+                          SafeActivityOptions options,
+                          boolean ignoreTargetSecurity, boolean componentSpecified, ActivityRecord[] outActivity,
+                          TaskRecord inTask, boolean allowPendingRemoteAnimationRegistryLookup,
+                          PendingIntentRecord originatingPendingIntent) &#123;
+    int err = ActivityManager.START_SUCCESS;
+    
+    ......
+
+    ActivityRecord r = new ActivityRecord(mService, callerApp, callingPid, callingUid,
+                                          callingPackage, intent, resolvedType, aInfo, mService.getGlobalConfiguration(),
+                                          resultRecord, resultWho, requestCode, componentSpecified, voiceSession != null,
+                                          mSupervisor, checkedOptions, sourceRecord);
+    if (outActivity != null) &#123;
+        outActivity[0] = r;
+    &#125;
+
+    ......
+
+    //看看之前是否还有未启动的活动对象
+    mController.doPendingActivityLaunches(false);
+    return startActivity(r, sourceRecord, voiceSession, voiceInteractor, startFlags,
+                         true /* doResume */, checkedOptions, inTask, outActivity);
+&#125;
+</code></pre>
+<p>startActivity()方法也是非常之长，调用过程也很复杂，不过在此，我们重点关注ActivityRecord， 在该方法中，创建了用于描述Activity的ActivityRecord，创建完成后，将ActivityRecord存入了outActivity[0]中，startActivity()方法紧接着调用了startActivityUnchecked方法，注意这里传入的参数<code>doResume</code>为true，startActivityUnchecked方法主要是把刚才创建好的ActivityRecord放入相应的Task, Stack中，代码如下：</p>
+<h3 id="startActivityUnchecked"><a href="#startActivityUnchecked" class="headerlink" title="startActivityUnchecked"></a>startActivityUnchecked</h3><p>该方法主要会完成以下动作，</p>
+<ol>
+<li><p> 此处会启动新的ActivityStack，输出am_create_task</p>
+</li>
+<li><p> 输出am_create_activity,准备创建activity</p>
+</li>
+<li><p> 设置焦点、焦点切换</p>
+</li>
+<li><p> 上一个activity的onpause</p>
+</li>
+</ol>
+<p><code>mSupervisor.resumeFocusedStackTopActivityLocked()</code></p>
+<pre><code class="java">private int startActivityUnchecked(final ActivityRecord r, ActivityRecord sourceRecord,
+                                   IVoiceInteractionSession voiceSession, IVoiceInteractor voiceInteractor,
+                                   int startFlags, boolean doResume, ActivityOptions options, TaskRecord inTask,
+                                   ActivityRecord[] outActivity) &#123;
+     // 初始化参数
+    setInitialState(r, options, inTask, doResume, startFlags, sourceRecord, voiceSession,
+                    voiceInteractor);
+    ......
+    
+    // 判断是否需要创建新的TaskRecord
+    boolean newTask = false;
+    final TaskRecord taskToAffiliate = (mLaunchTaskBehind &amp;&amp; mSourceRecord != null)
+        ? mSourceRecord.getTask() : null;
+
+    // Should this be considered a new task?
+    int result = START_SUCCESS;
+    if (mStartActivity.resultTo == null &amp;&amp; mInTask == null &amp;&amp; !mAddingToTask
+        &amp;&amp; (mLaunchFlags &amp; FLAG_ACTIVITY_NEW_TASK) != 0) &#123;
+        newTask = true;
+        result = setTaskFromReuseOrCreateNewTask(taskToAffiliate, topStack);
+    &#125; else if (mSourceRecord != null) &#123;
+        result = setTaskFromSourceRecord();
+    &#125; else if (mInTask != null) &#123;
+        result = setTaskFromInTask();
+    &#125; else &#123;
+        // This not being started from an existing activity, and not part of a new task...
+        // just put it in the top task, though these days this case should never happen.
+        setTaskToCurrentTopOrCreateNewTask();
+    &#125;
+    if (result != START_SUCCESS) &#123;
+        return result;
+    &#125;
+
+    mService.grantUriPermissionFromIntentLocked(mCallingUid, mStartActivity.packageName,
+                                                mIntent, mStartActivity.getUriPermissionsLocked(), mStartActivity.userId);
+    mService.grantEphemeralAccessLocked(mStartActivity.userId, mIntent,
+                                        mStartActivity.appInfo.uid, UserHandle.getAppId(mCallingUid));
+    // 如果需要创建新的task，在event log中输出am_create_task
+    // logcat -b events
+    if (newTask) &#123;
+        EventLog.writeEvent(EventLogTags.AM_CREATE_TASK, mStartActivity.userId,
+                            mStartActivity.getTask().taskId);
+    &#125;
+    // 在event log中输出am_create_task
+    ActivityStack.logStartActivity(
+        EventLogTags.AM_CREATE_ACTIVITY, mStartActivity, mStartActivity.getTask());
+    mTargetStack.mLastPausedActivity = null;
+
+    mSupervisor.sendPowerHintForLaunchStartIfNeeded(false /* forceSend */, mStartActivity);
+
+    mTargetStack.startActivityLocked(mStartActivity, topFocused, newTask, mKeepCurTransition,
+                                     mOptions);
+    // mDoResume为true,此处可以进去
+    if (mDoResume) &#123;
+        final ActivityRecord topTaskActivity =
+            mStartActivity.getTask().topRunningActivityLocked();
+        if (!mTargetStack.isFocusable()
+            || (topTaskActivity != null &amp;&amp; topTaskActivity.mTaskOverlay
+                &amp;&amp; mStartActivity != topTaskActivity)) &#123;
+            mTargetStack.ensureActivitiesVisibleLocked(null, 0, !PRESERVE_WINDOWS);
+            mService.mWindowManager.executeAppTransition();
+        &#125; else &#123;
+            // 如果mTargetStack是可以获得焦点的，但是目前又不是焦点，则需要要将其移动到栈的最前端
+            if (mTargetStack.isFocusable() &amp;&amp; !mSupervisor.isFocusedStack(mTargetStack)) &#123;
+                mTargetStack.moveToFront(&quot;startActivityUnchecked&quot;);
+            &#125;
+            mSupervisor.resumeFocusedStackTopActivityLocked(mTargetStack, mStartActivity,
+                                                            mOptions);
+        &#125;
+    &#125; else if (mStartActivity != null) &#123;
+        mSupervisor.mRecentTasks.add(mStartActivity.getTask());
+    &#125;
+    mSupervisor.updateUserStackLocked(mStartActivity.userId, mTargetStack);
+
+    mSupervisor.handleNonResizableTaskIfNeeded(mStartActivity.getTask(), preferredWindowingMode,
+                                               preferredLaunchDisplayId, mTargetStack);
+
+    return START_SUCCESS;
+&#125;
+</code></pre>
+<p>该方法主要是通过判断Intent的标志和Activity的属性来确定Activity的Task，对于处理的细节我们就不分析了。一旦找到了包含Activity的Task（或创建新的）后，调用ActivityStack的startActivityLocked()方法 找到对应的Task和Stack，并将其调整到栈顶，调用resumeFocusedStackTopActivityLocked()，继续完成启动流程</p>
+<pre><code class="java">void startActivityLocked(ActivityRecord r, ActivityRecord focusedTopActivity,
+                         boolean newTask, boolean keepCurTransition, ActivityOptions options) &#123;
+    TaskRecord rTask = r.getTask();
+    final int taskId = rTask.taskId;
+    // mLaunchTaskBehind tasks get placed at the back of the task stack.
+    if (!r.mLaunchTaskBehind &amp;&amp; (taskForIdLocked(taskId) == null || newTask)) &#123;
+        // Last activity in task had been removed or ActivityManagerService is reusing task.
+        // Insert or replace.
+        // Might not even be in.
+        insertTaskAtTop(rTask, r); // 如果是创建了新的Task，需要把ActivityRecord放在Task的顶部
+    &#125;
+    TaskRecord task = null;
+    if (!newTask) &#123; // 如果不需要启动新的Task，那么就需要找到目标Task
+        // If starting in an existing task, find where that is...
+        boolean startIt = true;
+        for (int taskNdx = mTaskHistory.size() - 1; taskNdx &gt;= 0; --taskNdx) &#123;
+            task = mTaskHistory.get(taskNdx);
+            if (task.getTopActivity() == null) &#123;
+                // All activities in task are finishing.
+                continue;
+            &#125;
+            if (task == rTask) &#123;
+                if (!startIt) &#123;
+                    if (DEBUG_ADD_REMOVE) Slog.i(TAG, &quot;Adding activity &quot; + r + &quot; to task &quot;
+                                                 + task, new RuntimeException(&quot;here&quot;).fillInStackTrace());
+                    r.createWindowContainer();
+                    ActivityOptions.abort(options);
+                    return;
+                &#125;
+                break;
+            &#125; else if (task.numFullscreen &gt; 0) &#123;
+                startIt = false;
+            &#125;
+        &#125;
+    &#125;
+
+    ......
+    
+    task = activityTask;
+
+    ......
+&#125;
+</code></pre>
+<h3 id="resumeFocusedStackTopActivityLocked"><a href="#resumeFocusedStackTopActivityLocked" class="headerlink" title="resumeFocusedStackTopActivityLocked"></a>resumeFocusedStackTopActivityLocked</h3><p>主要完成了以下工作：</p>
+<ol>
+<li> 向源进程发送paused消息，使其将自己的Activity暂停</li>
+<li> 启动当前Activity所在进程，目标进程起来后走Activity的生命周期</li>
+</ol>
+<pre><code class="java">boolean resumeFocusedStackTopActivityLocked(
+    ActivityStack targetStack, ActivityRecord target, ActivityOptions targetOptions) &#123;
+
+    if (!readyToResume()) &#123;
+        return false;
+    &#125;
+
+    if (targetStack != null &amp;&amp; isFocusedStack(targetStack)) &#123;
+        return targetStack.resumeTopActivityUncheckedLocked(target, targetOptions);
+    &#125;
+
+    final ActivityRecord r = mFocusedStack.topRunningActivityLocked(); // 1
+    if (r == null || !r.isState(RESUMED)) &#123;
+        mFocusedStack.resumeTopActivityUncheckedLocked(null, null); // 2
+    &#125; else if (r.isState(RESUMED)) &#123;
+        // Kick off any lingering app transitions form the MoveTaskToFront operation.
+        mFocusedStack.executeAppTransition(targetOptions);
+    &#125;
+
+    return false;
+&#125;
+</code></pre>
+<p>获取焦点stack, 从焦点栈中取出最上面处于running状态的ActivityRecord， 然后调用resumeTopActivityUncheckedLocked()方法，代码如下：</p>
+<pre><code class="java">boolean resumeTopActivityUncheckedLocked(ActivityRecord prev, ActivityOptions options) &#123;
+    if (mStackSupervisor.inResumeTopActivity) &#123;
+        // Don&#39;t even start recursing.
+        return false;
+    &#125;
+
+    boolean result = false;
+    try &#123;
+        // Protect against recursion.
+        mStackSupervisor.inResumeTopActivity = true;
+        result = resumeTopActivityInnerLocked(prev, options);
+        final ActivityRecord next = topRunningActivityLocked(true /* focusableOnly */);
+        if (next == null || !next.canTurnScreenOn()) &#123;
+            checkReadyForSleep();
+        &#125;
+    &#125; finally &#123;
+        mStackSupervisor.inResumeTopActivity = false;
+    &#125;
+
+    return result;
+&#125;
+</code></pre>
+<p>再来看一下<code>resumeTopActivityInnerLocked()</code></p>
+<pre><code class="java">private boolean resumeTopActivityInnerLocked(ActivityRecord prev, ActivityOptions options) &#123;
+    if (!mService.mBooting &amp;&amp; !mService.mBooted) &#123;
+        // Not ready yet!
+        return false;
+    &#125;
+
+    ......
+    
+    boolean pausing = mStackSupervisor.pauseBackStacks(userLeaving, next, false);
+    if (mResumedActivity != null) &#123;
+        if (DEBUG_STATES) Slog.d(TAG_STATES,
+                                 &quot;resumeTopActivityLocked: Pausing &quot; + mResumedActivity);
+        // 通知源进程的Activity切换到Pauseed状态
+        pausing |= startPausingLocked(userLeaving, false, next, false);
+    &#125;
+    
+    ......
+    
+        if (DEBUG_STATES) Slog.d(TAG_STATES, &quot;resumeTopActivityLocked: Restarting &quot; + next);
+        mStackSupervisor.startSpecificActivityLocked(next, true, true);
+    &#125;
+
+    if (DEBUG_STACK) mStackSupervisor.validateTopActivitiesLocked();
+    return true;
+&#125;
+</code></pre>
+<p>通知源进程将Activity切换值Paused状态的时序整理如下</p>
+<p><img src="/img/pic/startActivity/Pause_Caller.png" alt="Activity启动流程分析Entry"></p>
+<p>在通知完源进程将Activity调整为pause状态后，继续调用<code>mStackSupervisor.startSpecificActivityLocked(next, true, true);</code> 启动目标进程的Activity，如果目标进程的Activity没有起来，则通知AMS拉起目标进程</p>
+<pre><code class="java">void startSpecificActivityLocked(ActivityRecord r,
+                                 boolean andResume, boolean checkConfig) &#123;
+    // Is this activity&#39;s application already running?
+    ProcessRecord app = mService.getProcessRecordLocked(r.processName,
+                                                        r.info.applicationInfo.uid, true);
+
+    getLaunchTimeTracker().setLaunchTime(r);
+
+    if (app != null &amp;&amp; app.thread != null) &#123;
+        ......
+    &#125;
+
+    mService.startProcessLocked(r.processName, r.info.applicationInfo, true, 0,
+                                &quot;activity&quot;, r.intent.getComponent(), false, false, true);
+&#125;
+</code></pre>
+<p>最终又回到AMS中，让AMS启动目标APP进程，以上启动过程总结如下：</p>
+<p><img src="/img/pic/startActivity/resumeFocusedStack.png" alt="Activity启动流程分析Entry"></p>
+<h2 id="三、总结"><a href="#三、总结" class="headerlink" title="三、总结"></a>三、总结</h2><p>到目前为止，目标Activity的创建前的准备工作已经完成，接下来就是AMS向Zygote请求fork目标APP进程，目标进程起来后，然后才是我们熟悉的Activity的创建流程</p>
+
+      
+       <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 liu_haidy@163.com </span>
+    </div>
+</article>
+
+
+
+
+
+
+
+    
+
+
+
+
+    </div>
+    <div class="copyright">
+        <p class="footer-entry">
+    ©2016-2021 liuhaidi
+</p>
+<p class="footer-entry">Built with <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/yelog/hexo-theme-3-hexo" target="_blank">3-hexo</a> theme</p>
+
+    </div>
+    <div class="full-toc">
+        <button class="full" data-title="切换全屏 快捷键 s"><span class="min "></span></button>
+<a class="" id="rocket" ></a>
+
+    </div>
+</div>
+
+</body>
+<script src="/js/jquery.pjax.js?v=1.1.0" ></script>
+
+<script src="/js/script.js?v=1.1.0" ></script>
+<script>
+    var img_resize = 'default';
+    function initArticle() {
+        /*渲染对应的表格样式*/
+        
+            $("#post .pjax table").addClass("green_title");
+        
+
+        /*渲染打赏样式*/
+        
+
+        /*高亮代码块行号*/
+        
+        $('pre code').each(function(){
+            var lines = $(this).text().trim().split('\n').length, widther='';
+            if (lines>99) {
+                widther = 'widther'
+            }
+            var $numbering = $('<ul/>').addClass('pre-numbering ' + widther).attr("unselectable","on");
+            $(this).addClass('has-numbering ' + widther)
+                    .parent()
+                    .append($numbering);
+            for(var i=1;i<=lines;i++){
+                $numbering.append($('<li/>').text(i));
+            }
+        });
+        
+
+        /*访问数量*/
+        
+        $.getScript("//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js");
+        
+
+        /*代码高亮，行号对齐*/
+        $('.pre-numbering').css('line-height',$('.has-numbering').css('line-height'));
+
+        
+        
+        /* 渲染*/
+        function HTMLDecode(text) {
+            var temp = document.createElement("div");
+            temp.innerHTML = text;
+            var output = temp.innerText || temp.textContent;
+            temp = null;
+            return output;
+        }
+        if (window.mermaid){
+            window.mermaid = null
+        }
+        $.getScript("//cdn.jsdelivr.net/npm/mermaid@8.4.2/dist/mermaid.min.js", function () {
+            var mermaidOptions = JSON.parse(HTMLDecode("{&#34;theme&#34;:&#34;default&#34;,&#34;startOnLoad&#34;:true,&#34;flowchart&#34;:{&#34;useMaxWidth&#34;:false,&#34;htmlLabels&#34;:true}}"))
+            if (window.mermaid) {
+                mermaid.initialize(mermaidOptions)
+                mermaid.contentLoaded()
+            }
+        })
+        
+    }
+
+    /*打赏页面隐藏与展示*/
+    
+
+</script>
+
+<!--加入行号的高亮代码块样式-->
+
+<style>
+    pre{
+        position: relative;
+        margin-bottom: 24px;
+        border-radius: 10px;
+        border: 1px solid #e2dede;
+        background: #FFF;
+        overflow: hidden;
+    }
+    code.has-numbering{
+        margin-left: 30px;
+    }
+    code.has-numbering.widther{
+        margin-left: 35px;
+    }
+    .pre-numbering{
+        margin: 0;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 20px;
+        padding: 0.5em 3px 0.7em 5px;
+        border-right: 1px solid #C3CCD0;
+        text-align: right;
+        color: #AAA;
+        background-color: #fafafa;
+    }
+    .pre-numbering.widther {
+        width: 35px;
+    }
+</style>
+
+<!--自定义样式设置-->
+<style>
+    
+    
+    .nav {
+        width: 572px;
+    }
+    .nav.fullscreen {
+        margin-left: -572px;
+    }
+    .nav-left {
+        width: 150px;
+    }
+    
+    
+    @media screen and (max-width: 1468px) {
+        .nav {
+            width: 492px;
+        }
+        .nav.fullscreen {
+            margin-left: -492px;
+        }
+        .nav-left {
+            width: 100px;
+        }
+    }
+    
+    
+    @media screen and (max-width: 1024px) {
+        .nav {
+            width: 492px;
+            margin-left: -492px
+        }
+        .nav.fullscreen {
+            margin-left: 0;
+        }
+    }
+    
+    @media screen and (max-width: 426px) {
+        .nav {
+            width: 100%;
+        }
+        .nav-left {
+            width: 100%;
+        }
+    }
+    
+    
+    .nav-right .title-list nav a .post-title, .nav-right .title-list #local-search-result a .post-title {
+        color: #383636;
+    }
+    
+    
+    .nav-right .title-list nav a .post-date, .nav-right .title-list #local-search-result a .post-date {
+        color: #5e5e5f;
+    }
+    
+    
+    .nav-right nav a.hover, #local-search-result a.hover{
+        background-color: #e2e0e0;
+    }
+    
+    
+
+    /*列表样式*/
+    
+
+    /* 背景图样式 */
+    
+    
+
+
+    /*引用块样式*/
+    
+
+    /*文章列表背景图*/
+    
+    .nav-right:before {
+        content: ' ';
+        display: block;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0.3;
+        background: url("https://i.loli.net/2019/07/22/5d3521411f3f169375.png");
+        background-repeat: no-repeat;
+        background-position: 50% 0;
+        -ms-background-size: cover;
+        -o-background-size: cover;
+        -moz-background-size: cover;
+        -webkit-background-size: cover;
+        background-size: cover;
+    }
+    
+
+    
+</style>
+
+
+
+
+
+
+
+</html>
