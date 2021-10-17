@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>哈哈迪的小站</title>
+  <title>DataBinding的基本使用 | 哈哈迪的小站</title>
   <meta name="keywords" content="">
-  <meta name="description" content="哈哈迪的小站">
+  <meta name="description" content="DataBinding的基本使用 | 哈哈迪的小站">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="@[TOC] DataBinding的基本使用一、基本概念下面通过一个示例来说明DataBinding的作用 一个简单的示例：画面内有一个Button和一个TextView，每次点击Button，TextView数字加1，布局如下： 二、传统实现使用ViewModel来存放界面的数据，ViewModel的代码如下 public class MainViewModel extends ViewMod">
 <meta property="og:type" content="article">
@@ -58,7 +58,7 @@
 
 
 <body>
-<aside class="nav mobile">
+<aside class="nav">
     <div class="nav-left">
         <a href="/"
    class="avatar_target">
@@ -326,12 +326,45 @@
         </div>
     </div>
 </aside>
-<div id="post" class="index">
+<div id="post">
     <div class="pjax">
-        <article class="index">
-            <div class="toc-ref">
+        <article id="post-DataBinding的基本使用" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%85%B3%E4%BA%8E%E6%9C%AC%E7%AB%99"><span class="toc-text">关于本站</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8D%9A%E5%AE%A2%E5%B9%B3%E5%8F%B0"><span class="toc-text">博客平台</span></a></li></ol>
+        <h1 class="article-title">DataBinding的基本使用</h1>
+    
+    <div class="article-meta">
+        
+        
+        
+        
+    </div>
+    <div class="article-meta">
+        
+            发布时间 : <time class="date" title='最后更新: 2021-10-17 19:51:52'>2021-10-17 19:49</time>
+        
+    </div>
+    <div class="article-meta">
+        
+        <span>字数:1.5k</span>
+        
+        
+        <span id="busuanzi_container_page_pv">
+            阅读 :<span id="busuanzi_value_page_pv">
+                <span class="count-comment">
+                    <span class="spinner">
+                      <div class="cube1"></div>
+                      <div class="cube2"></div>
+                    </span>
+                </span>
+            </span>
+        </span>
+        
+        
+    </div>
+    
+    <div class="toc-ref">
+    
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#DataBinding%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8"><span class="toc-text">DataBinding的基本使用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="toc-text">一、基本概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E4%BC%A0%E7%BB%9F%E5%AE%9E%E7%8E%B0"><span class="toc-text">二、传统实现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E4%BD%BF%E7%94%A8dataBinding%E4%BC%98%E5%8C%96"><span class="toc-text">三、使用dataBinding优化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-text">总结</span></a></li></ol></li></ol></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -344,14 +377,206 @@
     }
 </style>
 </div>
-            <h1 id="关于本站"><a href="#关于本站" class="headerlink" title="关于本站"></a>关于本站</h1><p>本站用于记录自己的学习历程，虽菜鸟一只，但也一直在努力着，能力有限，还望多指教</p>
-<p>到目前为止已经写了<code class="article_number"></code>篇文章， 共<code class="site_word_count"></code>字。</p>
-<p>本站访问人数：<code class="site_uv"></code>人次 ， 访问量：<code class="site_pv"></code>次</p>
-<h1 id="博客平台"><a href="#博客平台" class="headerlink" title="博客平台"></a>博客平台</h1><p>博客通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> 生成，部署在 <a target="_blank" rel="noopener" href="https://pages.github.com/">GitHub Pages</a>主题 <a target="_blank" rel="noopener" href="https://github.com/yelog/hexo-theme-3-hexo">3-hexo</a> 感谢作者的开源</p>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>@<div class='inner-toc'><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#DataBinding%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8"><span class="toc-text">DataBinding的基本使用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="toc-text">一、基本概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E4%BC%A0%E7%BB%9F%E5%AE%9E%E7%8E%B0"><span class="toc-text">二、传统实现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E4%BD%BF%E7%94%A8dataBinding%E4%BC%98%E5%8C%96"><span class="toc-text">三、使用dataBinding优化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-text">总结</span></a></li></ol></li></ol></li></ol></div></p>
+<h1 id="DataBinding的基本使用"><a href="#DataBinding的基本使用" class="headerlink" title="DataBinding的基本使用"></a>DataBinding的基本使用</h1><h2 id="一、基本概念"><a href="#一、基本概念" class="headerlink" title="一、基本概念"></a>一、基本概念</h2><p>下面通过一个示例来说明DataBinding的作用</p>
+<p>一个简单的示例：画面内有一个Button和一个TextView，每次点击Button，TextView数字加1，布局如下：<br><img src="https://img-blog.csdnimg.cn/45f179a0902d44dd8d8285b844a076fd.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBAaGlkaV93aWtp,size_9,color_FFFFFF,t_70,g_se,x_16#pic_center" alt="在这里插入图片描述"></p>
+<h2 id="二、传统实现"><a href="#二、传统实现" class="headerlink" title="二、传统实现"></a>二、传统实现</h2><p>使用ViewModel来存放界面的数据，ViewModel的代码如下</p>
+<pre><code class="java">public class MainViewModel extends ViewModel &#123;
+    private MutableLiveData&lt;Integer&gt; count;
 
-        </article>
-        
-        
+    public MutableLiveData&lt;Integer&gt; getCount() &#123;
+        if (count == null) &#123;
+            count = new MutableLiveData&lt;&gt;();
+            count.setValue(0);
+        &#125;
+        return count;
+    &#125;
+
+    public void addCount() &#123;
+        count.setValue(count.getValue() + 1);
+    &#125;
+&#125;
+</code></pre>
+<p>在MainActivity中，每次点击Button，count值加1，同时需要更新TextView的值，代码如下：</p>
+<pre><code class="java">public class MainActivity extends AppCompatActivity &#123;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) &#123;
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        Button button = findViewById(R.id.button);
+        TextView view = findViewById(R.id.textView);
+        MainViewModel model = new ViewModelProvider(this).get(MainViewModel.class);
+        model.getCount().observe(this, new Observer&lt;Integer&gt;() &#123;
+            @Override
+            public void onChanged(Integer integer) &#123;
+                view.setText(String.valueOf(integer));
+            &#125;
+        &#125;);
+        button.setOnClickListener(new View.OnClickListener() &#123;
+            @Override
+            public void onClick(View v) &#123;
+                model.addCount();
+            &#125;
+        &#125;);
+    &#125;
+&#125;
+</code></pre>
+<p>从上面的代码中我们可以发现，MainActivity的代码非常的不方便维护，如界面内有多少个控件，我们就需要使用多少次<code>findViewById()</code>去创建控件，而且还要去设置相应的监听，下面我们使用databinding进行优化</p>
+<h2 id="三、使用dataBinding优化"><a href="#三、使用dataBinding优化" class="headerlink" title="三、使用dataBinding优化"></a>三、使用dataBinding优化</h2><p>首先，将布局文件转换为databinding布局，</p>
+<pre><code class="xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;androidx.constraintlayout.widget.ConstraintLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
+    xmlns:app=&quot;http://schemas.android.com/apk/res-auto&quot;
+    xmlns:tools=&quot;http://schemas.android.com/tools&quot;
+    android:layout_width=&quot;match_parent&quot;
+    android:layout_height=&quot;match_parent&quot;
+    tools:context=&quot;.MainActivity&quot;&gt;
+
+    &lt;Button
+        android:id=&quot;@+id/button&quot;
+        android:layout_width=&quot;wrap_content&quot;
+        android:layout_height=&quot;wrap_content&quot;
+        android:layout_weight=&quot;1&quot;
+        android:text=&quot;Button&quot;
+        app:layout_constraintBottom_toBottomOf=&quot;parent&quot;
+        app:layout_constraintEnd_toEndOf=&quot;parent&quot;
+        app:layout_constraintStart_toStartOf=&quot;parent&quot;
+        app:layout_constraintTop_toTopOf=&quot;parent&quot; /&gt;
+
+    &lt;TextView
+        android:id=&quot;@+id/textView&quot;
+        android:layout_width=&quot;wrap_content&quot;
+        android:layout_height=&quot;wrap_content&quot;
+        android:text=&quot;0&quot;
+        android:textSize=&quot;24sp&quot;
+        app:layout_constraintBottom_toBottomOf=&quot;parent&quot;
+        app:layout_constraintEnd_toEndOf=&quot;parent&quot;
+        app:layout_constraintStart_toStartOf=&quot;parent&quot;
+        app:layout_constraintTop_toTopOf=&quot;parent&quot;
+        app:layout_constraintVertical_bias=&quot;0.374&quot; /&gt;
+
+&lt;/androidx.constraintlayout.widget.ConstraintLayout&gt;
+</code></pre>
+<p>在转换成databinding布局之前，首先需要在gradle中设置了如下属性</p>
+<pre><code class="xaml">dataBinding &#123;
+    enabled = true
+&#125;
+</code></pre>
+<p>转换成databinding布局之后代码如下</p>
+<pre><code class="xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;layout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
+    xmlns:app=&quot;http://schemas.android.com/apk/res-auto&quot;
+    xmlns:tools=&quot;http://schemas.android.com/tools&quot;&gt;
+
+    &lt;data&gt;
+
+    &lt;/data&gt;
+
+    &lt;androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width=&quot;match_parent&quot;
+        android:layout_height=&quot;match_parent&quot;
+        tools:context=&quot;.MainActivity&quot;&gt;
+
+        &lt;Button
+            android:id=&quot;@+id/button&quot;
+            android:layout_width=&quot;wrap_content&quot;
+            android:layout_height=&quot;wrap_content&quot;
+            android:layout_weight=&quot;1&quot;
+            android:text=&quot;Button&quot;
+            app:layout_constraintBottom_toBottomOf=&quot;parent&quot;
+            app:layout_constraintEnd_toEndOf=&quot;parent&quot;
+            app:layout_constraintStart_toStartOf=&quot;parent&quot;
+            app:layout_constraintTop_toTopOf=&quot;parent&quot; /&gt;
+
+        &lt;TextView
+            android:id=&quot;@+id/textView&quot;
+            android:layout_width=&quot;wrap_content&quot;
+            android:layout_height=&quot;wrap_content&quot;
+            android:text=&quot;0&quot;
+            android:textSize=&quot;24sp&quot;
+            app:layout_constraintBottom_toBottomOf=&quot;parent&quot;
+            app:layout_constraintEnd_toEndOf=&quot;parent&quot;
+            app:layout_constraintStart_toStartOf=&quot;parent&quot;
+            app:layout_constraintTop_toTopOf=&quot;parent&quot;
+            app:layout_constraintVertical_bias=&quot;0.374&quot; /&gt;
+
+    &lt;/androidx.constraintlayout.widget.ConstraintLayout&gt;
+&lt;/layout&gt;
+</code></pre>
+<p>以前的布局被layout标签包含，同时在layout标签内增加data标签用于声明MainActivity画面内的数据</p>
+<pre><code class="xml">&lt;data&gt;
+
+&lt;/data&gt;
+</code></pre>
+<p>在进行转换后，整个布局文件会被IDE在后台自动解析成一个类文件，其中类文件的名称为<code>布局文件的名称+Binding</code>，布局文件名称需要去掉下划线，同时采用驼峰命名法即每个单词的首字母大写，以<code>activity_main.xml</code>为例，则生成的类文件为<code>ActivityMainBinding.java</code>，在MainActivity中我们应该这样使</p>
+<pre><code class="java">public class MainActivity extends AppCompatActivity &#123;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) &#123;
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        MainViewModel model = new ViewModelProvider(this).get(MainViewModel.class);
+
+        ActivityMainBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+
+        model.getCount().observe(this, new Observer&lt;Integer&gt;() &#123;
+            @Override
+            public void onChanged(Integer integer) &#123;
+                binding.textView.setText(String.valueOf(integer));
+            &#125;
+        &#125;);
+        binding.button.setOnClickListener(new View.OnClickListener() &#123;
+            @Override
+            public void onClick(View v) &#123;
+                model.addCount();
+            &#125;
+        &#125;);
+    &#125;
+&#125;
+</code></pre>
+<p>改变如下：</p>
+<ul>
+<li>TextView和Button不再通过<code>findViewById()</code>的方式，而是通过DataBindingUtil创建一个ActivityMainBinding对象，通过此对象获取这两个View</li>
+<li>MainActivity内的所有用到TextView和Button的地方都换成从ActivityMainBinding中获取</li>
+</ul>
+<p>以上的改变似乎并没有多少优化的空间，别急，还记得上文中提到的布局文件中增加的<code>data</code>标签么？，我们可以在data标签内进行如下的声明</p>
+<pre><code class="xml">&lt;data&gt;
+    &lt;variable
+          name=&quot;modelData&quot;
+          type=&quot;com.iauto.mvvm.MainViewModel&quot; /&gt;
+&lt;/data&gt;
+</code></pre>
+<p>在data标签内，我们声明了一个变量<code>modelData</code>，类型为<code>com.iauto.mvvm.MainViewModel</code>，接着我们把TextView要显示的内容与modelData中的count进行绑定</p>
+<pre><code class="xml">&lt;TextView    ......    android:text=&quot;@&#123;String.valueOf(modelData.count)&#125;&quot;    ....../&gt;
+</code></pre>
+<p>这里说明一下：使用<code>@&#123;&#125;</code>表示将TextView的text值与modelData的count进行单项绑定，即当modelData.count值发生变化时，会通知TextView进行刷新，同时还需要把modelData.count转成String类型，同理，也可以为Button的<code>onClick()</code>方法绑定到modelData的<code>addCount()</code>方法上</p>
+<pre><code class="xml">&lt;Button    ......    android:onClick=&quot;@&#123;()-&gt;modelData.addCount()&#125;&quot;    ....../&gt;
+</code></pre>
+<p>表示当Button的<code>onClick()</code>方法被回调时，<code>onClick()</code>方法中会调用<code>modelData.addCount()</code>，在对布局文件进行了以上的优化后，我们就可以继续改造MainActivity的处理</p>
+<pre><code class="java">public class MainActivity extends AppCompatActivity &#123;    @Override    protected void onCreate(Bundle savedInstanceState) &#123;        super.onCreate(savedInstanceState);        setContentView(R.layout.activity_main);        MainViewModel model = new ViewModelProvider(this).get(MainViewModel.class);        ActivityMainBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_main);        binding.setModelData(model);        binding.setLifecycleOwner(this);    &#125;&#125;
+</code></pre>
+<p>以前设置的各种监听就不需要了，因为在布局文件中，已经把控件和数据进行了单向的绑定，由于在布局中声明了类型为<code>com.iauto.mvvm.MainViewModel</code>的modelData变量，在实例化之后就需要调用<code>setModelData()</code>给该变量赋值</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>经过以上的优化，MainActivity的逻辑是不是少了很多，就达到了便于维护的目的，以上我们只使用了单向绑定，其实也可以进行双向绑定，使用<code>@=&#123;&#125;</code>即可进行双向绑定，对于大多数控件，android已经为我们实现了单向和双向的绑定，但对于自定义的View需要我们自己实现，后面的文章会继续分析</p>
+
+      
+       <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 liu_haidy@163.com </span>
+    </div>
+</article>
+
+
+
+
+
+
+
+    
+
+
+
+
     </div>
     <div class="copyright">
         <p class="footer-entry">
@@ -360,11 +585,11 @@
 <p class="footer-entry">Built with <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/yelog/hexo-theme-3-hexo" target="_blank">3-hexo</a> theme</p>
 
     </div>
-</div>
-<div class="full-toc">
-    <button class="full" data-title="切换全屏 快捷键 s"><span class="min "></span></button>
+    <div class="full-toc">
+        <button class="full" data-title="切换全屏 快捷键 s"><span class="min "></span></button>
 <a class="" id="rocket" ></a>
 
+    </div>
 </div>
 
 </body>
