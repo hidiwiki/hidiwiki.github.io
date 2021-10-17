@@ -15,7 +15,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/45f179a0902d44dd8d8285b844a076fd.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBAaGlkaV93aWtp,size_9,color_FFFFFF,t_70,g_se,x_16#pic_center">
 <meta property="article:published_time" content="2021-10-17T11:49:52.000Z">
-<meta property="article:modified_time" content="2021-10-17T12:03:28.540Z">
+<meta property="article:modified_time" content="2021-10-17T12:29:09.471Z">
 <meta property="article:author" content="Liu Haidi">
 <meta property="article:tag" content="MVVM">
 <meta property="article:tag" content="DataBinding">
@@ -390,7 +390,7 @@
     </div>
     <div class="article-meta">
         
-            发布时间 : <time class="date" title='最后更新: 2021-10-17 20:03:28'>2021-10-17 19:49</time>
+            发布时间 : <time class="date" title='最后更新: 2021-10-17 20:29:09'>2021-10-17 19:49</time>
         
     </div>
     <div class="article-meta">
@@ -603,7 +603,11 @@
 <pre><code class="xml">&lt;TextView    ......    android:text=&quot;@&#123;String.valueOf(modelData.count)&#125;&quot;    ....../&gt;
 </code></pre>
 <p>这里说明一下：使用<code>@&#123;&#125;</code>表示将TextView的text值与modelData的count进行单项绑定，即当modelData.count值发生变化时，会通知TextView进行刷新，同时还需要把modelData.count转成String类型，同理，也可以为Button的<code>onClick()</code>方法绑定到modelData的<code>addCount()</code>方法上</p>
-<pre><code class="xml">&lt;Button    ......    android:onClick=&quot;@&#123;()-&gt;modelData.addCount()&#125;&quot;    ....../&gt;
+<pre><code class="xml">    &lt;Button
+        ......
+        android:onClick=&quot;@&#123;()-&gt;modelData.addCount()&#125;&quot;
+        ......
+    /&gt;
 </code></pre>
 <p>表示当Button的<code>onClick()</code>方法被回调时，<code>onClick()</code>方法中会调用<code>modelData.addCount()</code>，在对布局文件进行了以上的优化后，我们就可以继续改造MainActivity的处理</p>
 <pre><code class="java">public class MainActivity extends AppCompatActivity &#123;    @Override    protected void onCreate(Bundle savedInstanceState) &#123;        super.onCreate(savedInstanceState);        setContentView(R.layout.activity_main);        MainViewModel model = new ViewModelProvider(this).get(MainViewModel.class);        ActivityMainBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_main);        binding.setModelData(model);        binding.setLifecycleOwner(this);    &#125;&#125;

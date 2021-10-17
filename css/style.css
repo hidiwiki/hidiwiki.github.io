@@ -1480,47 +1480,57 @@
   background-color: #fff5f5;
   color: #ff502c;
   font-size: 0.87em;
+*
   padding: 0.065em 0.4em;
+*
 }
-#post .pjax article pre.mermaid {
+*
+*
+#post .pjax pre.mermaid {
   border: none;
   text-align: center;
 }
-#post .pjax article pre {
+#post .pjax pre {
   position: relative;
 }
-#post .pjax article pre .code-embed {
+#post .pjax pre .code-embed {
   position: absolute;
   font-size: 12px;
   top: 3px;
   right: 15px;
   color: rgba(140,140,140,0.8);
 }
-#post .pjax article pre .code-embed-copy {
+#post .pjax pre .code-embed-copy {
   cursor: pointer;
   padding-left: 10px;
 }
-#post .pjax article pre > code {
-  font-size: 14px;
+#post .pjax pre > ul {
+  width: 40px;
+  font-size: 16px;
+  margin-top: 11px;
+}
+#post .pjax pre > code {
+  font-size: 16px;
   border-radius: 3px;
+  margin-left: 40px;
   padding: 18px 15px 12px;
   font-family: Menlo, Monaco, Consolas, Courier New, monospace;
 /* 滚动条 */
 }
-#post .pjax article pre > code::-webkit-scrollbar-thumb:horizontal {
+#post .pjax pre > code::-webkit-scrollbar-thumb:horizontal {
   width: 5px;
   background-color: #ccc;
   -webkit-border-radius: 6px;
 }
-#post .pjax article pre > code::-webkit-scrollbar-track-piece {
+#post .pjax pre > code::-webkit-scrollbar-track-piece {
   background-color: #fff; /*滚动条的背景颜色*/
   -webkit-border-radius: 0; /*滚动条的圆角宽度*/
 }
-#post .pjax article pre > code::-webkit-scrollbar {
+#post .pjax pre > code::-webkit-scrollbar {
   width: 10px /*滚动条的宽度*/;
   height: 8px /*滚动条的高度*/;
 }
-#post .pjax article pre > code::-webkit-scrollbar-thumb:vertical {
+#post .pjax pre > code::-webkit-scrollbar-thumb:vertical {
   height: 50px;
   background-color: #999;
   -webkit-border-radius: 4px;
@@ -1528,12 +1538,12 @@
   outline-offset: -2px;
   border: 2px solid #fff;
 }
-#post .pjax article pre > code::-webkit-scrollbar-thumb:hover {
+#post .pjax pre > code::-webkit-scrollbar-thumb:hover {
   height: 50px;
   background-color: #9f9f9f;
   -webkit-border-radius: 4px;
 }
-#post .dashang {
+.dashang {
   display: block;
   width: 56px;
   margin: auto;
@@ -1553,29 +1563,29 @@
   -ms-transition: 0.4s ease-in-out;
   transition: 0.4s ease-in-out;
 }
-#post .copyright {
+.copyright {
   margin-top: 50px;
   padding-bottom: 30px;
   line-height: 14px;
   text-align: center;
   color: #bcc1c4;
 }
-#post .copyright .miit {
+.copyright .miit {
   display: inline-block;
   padding-right: 10px;
 }
-#post .copyright .miit img {
+.copyright .miit img {
   height: 15px;
 }
-#post .copyright a {
+.copyright a {
   color: #0269c8;
   word-break: break-all;
   border-bottom: 1px solid #d1e9ff;
 }
-#post .copyright a:hover {
+.copyright a:hover {
   text-decoration: underline;
 }
-#post .article_copyright {
+.article_copyright {
   padding: 5px 30px;
   margin-bottom: 20px;
   background-color: #83b3c1;
@@ -1585,19 +1595,19 @@
   color: #444;
   font-size: 16px;
 }
-#post .article_copyright .copy-title {
+.article_copyright .copy-title {
   color: #000;
   margin-right: 10px;
 }
-#post .article_copyright>p {
+.article_copyright>p {
   margin: 0;
 }
-#post .article_copyright a {
+.article_copyright a {
   color: #595f67;
   word-break: break-all;
   font-family: sans-serif;
 }
-#post .article_copyright a:hover {
+.article_copyright a:hover {
   text-decoration: underline;
 }
 html,
