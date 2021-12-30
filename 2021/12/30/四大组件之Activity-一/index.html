@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>深入理解SystemUiVisibility(一) | 哈哈迪的小站</title>
-  <meta name="keywords" content=" WMS , SystemUI ">
-  <meta name="description" content="深入理解SystemUiVisibility(一) | 哈哈迪的小站">
+  <title>四大组件之Activity(一) | 哈哈迪的小站</title>
+  <meta name="keywords" content="">
+  <meta name="description" content="四大组件之Activity(一) | 哈哈迪的小站">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta property="og:type" content="article">
 <meta property="og:title" content="四大组件之Activity(一)">
@@ -412,43 +412,24 @@
 </aside>
 <div id="post">
     <div class="pjax">
-        <article id="post-深入理解SystemUiVisibility(一)" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-四大组件之Activity-一" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">深入理解SystemUiVisibility(一)</h1>
+        <h1 class="article-title">四大组件之Activity(一)</h1>
     
     <div class="article-meta">
         
         
         
-        <span class="book">
-            <i class="iconfont icon-category"></i>
-            
-            
-            <a  data-rel="android开发">android开发</a> > 
-            
-            <a  data-rel="android开发&lt;---&gt;SystemUI">SystemUI</a>
-            
-        </span>
-        
-        
-        <span class="tag">
-            <i class="iconfont icon-tag"></i>
-            
-            <a class="color4">WMS</a>
-            
-            <a class="color4">SystemUI</a>
-            
-        </span>
         
     </div>
     <div class="article-meta">
         
-            发布时间 : <time class="date" title='最后更新: 2021-12-26 14:44:14'>2021-04-06 16:13</time>
+            发布时间 : <time class="date" title='最后更新: 2021-12-30 18:00:17'>2021-12-30 18:00</time>
         
     </div>
     <div class="article-meta">
         
-        <span>字数:1.3k</span>
+        <span>字数:0</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -467,7 +448,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3SystemUiVisibility-%E4%B8%80"><span class="toc-text">深入理解SystemUiVisibility(一)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81SystemUIVisibility%E7%9A%84%E5%88%86%E7%B1%BB"><span class="toc-text">一、SystemUIVisibility的分类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E6%B8%85%E9%99%A4SystemUI%E7%9A%84%E7%9B%B8%E5%85%B3%E5%8A%A8%E4%BD%9C"><span class="toc-text">二、清除SystemUI的相关动作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81SystemUI-Flag-%E7%9B%B8%E5%85%B3%E7%89%B9%E6%80%A7%E8%AF%A6%E8%A7%A3"><span class="toc-text">三、SystemUI Flag 相关特性详解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-SYSTEM-UI-FLAG-LOW-PROFILE"><span class="toc-text">3.1 SYSTEM_UI_FLAG_LOW_PROFILE</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-SYSTEM-UI-FLAG-HIDE-NAVIGATION"><span class="toc-text">3.2 SYSTEM_UI_FLAG_HIDE_NAVIGATION</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-SYSTEM-UI-FLAG-FULLSCREEN"><span class="toc-text">3.3 SYSTEM_UI_FLAG_FULLSCREEN</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-SYSTEM-UI-FLAG-IMMERSIVE"><span class="toc-text">3.4 SYSTEM_UI_FLAG_IMMERSIVE</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-5-SYSTEM-UI-FLAG-IMMERSIVE-STICKY"><span class="toc-text">3.5 SYSTEM_UI_FLAG_IMMERSIVE_STICKY</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-6-SYSTEM-UI-FLAG-LAYOUT-STABLE"><span class="toc-text">3.6 SYSTEM_UI_FLAG_LAYOUT_STABLE</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-7-SYSTEM-UI-FLAG-LAYOUT-HIDE-NAVIGATION"><span class="toc-text">3.7 SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-8-SYSTEM-UI-FLAG-LAYOUT-FULLSCREEN"><span class="toc-text">3.8 SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81WindowManager-%E7%9B%B8%E5%85%B3%E7%89%B9%E6%80%A7%E8%AF%A6%E8%A7%A3"><span class="toc-text">四、WindowManager 相关特性详解</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E5%B8%B8%E7%94%A8%E7%BB%84%E5%90%88"><span class="toc-text">五、常用组合</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1-%E8%AE%BE%E7%BD%AE%E5%85%A8%E5%B1%8F%E6%A8%A1%E5%BC%8F"><span class="toc-text">5.1 设置全屏模式</span></a></li></ol></li></ol></li></ol>
+        
     
 <style>
     .left-col .switch-btn,
@@ -483,142 +464,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><div class='inner-toc'><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3SystemUiVisibility-%E4%B8%80"><span class="toc-text">深入理解SystemUiVisibility(一)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81SystemUIVisibility%E7%9A%84%E5%88%86%E7%B1%BB"><span class="toc-text">一、SystemUIVisibility的分类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E6%B8%85%E9%99%A4SystemUI%E7%9A%84%E7%9B%B8%E5%85%B3%E5%8A%A8%E4%BD%9C"><span class="toc-text">二、清除SystemUI的相关动作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81SystemUI-Flag-%E7%9B%B8%E5%85%B3%E7%89%B9%E6%80%A7%E8%AF%A6%E8%A7%A3"><span class="toc-text">三、SystemUI Flag 相关特性详解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-SYSTEM-UI-FLAG-LOW-PROFILE"><span class="toc-text">3.1 SYSTEM_UI_FLAG_LOW_PROFILE</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-SYSTEM-UI-FLAG-HIDE-NAVIGATION"><span class="toc-text">3.2 SYSTEM_UI_FLAG_HIDE_NAVIGATION</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-SYSTEM-UI-FLAG-FULLSCREEN"><span class="toc-text">3.3 SYSTEM_UI_FLAG_FULLSCREEN</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-SYSTEM-UI-FLAG-IMMERSIVE"><span class="toc-text">3.4 SYSTEM_UI_FLAG_IMMERSIVE</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-5-SYSTEM-UI-FLAG-IMMERSIVE-STICKY"><span class="toc-text">3.5 SYSTEM_UI_FLAG_IMMERSIVE_STICKY</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-6-SYSTEM-UI-FLAG-LAYOUT-STABLE"><span class="toc-text">3.6 SYSTEM_UI_FLAG_LAYOUT_STABLE</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-7-SYSTEM-UI-FLAG-LAYOUT-HIDE-NAVIGATION"><span class="toc-text">3.7 SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-8-SYSTEM-UI-FLAG-LAYOUT-FULLSCREEN"><span class="toc-text">3.8 SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81WindowManager-%E7%9B%B8%E5%85%B3%E7%89%B9%E6%80%A7%E8%AF%A6%E8%A7%A3"><span class="toc-text">四、WindowManager 相关特性详解</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E5%B8%B8%E7%94%A8%E7%BB%84%E5%90%88"><span class="toc-text">五、常用组合</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1-%E8%AE%BE%E7%BD%AE%E5%85%A8%E5%B1%8F%E6%A8%A1%E5%BC%8F"><span class="toc-text">5.1 设置全屏模式</span></a></li></ol></li></ol></li></ol></div></p>
-<h1 id="深入理解SystemUiVisibility-一"><a href="#深入理解SystemUiVisibility-一" class="headerlink" title="深入理解SystemUiVisibility(一)"></a>深入理解SystemUiVisibility(一)</h1><p>SystemUiVisibility用于标记状态栏和导航栏的行为，如显示和隐藏，影响窗口的布局等，该标记由应用根据自己的需要设置给WMS，再有WMS综合考虑后通知SystemUI，依次来操作状态栏和导航栏</p>
-<hr>
-<h2 id="一、SystemUIVisibility的分类"><a href="#一、SystemUIVisibility的分类" class="headerlink" title="一、SystemUIVisibility的分类"></a>一、SystemUIVisibility的分类</h2><p>按照这些标记所产生的影响，可以将其分为三类：</p>
-<p><strong>影响状态栏与导航栏可见性的标记：</strong></p>
-<ul>
-<li>  SYSTEM_UI_FLAG_LOW_PROFILE</li>
-<li>  SYSTEM_UI_FLAG_HIDE_NAVIGATION</li>
-<li>  SYSTEM_UI_FLAG_FULLSCREEN</li>
-<li>  SYSTEM_UI_FLAG_IMMERSIVE</li>
-<li>  SYSTEM_UI_FLAG_IMMERSIVE_STICKY</li>
-</ul>
-<p><strong>影响窗口布局结果的标记：</strong></p>
-<ul>
-<li>  SYSTEM_UI_FLAG_LAYOUT_STABLE</li>
-<li>  SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION</li>
-<li>  SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN</li>
-</ul>
-<p><strong>用于禁用状态栏与导航栏的某些功能的标记：</strong></p>
-<ul>
-<li>  STATUS_BAR_DISABLE_EXPAND</li>
-<li>  STATUS_BAR_DISABLE_NOTIFICATION__ICONS</li>
-<li>  STATUS_BAR_DISABLE_NOTIFICATION__ALERTS</li>
-<li>  STATUS_BAR_DISABLE_NOTIFICATION__TICKER</li>
-<li>  STATUS_BAR_DISABLE_INFO</li>
-<li>  STATUS_BAR_DISABLE_HOME</li>
-<li>  STATUS_BAR_DISABLE_BACK</li>
-<li>  STATUS_BAR_DISABLE_CLOCK</li>
-<li>  STATUS_BAR_DISABLE_RECENT</li>
-<li>  STATUS_BAR_DISABLE_SEARCH</li>
-</ul>
-<h2 id="二、清除SystemUI的相关动作"><a href="#二、清除SystemUI的相关动作" class="headerlink" title="二、清除SystemUI的相关动作"></a>二、清除SystemUI的相关动作</h2><p>为了防止一些应用恶意将StatusBar 和 NavigationBar 一直隐藏下去，android系统定义了一些操作会打断StatusBar 和 NavigationBar的隐藏，这些操作可以分为以下几类：</p>
-<ol>
-<li> 触摸屏幕任意位置/按压任意按键</li>
-<li> 从屏幕顶部下拉状态栏/从屏幕底部下拉导航栏</li>
-<li> Window状态的变化（弹窗，输入法，跳转等）</li>
-</ol>
-<p>以上几类动作的容易触发程度从弱到强，配合SystemUI的Flag使用，防止恶意应用一直隐藏StatusBar和NavigationBar，对于第二类操作，如无特殊说明，后文在描述StatusBar 时，指的是从屏幕顶部下拉状态栏， 描述NavigationBar时，指的是从屏幕底部下拉导航栏</p>
-<h2 id="三、SystemUI-Flag-相关特性详解"><a href="#三、SystemUI-Flag-相关特性详解" class="headerlink" title="三、SystemUI Flag 相关特性详解"></a>三、SystemUI Flag 相关特性详解</h2><h3 id="3-1-SYSTEM-UI-FLAG-LOW-PROFILE"><a href="#3-1-SYSTEM-UI-FLAG-LOW-PROFILE" class="headerlink" title="3.1 SYSTEM_UI_FLAG_LOW_PROFILE"></a>3.1 SYSTEM_UI_FLAG_LOW_PROFILE</h3><p>作用：使状态栏与导航栏进入低调模式</p>
-<pre><code class="java">@Override
-protected void onResume() &#123;
-    super.onResume();
-    int systemUiFlag = getWindow().getDecorView().getSystemUiVisibility();
-    int flag = systemUiFlag | View.SYSTEM_UI_FLAG_LOW_PROFILE;
-    getWindow().getDecorView().setSystemUiVisibility(flag);
-&#125;
-</code></pre>
-<p>低调模式设置后status bar上的一些图标会不显示，navigation bar没有变化，效果见下图：</p>
-<p><img src="/img/pic/systemUI/low_profile.png" alt="SYSTEM_UI_FLAG_LOW_PROFILE"></p>
-<h3 id="3-2-SYSTEM-UI-FLAG-HIDE-NAVIGATION"><a href="#3-2-SYSTEM-UI-FLAG-HIDE-NAVIGATION" class="headerlink" title="3.2 SYSTEM_UI_FLAG_HIDE_NAVIGATION"></a>3.2 SYSTEM_UI_FLAG_HIDE_NAVIGATION</h3><p>作用：隐藏导航栏，窗口在布局时的ParentFrame,ContentFrame，以及DisplayFrame时，会延伸至整个屏幕</p>
-<pre><code class="java">@Override
-protected void onResume() &#123;
-    super.onResume();
-    int systemUiFlag = getWindow().getDecorView().getSystemUiVisibility();
-    int flag = systemUiFlag | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
-    getWindow().getDecorView().setSystemUiVisibility(flag);
-&#125;
-</code></pre>
-<p>设置该Flag后，用户与系统的任何交互（第一、二、三类操作）都会导致系统将其清除，进而导航栏会重新显示，设置后的效果如下：</p>
-<p><img src="/img/pic/systemUI/navigation_bar.png" alt="SYSTEM_UI_FLAG_HIDE_NAVIGATION"></p>
-<h3 id="3-3-SYSTEM-UI-FLAG-FULLSCREEN"><a href="#3-3-SYSTEM-UI-FLAG-FULLSCREEN" class="headerlink" title="3.3 SYSTEM_UI_FLAG_FULLSCREEN"></a>3.3 SYSTEM_UI_FLAG_FULLSCREEN</h3><p>作用：隐藏StatusBar,从定义来看，是进入全屏模式，但是该Flag只能隐藏StatusBar，并不能隐藏NavigationBar</p>
-<pre><code class="java">@Override
-protected void onResume() &#123;
-    super.onResume();
-    int systemUiFlag = getWindow().getDecorView().getSystemUiVisibility();
-    int flag = systemUiFlag | View.SYSTEM_UI_FLAG_FULLSCREEN;
-    getWindow().getDecorView().setSystemUiVisibility(flag);
-&#125;
-</code></pre>
-<p>设置该Flag后，用户的交互（跳转到其他应用,下拉StatusBar，弹出键盘等,也即是第二章定义的第二、三类操作）会打断StatusBar的隐藏，设置后的效果如下：</p>
-<p><img src="/img/pic/systemUI/status_bar.png" alt="SYSTEM_UI_FLAG_FULLSCREEN"></p>
-<h3 id="3-4-SYSTEM-UI-FLAG-IMMERSIVE"><a href="#3-4-SYSTEM-UI-FLAG-IMMERSIVE" class="headerlink" title="3.4 SYSTEM_UI_FLAG_IMMERSIVE"></a>3.4 SYSTEM_UI_FLAG_IMMERSIVE</h3><p>作用:提高用户操作的等级，避免某些用户交互造成系统自动清除全屏状态，</p>
-<p>该Flag只配合SYSTEM_UI_FLAG_HIDE_NAVIGATION使用，对StatusBar的状态不受影响</p>
-<p>设置该Flag后，只有第二、三类操作才会导致系统清除SYSTEM_UI_FLAG_HIDE_NAVIGATION</p>
-<h3 id="3-5-SYSTEM-UI-FLAG-IMMERSIVE-STICKY"><a href="#3-5-SYSTEM-UI-FLAG-IMMERSIVE-STICKY" class="headerlink" title="3.5 SYSTEM_UI_FLAG_IMMERSIVE_STICKY"></a>3.5 SYSTEM_UI_FLAG_IMMERSIVE_STICKY</h3><p>作用：（1）提高用户操作的等级，（2）隐藏状态以半透明状态显示，延迟一段时间后会被重新隐藏，（3）NavigationBar显示后，会遮挡当前的画面，当前画面不会重新绘制</p>
-<pre><code class="java">@Override
-protected void onResume() &#123;
-    super.onResume();
-    int systemUiFlag = getWindow().getDecorView().getSystemUiVisibility();
-    int flag = systemUiFlag 
-        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-        | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
-    getWindow().getDecorView().setSystemUiVisibility(flag);
-&#125;
-</code></pre>
-<p>此Flag只有配合<em>SYSTEM_UI_FLAG_FULLSCREEN</em>和<em>SYSTEM_UI_FLAG_HIDE_NAVIGATION</em>使用时才会起作用。</p>
-<p>设置效果如下：</p>
-<p><img src="/img/pic/systemUI/sticky.png" alt="SYSTEM_UI_FLAG_IMMERSIVE_STICKY"></p>
-<h3 id="3-6-SYSTEM-UI-FLAG-LAYOUT-STABLE"><a href="#3-6-SYSTEM-UI-FLAG-LAYOUT-STABLE" class="headerlink" title="3.6 SYSTEM_UI_FLAG_LAYOUT_STABLE"></a>3.6 SYSTEM_UI_FLAG_LAYOUT_STABLE</h3><p>作用：该标记不会对状态栏和导航栏的可见性产生影响，会对声明这个Flag的窗口的布局产生影响</p>
-<p>不设置该属性，StatusBar和NavigationBar显示和隐藏时，会使得ContentFrame不断变化，进而使得控件所绘制的内容上下跳动，用户的实际感觉是屏幕一闪</p>
-<p>声明该属性后，状态栏在显示和隐藏时不会对窗口的绘制产生影响，看起来非常的平滑</p>
-<p>同时设置了SYSTEM_UI_FLAG_FULLSCREEN | SYSTEM_UI_FLAG_LAYOUT_STABLE时，会同时隐藏Actionbar和StatusBar，StatusBar所占空间不会隐藏，只会变成空白。同时View所在window的显示范围也不会伸展到StatusBar所占空间</p>
-<pre><code class="java">@Override
-protected void onResume() &#123;
-    super.onResume();
-    int systemUiFlag = getWindow().getDecorView().getSystemUiVisibility();
-    int flag = systemUiFlag
-        | View.SYSTEM_UI_FLAG_FULLSCREEN
-        | View.SYSTEM_UI_FLAG_IMMERSIVE
-        | View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
-    getWindow().getDecorView().setSystemUiVisibility(flag);
-&#125;
-</code></pre>
-<p>设置后的效果如下，Navigationbar同理</p>
-<p><img src="/img/pic/systemUI/stable.png" alt="SYSTEM_UI_FLAG_LAYOUT_STABLE"></p>
-<h3 id="3-7-SYSTEM-UI-FLAG-LAYOUT-HIDE-NAVIGATION"><a href="#3-7-SYSTEM-UI-FLAG-LAYOUT-HIDE-NAVIGATION" class="headerlink" title="3.7 SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION"></a>3.7 SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION</h3><p>作用：在不隐藏导航栏的情况下，设置该属性的窗口的显示内容将延伸到NavigationBar底部，同时窗口的内容也因为NavigationBar而覆盖</p>
-<p>在使用<em>SOFT_INPUT_ADJUST_RESIZE</em>，<br> 同时View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN或View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION时，当键盘弹出时，只会fitSystemWindow=true的view所占区域会被resize，其他view将会被软键盘覆盖。</p>
-<h3 id="3-8-SYSTEM-UI-FLAG-LAYOUT-FULLSCREEN"><a href="#3-8-SYSTEM-UI-FLAG-LAYOUT-FULLSCREEN" class="headerlink" title="3.8 SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN"></a>3.8 SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN</h3><p>与SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION作用相同，只不过该属性作用与StatusBar</p>
-<hr>
-<h2 id="四、WindowManager-相关特性详解"><a href="#四、WindowManager-相关特性详解" class="headerlink" title="四、WindowManager 相关特性详解"></a>四、WindowManager 相关特性详解</h2><p>与StatusBar 和 NavigationBar 状态相关的属性，除了在View中定义的以上属性，系统在WindowManager也定义了其他的都属性，用于控制两个bar的状态</p>
-<ul>
-<li>  WindowMananger.FLAG_TRANSLUCENT_STATUS</li>
-<li>  WindowMananger.FLAG_FULLSCREEN</li>
-<li>  WindowMananger.FLAG_TRANSLUCENT_NAVIGATION</li>
-<li>  WindowMananger.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS</li>
-</ul>
-<hr>
-<h2 id="五、常用组合"><a href="#五、常用组合" class="headerlink" title="五、常用组合"></a>五、常用组合</h2><p>一般设置SystemUIVisibility的时机有两个：</p>
-<blockquote>
-<p>  protected void onResume();</p>
-<p>  public void onWindowFocusChanged(boolean hasFocus)</p>
-</blockquote>
-<h3 id="5-1-设置全屏模式"><a href="#5-1-设置全屏模式" class="headerlink" title="5.1 设置全屏模式"></a>5.1 设置全屏模式</h3><pre><code class="java">@Override
-protected void onResume() &#123;
-    super.onResume();
-    int systemUiFlag = getWindow().getDecorView().getSystemUiVisibility();
-    int flag = systemUiFlag
-        | View.SYSTEM_UI_FLAG_FULLSCREEN
-        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN;
-        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-        | View.SYSTEM_UI_FLAG_LAYOUT_STABL;
-    getWindow().getDecorView().setSystemUiVisibility(flag);
-&#125;
-</code></pre>
-
+        
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 liu_haidy@163.com </span>
     </div>
@@ -627,12 +473,12 @@ protected void onResume() &#123;
 
 
 <div class="article_copyright">
-    <p><span class="copy-title">文章标题:</span>深入理解SystemUiVisibility(一)</p>
-    <p><span class="copy-title">字数:</span><span class="post-count">1.3k</span></p>
+    <p><span class="copy-title">文章标题:</span>四大组件之Activity(一)</p>
+    <p><span class="copy-title">字数:</span><span class="post-count">0</span></p>
     <p><span class="copy-title">本文作者:</span><a  title="Liu Haidi">Liu Haidi</a></p>
-    <p><span class="copy-title">发布时间:</span>2021-04-06, 16:13:47</p>
-    <p><span class="copy-title">最后更新:</span>2021-12-26, 14:44:14</p>
-    <span class="copy-title">原始链接:</span><a class="post-url" href="/2021/04/06/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3SystemUiVisibility(%E4%B8%80)/" title="深入理解SystemUiVisibility(一)">http://hidiwiki.github.io/2021/04/06/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3SystemUiVisibility(%E4%B8%80)/</a>
+    <p><span class="copy-title">发布时间:</span>2021-12-30, 18:00:17</p>
+    <p><span class="copy-title">最后更新:</span>2021-12-30, 18:00:17</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2021/12/30/%E5%9B%9B%E5%A4%A7%E7%BB%84%E4%BB%B6%E4%B9%8BActivity-%E4%B8%80/" title="四大组件之Activity(一)">http://hidiwiki.github.io/2021/12/30/%E5%9B%9B%E5%A4%A7%E7%BB%84%E4%BB%B6%E4%B9%8BActivity-%E4%B8%80/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">&#34;署名-非商用-相同方式共享 4.0&#34;</a> 转载请保留原文链接及作者。
     </p>
