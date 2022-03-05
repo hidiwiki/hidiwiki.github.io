@@ -928,7 +928,7 @@
 .nav-right .title-list nav #no-item-tips,
 .nav-right .title-list #local-search-result #no-item-tips {
   display: none;
-  height: 32px;
+  height: 42px;
   line-height: 1.5;
   padding: 15px;
 }
