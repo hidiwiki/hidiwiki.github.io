@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>哈哈迪的小站</title>
-  <meta name="keywords" content="">
-  <meta name="description" content="哈哈迪的小站">
+  <title>Android Log子系统(一) | 哈哈迪的小站</title>
+  <meta name="keywords" content=" Log ">
+  <meta name="description" content="Android Log子系统(一) | 哈哈迪的小站">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="一、Log系统框架Log系统框架如下图所示  android 5.0以前，Log系统的缓冲区存在于内核空间中，之后上移至logd进程中，存在于用户空间，其他进程通过liblog库与logd进程进行socket通信，以此将该进程内的log信息写入logd的缓存中，或者从logd中读取log信息. 常用Log等级有以下5个级别   （1）V  ：Verbose表示啰嗦，对应的log等级为VERVOSE">
 <meta property="og:type" content="article">
@@ -59,7 +59,7 @@
 
 
 <body>
-<aside class="nav mobile">
+<aside class="nav">
     <div class="nav-left">
         <a href="/"
    class="avatar_target">
@@ -427,12 +427,52 @@
         </div>
     </div>
 </aside>
-<div id="post" class="index">
+<div id="post">
     <div class="pjax">
-        <article class="index">
-            <div class="toc-ref">
+        <article id="post-Android-Log子系统-一" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%85%B3%E4%BA%8E%E6%9C%AC%E7%AB%99"><span class="toc-text">关于本站</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BD%91%E7%AB%99%E5%9C%B0%E5%9B%BE"><span class="toc-text">网站地图</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8D%9A%E5%AE%A2%E5%B9%B3%E5%8F%B0"><span class="toc-text">博客平台</span></a></li></ol>
+        <h1 class="article-title">Android Log子系统(一)</h1>
+    
+    <div class="article-meta">
+        
+        
+        
+        
+        <span class="tag">
+            <i class="iconfont icon-tag"></i>
+            
+            <a class="color4">Log</a>
+            
+        </span>
+        
+    </div>
+    <div class="article-meta">
+        
+            发布时间 : <time class="date" title='最后更新: 2022-03-05 18:19:28'>2022-03-05 18:18</time>
+        
+    </div>
+    <div class="article-meta">
+        
+        <span>字数:1.9k</span>
+        
+        
+        <span id="busuanzi_container_page_pv">
+            阅读 :<span id="busuanzi_value_page_pv">
+                <span class="count-comment">
+                    <span class="spinner">
+                      <div class="cube1"></div>
+                      <div class="cube2"></div>
+                    </span>
+                </span>
+            </span>
+        </span>
+        
+        
+    </div>
+    
+    <div class="toc-ref">
+    
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81Log%E7%B3%BB%E7%BB%9F%E6%A1%86%E6%9E%B6"><span class="toc-text">一、Log系统框架</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%86%85%E6%A0%B8Log%E4%BF%A1%E6%81%AF"><span class="toc-text">二、内核Log信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81Log%E5%A5%97%E6%8E%A5%E5%AD%97"><span class="toc-text">三、Log套接字</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81Log%E7%BC%93%E5%86%B2%E5%8C%BA"><span class="toc-text">四、Log缓冲区</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81logcat-%E5%91%BD%E4%BB%A4%E4%BD%BF%E7%94%A8"><span class="toc-text">五、logcat 命令使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81events%E7%BC%93%E5%86%B2%E5%8C%BAlog%E6%9F%A5%E7%9C%8B"><span class="toc-text">六、events缓冲区log查看</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81Logwrapper%E5%91%BD%E4%BB%A4"><span class="toc-text">七、Logwrapper命令</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -445,15 +485,196 @@
     }
 </style>
 </div>
-            <h1 id="关于本站"><a href="#关于本站" class="headerlink" title="关于本站"></a>关于本站</h1><p>本站用于记录自己的学习历程，是自学编程以来个人知识体系的大汇总， 旨在提升自己，方便他人，由于个人能力有限，文章中难免出现错误，还请游客自行甄别 </p>
-<p>到目前为止已经写了<code class="article_number"></code>篇文章， 共<code class="site_word_count"></code>字。</p>
-<p>本站访问人数：<code class="site_uv"></code>人次 ， 访问量：<code class="site_pv"></code>次</p>
-<h1 id="网站地图"><a href="#网站地图" class="headerlink" title="网站地图"></a>网站地图</h1><p>网站内容持续更新中，敬请期待！</p>
-<h1 id="博客平台"><a href="#博客平台" class="headerlink" title="博客平台"></a>博客平台</h1><p>博客通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> 生成，部署在 <a target="_blank" rel="noopener" href="https://pages.github.com/">GitHub Pages</a>主题 <a target="_blank" rel="noopener" href="https://github.com/yelog/hexo-theme-3-hexo">3-hexo</a> 感谢作者的开源</p>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="一、Log系统框架"><a href="#一、Log系统框架" class="headerlink" title="一、Log系统框架"></a>一、Log系统框架</h2><p>Log系统框架如下图所示</p>
+<p><img src="https://raw.githubusercontent.com/hidiwiki/picgo/main/pic/database/androidLog%E6%A1%86%E6%9E%B6.jpg"></p>
+<p>android 5.0以前，Log系统的缓冲区存在于内核空间中，之后上移至logd进程中，存在于用户空间，其他进程通过liblog库与logd进程进行socket通信，以此将该进程内的log信息写入logd的缓存中，或者从logd中读取log信息.</p>
+<p>常用Log等级有以下5个级别</p>
+<p>  （1）V  ：Verbose表示啰嗦，对应的log等级为VERVOSE。采用该等级的log，任何消息都会输出。</p>
+<p>  （2）D ：Debugb表示调试，对应的log等级为DEBUG。采用该等级的log，除了VERBOSE级别的log外，剩余的4个等级的log都会被输出。</p>
+<p>  （3）I   :  information，为一般提示性的消息，对应的log等级为INFO。采用该等级的log，不会输出VERBOSE和DEBUG信息，只会输出剩余3个等级的信息。</p>
+<p>  （4）W：warning警告信息，一般用于系统提示开发者需要优化android代码等场景，对应的等级为WARN。该级别log，只会输出WARN和ERROR的信息。</p>
+<p>  （5）E : error错误信息，一般用于输出异常和报错信息。该级别的log，只会输出该级别信息。系统在输出crassh等致命信息的时候，都会采用该级别的log。</p>
+<p>另外还有两种不常用：</p>
+<p>（6）F：Fatal，致命错误</p>
+<p>（7）S：Silent（suppress all output），静默，压制所有输出</p>
+<h2 id="二、内核Log信息"><a href="#二、内核Log信息" class="headerlink" title="二、内核Log信息"></a>二、内核Log信息</h2><p>内核的log由内核产生，一般比较重要的信息是启动信息，查看启动信息可以通过<code>dmesg</code>命令进行查看，dmesg 打印内核启动过程的所有信息，如下</p>
+<pre><code class="bash">130|generic_x86_64:/ # dmesg |tail 
+[15017.195157] healthd: battery l=100 v=5000 t=25.0 h=2 st=4 c=900000 fc=300000 cc=10 chg=
+[15617.195174] healthd: battery l=100 v=5000 t=25.0 h=2 st=4 c=900000 fc=300000 cc=10 chg=
+[16217.195146] healthd: battery l=100 v=5000 t=25.0 h=2 st=4 c=900000 fc=300000 cc=10 chg=
+[16817.195140] healthd: battery l=100 v=5000 t=25.0 h=2 st=4 c=900000 fc=300000 cc=10 chg=
+[17417.195397] healthd: battery l=100 v=5000 t=25.0 h=2 st=4 c=900000 fc=300000 cc=10 chg=
+[18017.195150] healthd: battery l=100 v=5000 t=25.0 h=2 st=4 c=900000 fc=300000 cc=10 chg=
+[18617.195154] healthd: battery l=100 v=5000 t=25.0 h=2 st=4 c=900000 fc=300000 cc=10 chg=
+[19217.195192] healthd: battery l=100 v=5000 t=25.0 h=2 st=4 c=900000 fc=300000 cc=10 chg=
+[19237.836153] logd: logdr: UID=0 GID=0 PID=1874 b tail=0 logMask=80 pid=0 start=0ns timeout=0ns
+[19817.195223] healthd: battery l=100 v=5000 t=25.0 h=2 st=4 c=900000 fc=300000 cc=10 chg=
+</code></pre>
+<p>dmesg仅输出启动过程的内核信息，如果想要打印实时的内核信息，可以使用<code>cat /proc/kmsg </code>命令，与 dmesg 有不同， 第一次执行 cat /proc/kmsg 打印到目前位置的所有内核信息，再次执行/proc/kmsg,就是最新的信息了，Linux 系统中，如果我们有 root 权限，可以直接 echo 信息到/dev/kmsg，这样在 dmesg 中就会出现我们的 echo的信息，如下：</p>
+<pre><code class="bash"># 首先在后台执行cat
+cat /proc/kmsg &amp;
 
-        </article>
-        
-        
+# 向/dev/kmsg中写入字符串&quot;test&quot;, &lt;3&gt;表示log的等级
+echo &quot;&lt;3&gt; test&quot; &gt; /dev/kmsg
+
+# 输出如下
+generic_x86_64:/dev # &lt;11&gt;[20225.409975]  test
+</code></pre>
+<h2 id="三、Log套接字"><a href="#三、Log套接字" class="headerlink" title="三、Log套接字"></a>三、Log套接字</h2><p>/dev/socket/logd ： SOCK_STREAM 提供的是可靠的流数据（类比于 TCP），<br>/dev/socket/logdr ： SOCK_SEQPACKET 则提供可靠的基于包的数据（可靠的 UDP），<br>/dev/socket/logdw： SOCK_DGRAM 可以用 UDP 来类比，不可靠的包传输。<br>这三个 socket 的功能如下：<br>socket logd: 用于外接受控制命令<br>客户端通过 logdr 读取 log 数据。使用 seqpacket，可以让用户在可靠地读取数据的同时，一次读取一条 log<br>客户端通过 logdw 写入 log 数据。由于类型是 dgram，在非常繁忙的时候，log 可能会丢失。但是，这可以避免<br>客户端阻塞在写 log 的调用上</p>
+<h2 id="四、Log缓冲区"><a href="#四、Log缓冲区" class="headerlink" title="四、Log缓冲区"></a>四、Log缓冲区</h2><p>radio：查看包含无线装置/电话相关消息的缓冲区。<br>events：查看已经过解译的二进制系统事件缓冲区消息。<br>main：查看主日志缓冲区（默认），不包含系统和崩溃日志消息。<br>system：查看系统日志缓冲区（默认）。<br>crash：查看崩溃日志缓冲区（默认）。<br>all：查看所有缓冲区。<br>default：报告 main、system 和 crash 缓冲区。</p>
+<h2 id="五、logcat-命令使用"><a href="#五、logcat-命令使用" class="headerlink" title="五、logcat 命令使用"></a>五、logcat 命令使用</h2><p>通过logcat命令输出log的基本格式如下</p>
+<table>
+<thead>
+<tr>
+<th>日期</th>
+<th>时间</th>
+<th>进程号</th>
+<th>线程号</th>
+<th>Log等级</th>
+<th>TAG</th>
+<th>信息</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>03-05</td>
+<td>09:51:17.344</td>
+<td>270</td>
+<td>270</td>
+<td>I</td>
+<td>boot_progress_start:</td>
+<td>20568</td>
+</tr>
+</tbody></table>
+<p>logcat的常用命令</p>
+<p>输出特定缓冲区内的log</p>
+<pre><code class="shell">logcat -b &lt;buffer&gt; : 指定输出缓冲区
+
+# 输出events log
+logcat -b events
+
+# 输出kernel log,需要root权限
+logcat -b kernel 
+
+# 指定多个缓冲区
+logcat -b events，system
+
+# 输出所有缓冲区的log
+logcat -b all
+</code></pre>
+<p>过滤出特定级别的TAG</p>
+<pre><code class="shell"># 输出TAG为phone，且log级别为E的log
+logcat -s &quot;phone:E&quot;
+
+# 同时输出 phone标签的Error以上级别和WifiHW 标签 的 Debug 以上级别的日志。
+# *:S : 如果没有 *S 就会输出错误， 最后一个元素 *:S 将所有标记的优先级设为“静默”，
+# 从而确保系统仅显示带有“WifiHW”和“phone”标记的日志消息。
+logcat -s phone:E WifiHW:D *:S
+</code></pre>
+<p>综合的用法</p>
+<pre><code class="shell">logcat -b main,system,crash -v threadtime -v usec -v printable -D -f /sdcard/logcat.log -r 512 -n 2
+</code></pre>
+<ul>
+<li>-b : 指定输出main，system，crash三个缓冲区的log</li>
+<li>-v ：指定输出的格式</li>
+<li>-D：不在屏幕输出</li>
+<li>-f ：把log输出到<code>/sdcard/logcat.log</code>文件中</li>
+<li>-r ：循环输出，如果缓冲区中log的大小超过512字节，就将其写入文件</li>
+<li>-n ：文件的命名在<code>0~2</code>中间循环</li>
+</ul>
+<p>参数总结</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-b <buffer></td>
+<td>加载可供查看的备用log缓冲区，例如events或radio，默认情况下使用main，system，crash缓冲区</td>
+</tr>
+<tr>
+<td>-c, –clear</td>
+<td>清空所选的缓冲区并退出，默认缓冲区集为main、system和crash，如果需要清空所有，可以使用<code>-b all -c</code></td>
+</tr>
+<tr>
+<td>-e <expr>, –regex=<expr></td>
+<td>只输出与<expr>相匹配的log信息，<expr>是正则表达式</td>
+</tr>
+<tr>
+<td>-f <filename></td>
+<td>将log信息输出写入到<filename>，默认为stdout</td>
+</tr>
+<tr>
+<td>-g，–buffer-size</td>
+<td>输出指定日志缓冲区的大小并退出</td>
+</tr>
+<tr>
+<td>-d</td>
+<td>将log信息显示在屏幕上并退出</td>
+</tr>
+<tr>
+<td>-v</td>
+<td>设置log信息的输出格式，默认格式为threadtime</td>
+</tr>
+<tr>
+<td>–pid=<pid></td>
+<td>只输出指定<pid>进程的log信息</td>
+</tr>
+</tbody></table>
+<h2 id="六、events缓冲区log查看"><a href="#六、events缓冲区log查看" class="headerlink" title="六、events缓冲区log查看"></a>六、events缓冲区log查看</h2><p>events缓冲区中log的作用：</p>
+<ul>
+<li><p>用于记录Process，CPU，ActivityManager，WindowManager，Power，Notification等相关信息</p>
+</li>
+<li><p>events log 类别在编译后存放在<code>system/etc/event-log-tags</code>文件中，其语法定义在源码目录下<code>system/core/logcat/event.logtags</code>文件中</p>
+<pre><code class="shell">Despription are in the format
+</code></pre>
+</li>
+</ul>
+<p>使用案例</p>
+<p>查看Android系统启动时间，使用如下命令</p>
+<pre><code class="shell">logcat -b events |grep boot
+</code></pre>
+<h2 id="七、Logwrapper命令"><a href="#七、Logwrapper命令" class="headerlink" title="七、Logwrapper命令"></a>七、Logwrapper命令</h2><p>对于一些第三方的库，其中的Log信息大多数采用printf之类的标准函数进行输出，这类log无法被记录到Android log系统中，只要是由于init进程会把0，1，2三个fd指向到/dev/null，其他进程都是由init fork出来的，所以标准输出和标准错误输出都会继承自父进程，所以默认也都不会打印出来</p>
+<p>Android提供了<code>logwrapper</code>程序来重定向log的输出，重定向的log可以使用<code>logcat</code>查看，使用方法如下：</p>
+<pre><code class="shell"># 将ps命令的输出（标准输出）信息重定向到用户空间log系统中
+logwrapper ps -elf
+
+# 将ps命令的输出（标准输出）信息重定向到内核log系统中
+logwrapper -k ps -elf 
+</code></pre>
+
+      
+       <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 liu_haidy@163.com </span>
+    </div>
+</article>
+
+
+
+<div class="article_copyright">
+    <p><span class="copy-title">文章标题:</span>Android Log子系统(一)</p>
+    <p><span class="copy-title">字数:</span><span class="post-count">1.9k</span></p>
+    <p><span class="copy-title">本文作者:</span><a  title="Liu Haidi">Liu Haidi</a></p>
+    <p><span class="copy-title">发布时间:</span>2022-03-05, 18:18:29</p>
+    <p><span class="copy-title">最后更新:</span>2022-03-05, 18:19:28</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2022/03/05/Android-Log%E5%AD%90%E7%B3%BB%E7%BB%9F-%E4%B8%80/" title="Android Log子系统(一)">http://hidiwiki.github.io/2022/03/05/Android-Log%E5%AD%90%E7%B3%BB%E7%BB%9F-%E4%B8%80/</a>
+    <p>
+        <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">&#34;署名-非商用-相同方式共享 4.0&#34;</a> 转载请保留原文链接及作者。
+    </p>
+</div>
+
+
+
+
+
+    
+
+
+
+
     </div>
     <div class="copyright">
         <p class="footer-entry">
@@ -462,11 +683,11 @@
 <p class="footer-entry">Built with <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/yelog/hexo-theme-3-hexo" target="_blank">3-hexo</a> theme</p>
 
     </div>
-</div>
-<div class="full-toc">
-    <button class="full" data-title="切换全屏 快捷键 s"><span class="min "></span></button>
+    <div class="full-toc">
+        <button class="full" data-title="切换全屏 快捷键 s"><span class="min "></span></button>
 <a class="" id="rocket" ></a>
 
+    </div>
 </div>
 
 </body>
