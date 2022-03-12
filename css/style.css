@@ -507,7 +507,7 @@
   color: #f00;
 }
 .nav-left {
-  width: 120px;
+  width: 200px;
   height: 100%;
   background: #2a2935;
   box-shadow: inset -15px 0 15px -15px #222;
@@ -1197,7 +1197,7 @@
   text-shadow: none;
 }
 #post .pjax {
-  max-width: 1200px;
+  max-width: 1000px;
   min-height: calc(100vh - 143px);
   margin: 0 auto;
   overflow-y: auto;

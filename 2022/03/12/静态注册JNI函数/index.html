@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>哈哈迪的小站</title>
-  <meta name="keywords" content="">
-  <meta name="description" content="哈哈迪的小站">
+  <title>静态注册JNI函数 | 哈哈迪的小站</title>
+  <meta name="keywords" content=" JNI ">
+  <meta name="description" content="静态注册JNI函数 | 哈哈迪的小站">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="系统 ：基于Android 9版本 ：初版作成  [TOC] 静态注册JNI函数一、静态注册的概念所谓的静态注册，就是根据函数名来找到对应的JNI函数，它需要Java的工具程序javah参与 Java函数与JNI函数的对应关系 如果Java类的包名为com.iauto.jni，则Java的函数的全路径名称为com.iauto.jni.HelloWorld.func()；在native中，&amp;quo">
 <meta property="og:type" content="article">
@@ -57,7 +57,7 @@
 
 
 <body>
-<aside class="nav mobile">
+<aside class="nav">
     <div class="nav-left">
         <a href="/"
    class="avatar_target">
@@ -477,12 +477,62 @@
         </div>
     </div>
 </aside>
-<div id="post" class="index">
+<div id="post">
     <div class="pjax">
-        <article class="index">
-            <div class="toc-ref">
+        <article id="post-静态注册JNI函数" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%85%B3%E4%BA%8E%E6%9C%AC%E7%AB%99"><span class="toc-text">关于本站</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BD%91%E7%AB%99%E5%9C%B0%E5%9B%BE"><span class="toc-text">网站地图</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8D%9A%E5%AE%A2%E5%B9%B3%E5%8F%B0"><span class="toc-text">博客平台</span></a></li></ol>
+        <h1 class="article-title">静态注册JNI函数</h1>
+    
+    <div class="article-meta">
+        
+        
+        
+        <span class="book">
+            <i class="iconfont icon-category"></i>
+            
+            
+            <a  data-rel="android开发">android开发</a> > 
+            
+            <a  data-rel="android开发&lt;---&gt;JNI编程">JNI编程</a>
+            
+        </span>
+        
+        
+        <span class="tag">
+            <i class="iconfont icon-tag"></i>
+            
+            <a class="color4">JNI</a>
+            
+        </span>
+        
+    </div>
+    <div class="article-meta">
+        
+            发布时间 : <time class="date" title='最后更新: 2022-03-12 14:34:17'>2022-03-12 14:23</time>
+        
+    </div>
+    <div class="article-meta">
+        
+        <span>字数:1.6k</span>
+        
+        
+        <span id="busuanzi_container_page_pv">
+            阅读 :<span id="busuanzi_value_page_pv">
+                <span class="count-comment">
+                    <span class="spinner">
+                      <div class="cube1"></div>
+                      <div class="cube2"></div>
+                    </span>
+                </span>
+            </span>
+        </span>
+        
+        
+    </div>
+    
+    <div class="toc-ref">
+    
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%9D%99%E6%80%81%E6%B3%A8%E5%86%8CJNI%E5%87%BD%E6%95%B0"><span class="toc-text">静态注册JNI函数</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E9%9D%99%E6%80%81%E6%B3%A8%E5%86%8C%E7%9A%84%E6%A6%82%E5%BF%B5"><span class="toc-text">一、静态注册的概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81JAVA%E5%B1%82%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="toc-text">二、JAVA层的实现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AAJNI%E5%A4%B4%E6%96%87%E4%BB%B6"><span class="toc-text">三、创建一个JNI头文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E5%AE%9E%E7%8E%B0Native%E5%87%BD%E6%95%B0"><span class="toc-text">四、实现Native函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E7%BC%96%E8%AF%91lib%E5%BA%93"><span class="toc-text">五、编译lib库</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E8%BF%90%E8%A1%8CJava%E7%A8%8B%E5%BA%8F"><span class="toc-text">六、运行Java程序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81javah%E5%91%BD%E4%BB%A4"><span class="toc-text">七、javah命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AB%E3%80%81%E5%8E%9F%E7%90%86%E6%80%BB%E7%BB%93"><span class="toc-text">八、原理总结</span></a></li></ol></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -495,15 +545,231 @@
     }
 </style>
 </div>
-            <h1 id="关于本站"><a href="#关于本站" class="headerlink" title="关于本站"></a>关于本站</h1><p>本站用于记录自己的学习历程，是自学编程以来个人知识体系的大汇总， 旨在提升自己，方便他人，由于个人能力有限，文章中难免出现错误，还请游客自行甄别 </p>
-<p>到目前为止已经写了<code class="article_number"></code>篇文章， 共<code class="site_word_count"></code>字。</p>
-<p>本站访问人数：<code class="site_uv"></code>人次 ， 访问量：<code class="site_pv"></code>次</p>
-<h1 id="网站地图"><a href="#网站地图" class="headerlink" title="网站地图"></a>网站地图</h1><p>网站内容持续更新中，敬请期待！</p>
-<h1 id="博客平台"><a href="#博客平台" class="headerlink" title="博客平台"></a>博客平台</h1><p>博客通过 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> 生成，部署在 <a target="_blank" rel="noopener" href="https://pages.github.com/">GitHub Pages</a>主题 <a target="_blank" rel="noopener" href="https://github.com/yelog/hexo-theme-3-hexo">3-hexo</a> 感谢作者的开源</p>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <hr>
+<p>系统 ：基于Android 9<br>版本 ：初版作成</p>
+<hr>
+<p><div class='inner-toc'><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%9D%99%E6%80%81%E6%B3%A8%E5%86%8CJNI%E5%87%BD%E6%95%B0"><span class="toc-text">静态注册JNI函数</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E9%9D%99%E6%80%81%E6%B3%A8%E5%86%8C%E7%9A%84%E6%A6%82%E5%BF%B5"><span class="toc-text">一、静态注册的概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81JAVA%E5%B1%82%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="toc-text">二、JAVA层的实现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AAJNI%E5%A4%B4%E6%96%87%E4%BB%B6"><span class="toc-text">三、创建一个JNI头文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E5%AE%9E%E7%8E%B0Native%E5%87%BD%E6%95%B0"><span class="toc-text">四、实现Native函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E7%BC%96%E8%AF%91lib%E5%BA%93"><span class="toc-text">五、编译lib库</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E8%BF%90%E8%A1%8CJava%E7%A8%8B%E5%BA%8F"><span class="toc-text">六、运行Java程序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81javah%E5%91%BD%E4%BB%A4"><span class="toc-text">七、javah命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AB%E3%80%81%E5%8E%9F%E7%90%86%E6%80%BB%E7%BB%93"><span class="toc-text">八、原理总结</span></a></li></ol></li></ol></div></p>
+<h1 id="静态注册JNI函数"><a href="#静态注册JNI函数" class="headerlink" title="静态注册JNI函数"></a>静态注册JNI函数</h1><h2 id="一、静态注册的概念"><a href="#一、静态注册的概念" class="headerlink" title="一、静态注册的概念"></a>一、静态注册的概念</h2><p>所谓的静态注册，就是根据函数名来找到对应的JNI函数，它需要Java的工具程序javah参与</p>
+<p>Java函数与JNI函数的对应关系</p>
+<p>如果Java类的包名为<code>com.iauto.jni</code>，则Java的函数的全路径名称为<code>com.iauto.jni.HelloWorld.func()</code>；在native中，<code>&quot;.&quot;</code>有特殊的含义，因此，使用<code>&quot;_&quot;</code>代替，则Java的函数的全路径名称为<code>com_iauto_jni_HelloWorld_func</code>，下面我们实操一下。</p>
+<h2 id="二、JAVA层的实现"><a href="#二、JAVA层的实现" class="headerlink" title="二、JAVA层的实现"></a>二、JAVA层的实现</h2><pre><code>class HelloWorld
+&#123;
+  private native void print();
+  public static void main(String[] args)
+  &#123;
+    new HelloWorld().print();
+  &#125;
+  static&#123;
+    System.loadLibrary(&quot;libhelloworld_jni&quot;);// 此处有一个错误
+  &#125;
+&#125;
+</code></pre>
+<h2 id="三、创建一个JNI头文件"><a href="#三、创建一个JNI头文件" class="headerlink" title="三、创建一个JNI头文件"></a>三、创建一个JNI头文件</h2><p>Java根据函数名来查找Native 层的函数， 这就意味着Native层的函数名要和JAVA层的定义一致，如何做到一致呢？可以使用工具: <strong>javah</strong>, 使用方法如下</p>
+<pre><code>// 1.首先使用javac将java文件转化为class文件
+javac HelloWorld.java
 
-        </article>
-        
-        
+// 2.使用javah自动生成一个HelloWorld.h
+javah HelloWorld
+</code></pre>
+<p>使用javah 时， 如果<code>HelloWorld.java</code>指定了包名，如在文件中指定<code>com.iauto.jni</code></p>
+<pre><code class="Java">package com.iauto.jni;
+
+public class HelloWorld &#123;
+  ......
+&#125;
+</code></pre>
+<p>如果指定了包名，则执行javah时，会报找不到文件的问题</p>
+<pre><code class="Bash">$ javah HelloWorld
+错误: 找不到 &#39;HelloWorld&#39; 的类文件。
+</code></pre>
+<p>解决方法如下：</p>
+<ol>
+<li><p>假设项目的根目录为<code>jni</code>,在根目录下创建目录<code>com/iauto/jni/</code>目录，路径名称和包名一致，在该目录下创建<code>HelloWorld.java</code></p>
+</li>
+<li><p>在根目录<code>jni</code>目录下创建<code>src.txt</code>文件（名称随意），填充内容如下</p>
+<pre><code class="Bash">com/iauto/jni/HelloWorld.java
+</code></pre>
+<p>该目录用于指定java文件的路径，如果<code>com/iauto/jni/</code>目录下有多个java文件，可以在后面追加</p>
+</li>
+<li><p>在根目录<code>jni</code>目录下，创建class目录用于存放编译后的class文件，执行如下命令</p>
+<pre><code class="Bash">javac -d ./class @src.txt
+</code></pre>
+<p>执行完毕后，会在<code>class</code>目录下生成<code>HelloWorld.class</code>文件，目录结构如下</p>
+<pre><code class="Bash">.
+├── class
+│   └── com
+│       └── iauto
+│           └── jni
+│               └── HelloWorld.class
+</code></pre>
+</li>
+<li><p>在根目录<code>jni</code>目录下，创建<code>class.txt</code>文件（名称随意），填充内容如下：</p>
+<pre><code class="Bash">com.iauto.jni.HelloWorld
+</code></pre>
+</li>
+<li><p>在根目录<code>jni</code>目录下，创建<code>jni</code>目录（名称随意），然后在根目录<code>jni</code>下执行如下命令：</p>
+<pre><code class="Bash">javah -d jni/ -classpath class/ -jni @class.txt
+</code></pre>
+<p>执行后，会在<code>jni/jni/</code>目录下，生成头文件<code>com_iauto_jni_HelloWorld.h</code>，目录结构如下：</p>
+<pre><code class="Bash">.
+├── class
+│   └── com
+│       └── iauto
+│           └── jni
+│               └── HelloWorld.class
+├── class.txt
+├── com
+│   └── iauto
+│       └── jni
+│           └── HelloWorld.java
+├── jni
+│   └── com_iauto_jni_HelloWorld.h
+└── src.txt
+
+8 directories, 6 files
+</code></pre>
+</li>
+</ol>
+<p>根据以上命令生成的<code>com_iauto_jni_HelloWorld.h</code>如下</p>
+<pre><code>/* DO NOT EDIT THIS FILE - it is machine generated */
+#include &lt;jni.h&gt;
+/* Header for class com_iauto_jni_HelloWorld */
+
+#ifndef _Included_com_iauto_jni_HelloWorld
+#define _Included_com_iauto_jni_HelloWorld
+#ifdef __cplusplus
+extern &quot;C&quot; &#123;
+#endif
+/*
+ * Class:     com_iauto_jni_HelloWorld
+ * Method:    print
+ * Signature: ()V
+ */
+JNIEXPORT void JNICALL Java_com_iauto_jni_HelloWorld_print
+  (JNIEnv *, jobject);
+
+#ifdef __cplusplus
+&#125;
+#endif
+#endif
+</code></pre>
+<h2 id="四、实现Native函数"><a href="#四、实现Native函数" class="headerlink" title="四、实现Native函数"></a>四、实现Native函数</h2><pre><code>#include &quot;com_iauto_jni_HelloWorld.h&quot;
+
+JNIEXPORT void JNICALL Java_com_iauto_jni_HelloWorld_print
+  (JNIEnv *, jobject) &#123;
+    printf(&quot;say hello world from jni !\n&quot;);
+&#125;
+</code></pre>
+<blockquote>
+<p>如果java方法名中包含<code>&quot;_&quot;</code>，转化后的名称则以<code>&quot;_l&quot;</code>开头，如Java中的函数名为”native_print”，则转化后的方法名为<code>&quot;native_lprint&quot;</code></p>
+</blockquote>
+<h2 id="五、编译lib库"><a href="#五、编译lib库" class="headerlink" title="五、编译lib库"></a>五、编译lib库</h2><p>首先使用gcc编译libmath.so 库</p>
+<pre><code>gcc -fPIC -shared com_iauto_jni_HelloWorld.cpp -o libhelloworld_jni.so
+</code></pre>
+<p>会报如下错误</p>
+<pre><code class="Bash">com_iauto_jni_HelloWorld.cpp:1:10: fatal error: jni.h: 没有那个文件或目录
+    1 | #include &lt;jni.h&gt;
+      |          ^~~~~~~
+compilation terminated.
+</code></pre>
+<p>原因就是没有配置环境变量，jni.h在<code>/usr/lib/jvm/java-8-openjdk-amd64/include</code>目录下，可以指定该目录，或者直接将其拷贝到<code>jni/jni/</code>目录下，同时把<code>#include &lt;jni.h&gt;</code> 变为 <code>#include &quot;jni.h&quot;</code></p>
+<p>再次编译还是报错，如下：</p>
+<pre><code class="Bash">In file included from com_iauto_jni_HelloWorld.cpp:1:
+jni.h:45:10: fatal error: jni_md.h: 没有那个文件或目录
+   45 | #include &quot;jni_md.h&quot;
+      |          ^~~~~~~~~~
+compilation terminated.
+</code></pre>
+<p>同理，需要把<code>/usr/lib/jvm/java-8-openjdk-amd64/include/linux</code>目录下的<code>jni_md.h </code>拷贝到该目录下，再次编译OK</p>
+<h2 id="六、运行Java程序"><a href="#六、运行Java程序" class="headerlink" title="六、运行Java程序"></a>六、运行Java程序</h2><p>在class目录下，执行如下命令，</p>
+<pre><code>java com.iauto.jni.HelloWorld
+</code></pre>
+<p>报如下错误：</p>
+<pre><code class="Bash">Exception in thread &quot;main&quot; java.lang.UnsatisfiedLinkError: no libhelloworld_jni.so in java.library.path
+  at java.lang.ClassLoader.loadLibrary(ClassLoader.java:1860)
+  at java.lang.Runtime.loadLibrary0(Runtime.java:871)
+  at java.lang.System.loadLibrary(System.java:1124)
+  at com.iauto.jni.HelloWorld.&lt;clinit&gt;(HelloWorld.java:11)
+</code></pre>
+<p>原因是在<code>java.library.path</code>属性中找不到<code>libhelloworld_jni.so</code>库， 我们可以在java代码中，获取<code>java.library.path</code>属性，看一下都去哪些目录下查找</p>
+<pre><code class="Java">    String path = System.getProperty(&quot;java.library.path&quot;);
+    System.out.println(&quot;path = &quot; + path);
+</code></pre>
+<p>Java运行时，会从如下目录中查找对应的库文件，</p>
+<pre><code class="Bash">path = /usr/java/packages/lib/amd64:/usr/lib/x86_64-linux-gnu/jni:/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu:/usr/lib/jni:/lib:/usr/lib
+</code></pre>
+<p>在运行命令时，通过-Djava.library.path来指定库目录，如下</p>
+<pre><code class="Bash">java com.iauto.jni.HelloWorld -Djava.library.path=/home/lhd/workspace/package/jni/jni/
+</code></pre>
+<p>或者，通过<code>LD_LIBRARY_PATH</code>来指定</p>
+<pre><code class="Bash">export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/lhd/workspace/package/jni/jni/
+</code></pre>
+<p>发现还是一如既往的报上面的错误，明明已经指定了lib库的目录，为什么就是找不到呢？肯定不是路径的错误，很有可能是库的名称的问题，再来看看我们是如何加载lib库的</p>
+<pre><code class="Java">  static &#123;
+    System.loadLibrary(&quot;libhelloworld_jni&quot;);
+  &#125;
+</code></pre>
+<p>我们在一个静态代码块中，使用<code>System.loadLibrary()</code>方法进行库的加载，但是就是找不到<code>libhelloworld_jni</code>，原来，该方法在查找时，会自动补充一个<code>lib</code>前缀，如动态库的实际名称为<code>libhelloworld_jni.so</code>，那么<code>System.loadLibrary()</code>在实际查找时，就是<code>liblibhelloworld_jni.so</code></p>
+<p>所有，我们应该这样修改, 去掉前面的<code>lib</code>前缀</p>
+<pre><code class="Java">  static &#123;
+    System.loadLibrary(&quot;helloworld_jni&quot;);
+  &#125;
+</code></pre>
+<p>然后再运行就可以了</p>
+<pre><code class="Bash">$ java com.iauto.jni.HelloWorld -Djava.library.path=/home/lhd/workspace/package/jni/jni/
+path = :/home/lhd/workspace/package/jni/jni/:.:/usr/java/packages/lib/amd64:/usr/lib/x86_64-linux-gnu/jni:/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu:/usr/lib/jni:/lib:/usr/lib
+say hello world from jni !
+</code></pre>
+<h2 id="七、javah命令"><a href="#七、javah命令" class="headerlink" title="七、javah命令"></a>七、javah命令</h2><p>使用<code>javah -h</code>命令，输出帮助</p>
+<pre><code class="Bash">用法: 
+  javah [options] &lt;classes&gt;
+其中, [options] 包括:
+  -o &lt;file&gt;                输出文件 (只能使用 -d 或 -o 之一)
+  -d &lt;dir&gt;                 输出目录
+  -v  -verbose             启用详细输出
+  -h  --help  -?           输出此消息
+  -version                 输出版本信息
+  -jni                     生成 JNI 样式的标头文件 (默认值)
+  -force                   始终写入输出文件
+  -classpath &lt;path&gt;        从中加载类的路径
+  -cp &lt;path&gt;               从中加载类的路径
+  -bootclasspath &lt;path&gt;    从中加载引导类的路径
+&lt;classes&gt; 是使用其全限定名称指定的
+(例如, java.lang.Object)。
+</code></pre>
+<h2 id="八、原理总结"><a href="#八、原理总结" class="headerlink" title="八、原理总结"></a>八、原理总结</h2><p>当Java层调用<code>HelloWorld</code>类中的<code>print()</code>的native方法时，它会从JNI库中查找<code>Java_com_iauto_jni_HelloWorld_print()</code>方法，如果没有，就会报错，如果找到，则会为<code>print()</code>方法和<code>Java_com_iauto_jni_HelloWorld_print()</code>方法建立一个连接，虚拟机会为其保存<code>Java_com_iauto_jni_HelloWorld_print()</code>的函数指针</p>
+
+      
+       <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 liu_haidy@163.com </span>
+    </div>
+</article>
+
+
+
+<div class="article_copyright">
+    <p><span class="copy-title">文章标题:</span>静态注册JNI函数</p>
+    <p><span class="copy-title">字数:</span><span class="post-count">1.7k</span></p>
+    <p><span class="copy-title">本文作者:</span><a  title="Liu Haidi">Liu Haidi</a></p>
+    <p><span class="copy-title">发布时间:</span>2022-03-12, 14:23:58</p>
+    <p><span class="copy-title">最后更新:</span>2022-03-12, 14:34:17</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2022/03/12/%E9%9D%99%E6%80%81%E6%B3%A8%E5%86%8CJNI%E5%87%BD%E6%95%B0/" title="静态注册JNI函数">http://hidiwiki.github.io/2022/03/12/%E9%9D%99%E6%80%81%E6%B3%A8%E5%86%8CJNI%E5%87%BD%E6%95%B0/</a>
+    <p>
+        <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">&#34;署名-非商用-相同方式共享 4.0&#34;</a> 转载请保留原文链接及作者。
+    </p>
+</div>
+
+
+
+
+
+    
+
+
+
+
     </div>
     <div class="copyright">
         <p class="footer-entry">
@@ -512,11 +778,11 @@
 <p class="footer-entry">Built with <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/yelog/hexo-theme-3-hexo" target="_blank">3-hexo</a> theme</p>
 
     </div>
-</div>
-<div class="full-toc">
-    <button class="full" data-title="切换全屏 快捷键 s"><span class="min "></span></button>
+    <div class="full-toc">
+        <button class="full" data-title="切换全屏 快捷键 s"><span class="min "></span></button>
 <a class="" id="rocket" ></a>
 
+    </div>
 </div>
 
 </body>
