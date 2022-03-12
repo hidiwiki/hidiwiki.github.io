@@ -6,15 +6,15 @@
   <meta name="keywords" content=" JNI ">
   <meta name="description" content="静态注册JNI函数 | 哈哈迪的小站">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta name="description" content="系统 ：基于Android 9版本 ：初版作成  [TOC] 静态注册JNI函数一、静态注册的概念所谓的静态注册，就是根据函数名来找到对应的JNI函数，它需要Java的工具程序javah参与 Java函数与JNI函数的对应关系 如果Java类的包名为com.iauto.jni，则Java的函数的全路径名称为com.iauto.jni.HelloWorld.func()；在native中，&amp;quo">
+<meta name="description" content="系统 ：基于Android 9版本 ：初版作成  动态注册JNI函数一、动态注册的概念所谓的动态注册就是使用JNINativeMethod的结构体来记录Java方法和Native方法的映射关系，不用方法名来查找Native方法，其定义如下： typedef struct &amp;#123;     &#x2F;&#x2F; java中native函数的名称，不用携带路径     const char* name;">
 <meta property="og:type" content="article">
-<meta property="og:title" content="静态注册JNI函数">
-<meta property="og:url" content="http://hidiwiki.github.io/2022/03/12/%E9%9D%99%E6%80%81%E6%B3%A8%E5%86%8CJNI%E5%87%BD%E6%95%B0/index.html">
+<meta property="og:title" content="动态注册JNI函数">
+<meta property="og:url" content="http://hidiwiki.github.io/2022/03/12/%E5%8A%A8%E6%80%81%E6%B3%A8%E5%86%8CJNI%E5%87%BD%E6%95%B0/index.html">
 <meta property="og:site_name" content="哈哈迪的小站">
-<meta property="og:description" content="系统 ：基于Android 9版本 ：初版作成  [TOC] 静态注册JNI函数一、静态注册的概念所谓的静态注册，就是根据函数名来找到对应的JNI函数，它需要Java的工具程序javah参与 Java函数与JNI函数的对应关系 如果Java类的包名为com.iauto.jni，则Java的函数的全路径名称为com.iauto.jni.HelloWorld.func()；在native中，&amp;quo">
+<meta property="og:description" content="系统 ：基于Android 9版本 ：初版作成  动态注册JNI函数一、动态注册的概念所谓的动态注册就是使用JNINativeMethod的结构体来记录Java方法和Native方法的映射关系，不用方法名来查找Native方法，其定义如下： typedef struct &amp;#123;     &#x2F;&#x2F; java中native函数的名称，不用携带路径     const char* name;">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2022-03-12T06:23:58.000Z">
-<meta property="article:modified_time" content="2022-03-12T06:34:17.550Z">
+<meta property="article:published_time" content="2022-03-12T10:25:02.000Z">
+<meta property="article:modified_time" content="2022-03-12T10:26:25.171Z">
 <meta property="article:author" content="Liu Haidi">
 <meta property="article:tag" content="JNI">
 <meta name="twitter:card" content="summary">
@@ -153,7 +153,7 @@
     <li>
         <div class="all active" data-rel="全部文章">全部文章
             
-                <small>(7)</small>
+                <small>(8)</small>
             
         </div>
     </li>
@@ -165,7 +165,7 @@
                         <i class="fold iconfont icon-right"></i>
                         
                         android开发
-                        <small>(6)</small>
+                        <small>(7)</small>
                         
                     </div>
                     
@@ -200,7 +200,7 @@
                                         
                                         JNI编程
                                         
-                                            <small>(1
+                                            <small>(2
                                                 )</small>
                                         
                                     </div>
@@ -312,8 +312,8 @@
         
     </div>
 </div>
-<input type="hidden" id="yelog_site_posts_number" value="7">
-<input type="hidden" id="yelog_site_word_count" value="10.3k">
+<input type="hidden" id="yelog_site_posts_number" value="8">
+<input type="hidden" id="yelog_site_word_count" value="11.1k">
 <div style="display: none">
     <span id="busuanzi_value_site_uv"></span>
     <span id="busuanzi_value_site_pv"></span>
@@ -404,6 +404,14 @@
 
     
     <nav id="title-list-nav">
+        
+        <a  class="全部文章 android开发 JNI编程 "
+           href="/2022/03/12/%E5%8A%A8%E6%80%81%E6%B3%A8%E5%86%8CJNI%E5%87%BD%E6%95%B0/"
+           data-tag="JNI"
+           data-author="" >
+            <span class="post-title" title="动态注册JNI函数">动态注册JNI函数</span>
+            <span class="post-date" title="2022-03-12 18:25:02">2022/03/12</span>
+        </a>
         
         <a  class="全部文章 android开发 JNI编程 "
            href="/2022/03/12/%E9%9D%99%E6%80%81%E6%B3%A8%E5%86%8CJNI%E5%87%BD%E6%95%B0/"
@@ -508,7 +516,7 @@
     </div>
     <div class="article-meta">
         
-            发布时间 : <time class="date" title='最后更新: 2022-03-12 14:34:17'>2022-03-12 14:23</time>
+            发布时间 : <time class="date" title='最后更新: 2022-03-12 18:26:11'>2022-03-12 14:23</time>
         
     </div>
     <div class="article-meta">
@@ -549,7 +557,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <hr>
-<p>系统 ：基于Android 9<br>版本 ：初版作成</p>
+<p>系统 ：基于Ubuntu<br>版本 ：初版作成</p>
 <hr>
 <p><div class='inner-toc'><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%9D%99%E6%80%81%E6%B3%A8%E5%86%8CJNI%E5%87%BD%E6%95%B0"><span class="toc-text">静态注册JNI函数</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E9%9D%99%E6%80%81%E6%B3%A8%E5%86%8C%E7%9A%84%E6%A6%82%E5%BF%B5"><span class="toc-text">一、静态注册的概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81JAVA%E5%B1%82%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="toc-text">二、JAVA层的实现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AAJNI%E5%A4%B4%E6%96%87%E4%BB%B6"><span class="toc-text">三、创建一个JNI头文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E5%AE%9E%E7%8E%B0Native%E5%87%BD%E6%95%B0"><span class="toc-text">四、实现Native函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E7%BC%96%E8%AF%91lib%E5%BA%93"><span class="toc-text">五、编译lib库</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E8%BF%90%E8%A1%8CJava%E7%A8%8B%E5%BA%8F"><span class="toc-text">六、运行Java程序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81javah%E5%91%BD%E4%BB%A4"><span class="toc-text">七、javah命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AB%E3%80%81%E5%8E%9F%E7%90%86%E6%80%BB%E7%BB%93"><span class="toc-text">八、原理总结</span></a></li></ol></li></ol></div></p>
 <h1 id="静态注册JNI函数"><a href="#静态注册JNI函数" class="headerlink" title="静态注册JNI函数"></a>静态注册JNI函数</h1><h2 id="一、静态注册的概念"><a href="#一、静态注册的概念" class="headerlink" title="一、静态注册的概念"></a>一、静态注册的概念</h2><p>所谓的静态注册，就是根据函数名来找到对应的JNI函数，它需要Java的工具程序javah参与</p>
@@ -754,7 +762,7 @@ say hello world from jni !
     <p><span class="copy-title">字数:</span><span class="post-count">1.7k</span></p>
     <p><span class="copy-title">本文作者:</span><a  title="Liu Haidi">Liu Haidi</a></p>
     <p><span class="copy-title">发布时间:</span>2022-03-12, 14:23:58</p>
-    <p><span class="copy-title">最后更新:</span>2022-03-12, 14:34:17</p>
+    <p><span class="copy-title">最后更新:</span>2022-03-12, 18:26:11</p>
     <span class="copy-title">原始链接:</span><a class="post-url" href="/2022/03/12/%E9%9D%99%E6%80%81%E6%B3%A8%E5%86%8CJNI%E5%87%BD%E6%95%B0/" title="静态注册JNI函数">http://hidiwiki.github.io/2022/03/12/%E9%9D%99%E6%80%81%E6%B3%A8%E5%86%8CJNI%E5%87%BD%E6%95%B0/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">&#34;署名-非商用-相同方式共享 4.0&#34;</a> 转载请保留原文链接及作者。

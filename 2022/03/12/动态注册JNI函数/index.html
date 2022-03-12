@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>DataBinding的基本使用 | 哈哈迪的小站</title>
-  <meta name="keywords" content=" MVVM , DataBinding , 架构组件 ">
-  <meta name="description" content="DataBinding的基本使用 | 哈哈迪的小站">
+  <title>动态注册JNI函数 | 哈哈迪的小站</title>
+  <meta name="keywords" content=" JNI ">
+  <meta name="description" content="动态注册JNI函数 | 哈哈迪的小站">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="系统 ：基于Android 9版本 ：初版作成  动态注册JNI函数一、动态注册的概念所谓的动态注册就是使用JNINativeMethod的结构体来记录Java方法和Native方法的映射关系，不用方法名来查找Native方法，其定义如下： typedef struct &amp;#123;     &#x2F;&#x2F; java中native函数的名称，不用携带路径     const char* name;">
 <meta property="og:type" content="article">
@@ -487,9 +487,9 @@
 </aside>
 <div id="post">
     <div class="pjax">
-        <article id="post-DataBinding的基本使用" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-动态注册JNI函数" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">DataBinding的基本使用</h1>
+        <h1 class="article-title">动态注册JNI函数</h1>
     
     <div class="article-meta">
         
@@ -501,7 +501,7 @@
             
             <a  data-rel="android开发">android开发</a> > 
             
-            <a  data-rel="android开发&lt;---&gt;App开发">App开发</a>
+            <a  data-rel="android开发&lt;---&gt;JNI编程">JNI编程</a>
             
         </span>
         
@@ -509,23 +509,19 @@
         <span class="tag">
             <i class="iconfont icon-tag"></i>
             
-            <a class="color5">MVVM</a>
-            
-            <a class="color2">DataBinding</a>
-            
-            <a class="color5">架构组件</a>
+            <a class="color4">JNI</a>
             
         </span>
         
     </div>
     <div class="article-meta">
         
-            发布时间 : <time class="date" title='最后更新: 2022-03-05 21:02:06'>2021-10-17 19:49</time>
+            发布时间 : <time class="date" title='最后更新: 2022-03-12 18:26:25'>2022-03-12 18:25</time>
         
     </div>
     <div class="article-meta">
         
-        <span>字数:1.5k</span>
+        <span>字数:827</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -544,7 +540,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#DataBinding%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8"><span class="toc-text">DataBinding的基本使用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="toc-text">一、基本概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E4%BC%A0%E7%BB%9F%E5%AE%9E%E7%8E%B0"><span class="toc-text">二、传统实现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E4%BD%BF%E7%94%A8dataBinding%E4%BC%98%E5%8C%96"><span class="toc-text">三、使用dataBinding优化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-text">总结</span></a></li></ol></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E6%B3%A8%E5%86%8CJNI%E5%87%BD%E6%95%B0"><span class="toc-text">动态注册JNI函数</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%8A%A8%E6%80%81%E6%B3%A8%E5%86%8C%E7%9A%84%E6%A6%82%E5%BF%B5"><span class="toc-text">一、动态注册的概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81Java%E5%B1%82%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="toc-text">二、Java层的实现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E5%AE%9E%E7%8E%B0JNI-OnLoad%E6%96%B9%E6%B3%95"><span class="toc-text">三、实现JNI_OnLoad方法</span></a></li></ol></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -561,193 +557,133 @@
     <div class="article-entry" itemprop="articleBody">
       
         <hr>
-<p>系统 ：基于Android 10<br>版本 ：初版作成</p>
+<p>系统 ：基于Android 9<br>版本 ：初版作成</p>
 <hr>
-<p><div class='inner-toc'><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#DataBinding%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8"><span class="toc-text">DataBinding的基本使用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="toc-text">一、基本概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E4%BC%A0%E7%BB%9F%E5%AE%9E%E7%8E%B0"><span class="toc-text">二、传统实现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E4%BD%BF%E7%94%A8dataBinding%E4%BC%98%E5%8C%96"><span class="toc-text">三、使用dataBinding优化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-text">总结</span></a></li></ol></li></ol></li></ol></div></p>
-<h1 id="DataBinding的基本使用"><a href="#DataBinding的基本使用" class="headerlink" title="DataBinding的基本使用"></a>DataBinding的基本使用</h1><h2 id="一、基本概念"><a href="#一、基本概念" class="headerlink" title="一、基本概念"></a>一、基本概念</h2><p>下面通过一个示例来说明DataBinding的作用</p>
-<p>一个简单的示例：画面内有一个Button和一个TextView，每次点击Button，TextView数字加1，布局如下：</p>
-<p><img src="https://raw.githubusercontent.com/hidiwiki/picgo/main/mvc_model/dataBinding%E7%AE%80%E5%8D%95%E7%A4%BA%E4%BE%8B.png" alt="databinding示意图"></p>
-<h2 id="二、传统实现"><a href="#二、传统实现" class="headerlink" title="二、传统实现"></a>二、传统实现</h2><p>使用ViewModel来存放界面的数据，ViewModel的代码如下</p>
-<pre><code class="java">public class MainViewModel extends ViewModel &#123;
-    private MutableLiveData&lt;Integer&gt; count;
-
-    public MutableLiveData&lt;Integer&gt; getCount() &#123;
-        if (count == null) &#123;
-            count = new MutableLiveData&lt;&gt;();
-            count.setValue(0);
-        &#125;
-        return count;
-    &#125;
-
-    public void addCount() &#123;
-        count.setValue(count.getValue() + 1);
-    &#125;
-&#125;
+<h1 id="动态注册JNI函数"><a href="#动态注册JNI函数" class="headerlink" title="动态注册JNI函数"></a>动态注册JNI函数</h1><h2 id="一、动态注册的概念"><a href="#一、动态注册的概念" class="headerlink" title="一、动态注册的概念"></a>一、动态注册的概念</h2><p>所谓的动态注册就是使用<code>JNINativeMethod</code>的结构体来记录Java方法和Native方法的映射关系，不用方法名来查找Native方法，其定义如下：</p>
+<pre><code class="c">typedef struct &#123;
+    // java中native函数的名称，不用携带路径
+    const char* name;
+    // Java函数的签名信息，用字符串表示，是参数类型和返回值类型的组合
+    const char* signature;
+    // JNI层对应函数的函数指针，为void*
+    void* fnPtr;
+&#125; JNINativeMethod;
 </code></pre>
-<p>在MainActivity中，每次点击Button，count值加1，同时需要更新TextView的值，代码如下：</p>
-<pre><code class="java">public class MainActivity extends AppCompatActivity &#123;
+<p>实现动态注册的方式只需要两个函数就可以完成，如下</p>
+<pre><code class="c++">// className为对应的Java的类名，JNINativeMethod使用的函数不包含全路径，所有需要指定包名+类名
+jclass clazz = (*env)-&gt;FindClass(env, className);
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) &#123;
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        Button button = findViewById(R.id.button);
-        TextView view = findViewById(R.id.textView);
-        MainViewModel model = new ViewModelProvider(this).get(MainViewModel.class);
-        model.getCount().observe(this, new Observer&lt;Integer&gt;() &#123;
-            @Override
-            public void onChanged(Integer integer) &#123;
-                view.setText(String.valueOf(integer));
-            &#125;
-        &#125;);
-        button.setOnClickListener(new View.OnClickListener() &#123;
-            @Override
-            public void onClick(View v) &#123;
-                model.addCount();
-            &#125;
-        &#125;);
-    &#125;
-&#125;
+// 调用JNIEnv的RegisterNatives函数，注册关联关系
+(*env)-&gt;RegisterNatives(env, clazz, gMethods, numMethods);
 </code></pre>
-<p>从上面的代码中我们可以发现，MainActivity的代码非常的不方便维护，如界面内有多少个控件，我们就需要使用多少次<code>findViewById()</code>去创建控件，而且还要去设置相应的监听，下面我们使用databinding进行优化</p>
-<h2 id="三、使用dataBinding优化"><a href="#三、使用dataBinding优化" class="headerlink" title="三、使用dataBinding优化"></a>三、使用dataBinding优化</h2><p>首先，将布局文件转换为databinding布局，</p>
-<pre><code class="xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
-&lt;androidx.constraintlayout.widget.ConstraintLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
-    xmlns:app=&quot;http://schemas.android.com/apk/res-auto&quot;
-    xmlns:tools=&quot;http://schemas.android.com/tools&quot;
-    android:layout_width=&quot;match_parent&quot;
-    android:layout_height=&quot;match_parent&quot;
-    tools:context=&quot;.MainActivity&quot;&gt;
-
-    &lt;Button
-        android:id=&quot;@+id/button&quot;
-        android:layout_width=&quot;wrap_content&quot;
-        android:layout_height=&quot;wrap_content&quot;
-        android:layout_weight=&quot;1&quot;
-        android:text=&quot;Button&quot;
-        app:layout_constraintBottom_toBottomOf=&quot;parent&quot;
-        app:layout_constraintEnd_toEndOf=&quot;parent&quot;
-        app:layout_constraintStart_toStartOf=&quot;parent&quot;
-        app:layout_constraintTop_toTopOf=&quot;parent&quot; /&gt;
-
-    &lt;TextView
-        android:id=&quot;@+id/textView&quot;
-        android:layout_width=&quot;wrap_content&quot;
-        android:layout_height=&quot;wrap_content&quot;
-        android:text=&quot;0&quot;
-        android:textSize=&quot;24sp&quot;
-        app:layout_constraintBottom_toBottomOf=&quot;parent&quot;
-        app:layout_constraintEnd_toEndOf=&quot;parent&quot;
-        app:layout_constraintStart_toStartOf=&quot;parent&quot;
-        app:layout_constraintTop_toTopOf=&quot;parent&quot;
-        app:layout_constraintVertical_bias=&quot;0.374&quot; /&gt;
-
-&lt;/androidx.constraintlayout.widget.ConstraintLayout&gt;
-</code></pre>
-<p>在转换成databinding布局之前，首先需要在gradle中设置了如下属性</p>
-<pre><code class="xaml">dataBinding &#123;
-    enabled = true
-&#125;
-</code></pre>
-<p>转换成databinding布局之后代码如下</p>
-<pre><code class="xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
-&lt;layout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
-    xmlns:app=&quot;http://schemas.android.com/apk/res-auto&quot;
-    xmlns:tools=&quot;http://schemas.android.com/tools&quot;&gt;
-
-    &lt;data&gt;
-
-    &lt;/data&gt;
-
-    &lt;androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width=&quot;match_parent&quot;
-        android:layout_height=&quot;match_parent&quot;
-        tools:context=&quot;.MainActivity&quot;&gt;
-
-        &lt;Button
-            android:id=&quot;@+id/button&quot;
-            android:layout_width=&quot;wrap_content&quot;
-            android:layout_height=&quot;wrap_content&quot;
-            android:layout_weight=&quot;1&quot;
-            android:text=&quot;Button&quot;
-            app:layout_constraintBottom_toBottomOf=&quot;parent&quot;
-            app:layout_constraintEnd_toEndOf=&quot;parent&quot;
-            app:layout_constraintStart_toStartOf=&quot;parent&quot;
-            app:layout_constraintTop_toTopOf=&quot;parent&quot; /&gt;
-
-        &lt;TextView
-            android:id=&quot;@+id/textView&quot;
-            android:layout_width=&quot;wrap_content&quot;
-            android:layout_height=&quot;wrap_content&quot;
-            android:text=&quot;0&quot;
-            android:textSize=&quot;24sp&quot;
-            app:layout_constraintBottom_toBottomOf=&quot;parent&quot;
-            app:layout_constraintEnd_toEndOf=&quot;parent&quot;
-            app:layout_constraintStart_toStartOf=&quot;parent&quot;
-            app:layout_constraintTop_toTopOf=&quot;parent&quot;
-            app:layout_constraintVertical_bias=&quot;0.374&quot; /&gt;
-
-    &lt;/androidx.constraintlayout.widget.ConstraintLayout&gt;
-&lt;/layout&gt;
-</code></pre>
-<p>以前的布局被layout标签包含，同时在layout标签内增加data标签用于声明MainActivity画面内的数据</p>
-<pre><code class="xml">&lt;data&gt;
-
-&lt;/data&gt;
-</code></pre>
-<p>在进行转换后，整个布局文件会被IDE在后台自动解析成一个类文件，其中类文件的名称为<code>布局文件的名称+Binding</code>，布局文件名称需要去掉下划线，同时采用驼峰命名法即每个单词的首字母大写，以<code>activity_main.xml</code>为例，则生成的类文件为<code>ActivityMainBinding.java</code>，在MainActivity中我们应该这样使</p>
-<pre><code class="java">public class MainActivity extends AppCompatActivity &#123;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) &#123;
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        MainViewModel model = new ViewModelProvider(this).get(MainViewModel.class);
-
-        ActivityMainBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
-
-        model.getCount().observe(this, new Observer&lt;Integer&gt;() &#123;
-            @Override
-            public void onChanged(Integer integer) &#123;
-                binding.textView.setText(String.valueOf(integer));
-            &#125;
-        &#125;);
-        binding.button.setOnClickListener(new View.OnClickListener() &#123;
-            @Override
-            public void onClick(View v) &#123;
-                model.addCount();
-            &#125;
-        &#125;);
-    &#125;
-&#125;
-</code></pre>
-<p>改变如下：</p>
+<p>还有一个问题，什么时候完成的注册呢？</p>
+<p>答案是当Java代码调用<code>System.loadLibrary()</code>完成动态库的加载后，紧接着后调用动态库中的<code>JNI_OnLoad</code>的函数，如果有，就调用<code>RegisterNatives()</code>完成映射表的注册，因此，我们需要在<code>libXXX_JNI.so</code>库中实现<code>JNI_OnLoad</code>函数，下面我们具体操作一下</p>
+<h2 id="二、Java层的实现"><a href="#二、Java层的实现" class="headerlink" title="二、Java层的实现"></a>二、Java层的实现</h2><p>Java层主要是做了三件事完成了JNI的调用</p>
 <ul>
-<li>TextView和Button不再通过<code>findViewById()</code>的方式，而是通过DataBindingUtil创建一个ActivityMainBinding对象，通过此对象获取这两个View</li>
-<li>MainActivity内的所有用到TextView和Button的地方都换成从ActivityMainBinding中获取</li>
+<li>加载动态库，假设JNI动态库的名称为<code>libHelloWorld_jni.so</code>，则通常情况下使用如下方式进行加载：</li>
 </ul>
-<p>以上的改变似乎并没有多少优化的空间，别急，还记得上文中提到的布局文件中增加的<code>data</code>标签么？，我们可以在data标签内进行如下的声明</p>
-<pre><code class="xml">&lt;data&gt;
-    &lt;variable
-          name=&quot;modelData&quot;
-          type=&quot;com.iauto.mvvm.MainViewModel&quot; /&gt;
-&lt;/data&gt;
+<pre><code class="java">static &#123;
+    System.loadLibrary(&quot;XXX_JNI&quot;);
+&#125;
 </code></pre>
-<p>在data标签内，我们声明了一个变量<code>modelData</code>，类型为<code>com.iauto.mvvm.MainViewModel</code>，接着我们把TextView要显示的内容与modelData中的count进行绑定</p>
-<pre><code class="xml">&lt;TextView    ......    android:text=&quot;@&#123;String.valueOf(modelData.count)&#125;&quot;    ....../&gt;
+<ul>
+<li>声明本地方法，本地方法通过<code>native</code>关键字进行指定</li>
+</ul>
+<pre><code class="java">public native String getString();
 </code></pre>
-<p>这里说明一下：使用<code>@&#123;&#125;</code>表示将TextView的text值与modelData的count进行单项绑定，即当modelData.count值发生变化时，会通知TextView进行刷新，同时还需要把modelData.count转成String类型，同理，也可以为Button的<code>onClick()</code>方法绑定到modelData的<code>addCount()</code>方法上</p>
-<pre><code class="xml">    &lt;Button
-        ......
-        android:onClick=&quot;@&#123;()-&gt;modelData.addCount()&#125;&quot;
-        ......
-    /&gt;
+<ul>
+<li>完成上述两个步骤后就可以像调用Java方法一样调用native方法</li>
+</ul>
+<p>Android中给了我们如何编写JNI的sample，路径如下，我们以此为参考完成本次实验</p>
+<pre><code class="shell">aosp-11/development/samples/SimpleJNI
 </code></pre>
-<p>表示当Button的<code>onClick()</code>方法被回调时，<code>onClick()</code>方法中会调用<code>modelData.addCount()</code>，在对布局文件进行了以上的优化后，我们就可以继续改造MainActivity的处理</p>
-<pre><code class="java">public class MainActivity extends AppCompatActivity &#123;    @Override    protected void onCreate(Bundle savedInstanceState) &#123;        super.onCreate(savedInstanceState);        setContentView(R.layout.activity_main);        MainViewModel model = new ViewModelProvider(this).get(MainViewModel.class);        ActivityMainBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_main);        binding.setModelData(model);        binding.setLifecycleOwner(this);    &#125;&#125;
+<p>Java层我们不做修改了，直接使用原生Sample，如下：</p>
+<pre><code class="java">package com.example.android.simplejni;
+
+import android.app.Activity;
+import android.os.Bundle;
+import android.widget.TextView;
+
+public class SimpleJNI extends Activity &#123;
+    /** Called when the activity is first created. */
+    @Override
+    public void onCreate(Bundle savedInstanceState) &#123;
+        super.onCreate(savedInstanceState);
+        TextView tv = new TextView(this);
+        int sum = Native.add(2, 3);
+        tv.setText(&quot;2 + 3 = &quot; + Integer.toString(sum));
+        setContentView(tv);
+    &#125;
+&#125;
+
+class Native &#123;
+    static &#123;
+        // The runtime will add &quot;lib&quot; on the front and &quot;.o&quot; on the end of
+        // the name supplied to loadLibrary.
+        System.loadLibrary(&quot;simplejni&quot;);
+    &#125;
+
+    static native int add(int a, int b);
+&#125;
 </code></pre>
-<p>以前设置的各种监听就不需要了，因为在布局文件中，已经把控件和数据进行了单向的绑定，由于在布局中声明了类型为<code>com.iauto.mvvm.MainViewModel</code>的modelData变量，在实例化之后就需要调用<code>setModelData()</code>给该变量赋值</p>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>经过以上的优化，MainActivity的逻辑是不是少了很多，就达到了便于维护的目的，以上我们只使用了单向绑定，其实也可以进行双向绑定，使用<code>@=&#123;&#125;</code>即可进行双向绑定，对于大多数控件，android已经为我们实现了单向和双向的绑定，但对于自定义的View需要我们自己实现，后面的文章会继续分析</p>
+<h2 id="三、实现JNI-OnLoad方法"><a href="#三、实现JNI-OnLoad方法" class="headerlink" title="三、实现JNI_OnLoad方法"></a>三、实现JNI_OnLoad方法</h2><p>JNI_OnLoad()方法是JVM在加载完动态库之后，回调JNI库中的方法，在这个方法中，我们可以进行Java和Native中相应方法的映射，即映射表的动态注册，实现如下</p>
+<pre><code class="c++">jint JNI_OnLoad(JavaVM* vm, void* /*reserved*/)
+&#123;
+    UnionJNIEnvToVoid uenv;
+    uenv.venv = NULL;
+    jint result = -1;
+    JNIEnv* env = NULL;
+    
+    ALOGI(&quot;JNI_OnLoad&quot;);
+
+    if (vm-&gt;GetEnv(&amp;uenv.venv, JNI_VERSION_1_4) != JNI_OK) &#123;
+        ALOGE(&quot;ERROR: GetEnv failed&quot;);
+        goto bail;
+    &#125;
+    env = uenv.env;
+
+    if (registerNatives(env) != JNI_TRUE) &#123;
+        ALOGE(&quot;ERROR: registerNatives failed&quot;);
+        goto bail;
+    &#125;
+    
+    result = JNI_VERSION_1_4;
+    
+bail:
+    return result;
+&#125;
+</code></pre>
+<p>在该回调中，我们又调用了<code>registerNatives()</code>方法，实现如下：</p>
+<pre><code class="cpp">static int registerNatives(JNIEnv* env)
+&#123;
+  if (!registerNativeMethods(env, classPathName,
+                 methods, sizeof(methods) / sizeof(methods[0]))) &#123;
+    return JNI_FALSE;
+  &#125;
+
+  return JNI_TRUE;
+&#125;
+
+
+static int registerNativeMethods(JNIEnv* env, const char* className,
+    JNINativeMethod* gMethods, int numMethods)
+&#123;
+    jclass clazz;
+
+    clazz = env-&gt;FindClass(className);
+    if (clazz == NULL) &#123;
+        ALOGE(&quot;Native registration unable to find class &#39;%s&#39;&quot;, className);
+        return JNI_FALSE;
+    &#125;
+    if (env-&gt;RegisterNatives(clazz, gMethods, numMethods) &lt; 0) &#123;
+        ALOGE(&quot;RegisterNatives failed for &#39;%s&#39;&quot;, className);
+        return JNI_FALSE;
+    &#125;
+
+    return JNI_TRUE;
+&#125;
+</code></pre>
+<p>在registerNativeMethods()方法中，完成了上述所说的两件事：<code>FindClass()</code> 和<code>RegisterNatives()</code></p>
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 liu_haidy@163.com </span>
@@ -757,12 +693,12 @@
 
 
 <div class="article_copyright">
-    <p><span class="copy-title">文章标题:</span>DataBinding的基本使用</p>
-    <p><span class="copy-title">字数:</span><span class="post-count">1.5k</span></p>
+    <p><span class="copy-title">文章标题:</span>动态注册JNI函数</p>
+    <p><span class="copy-title">字数:</span><span class="post-count">827</span></p>
     <p><span class="copy-title">本文作者:</span><a  title="Liu Haidi">Liu Haidi</a></p>
-    <p><span class="copy-title">发布时间:</span>2021-10-17, 19:49:52</p>
-    <p><span class="copy-title">最后更新:</span>2022-03-05, 21:02:06</p>
-    <span class="copy-title">原始链接:</span><a class="post-url" href="/2021/10/17/DataBinding%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/" title="DataBinding的基本使用">http://hidiwiki.github.io/2021/10/17/DataBinding%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/</a>
+    <p><span class="copy-title">发布时间:</span>2022-03-12, 18:25:02</p>
+    <p><span class="copy-title">最后更新:</span>2022-03-12, 18:26:25</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2022/03/12/%E5%8A%A8%E6%80%81%E6%B3%A8%E5%86%8CJNI%E5%87%BD%E6%95%B0/" title="动态注册JNI函数">http://hidiwiki.github.io/2022/03/12/%E5%8A%A8%E6%80%81%E6%B3%A8%E5%86%8CJNI%E5%87%BD%E6%95%B0/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">&#34;署名-非商用-相同方式共享 4.0&#34;</a> 转载请保留原文链接及作者。
     </p>
