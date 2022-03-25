@@ -6,15 +6,15 @@
   <meta name="keywords" content=" SystemUI ">
   <meta name="description" content="深入理解SystemUiVisibility(二) | 哈哈迪的小站">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta name="description" content="系统 ：基于Android 9版本 ：初版作成  动态注册JNI函数一、动态注册的概念所谓的动态注册就是使用JNINativeMethod的结构体来记录Java方法和Native方法的映射关系，不用方法名来查找Native方法，其定义如下： typedef struct &amp;#123;     &#x2F;&#x2F; java中native函数的名称，不用携带路径     const char* name;">
+<meta name="description" content="系统 ：基于Android 9版本 ：初版作成  [TOC] 动态注册JNI函数一、动态注册的概念所谓的动态注册就是使用JNINativeMethod的结构体来记录Java方法和Native方法的映射关系，不用方法名来查找Native方法，其定义如下： typedef struct &amp;#123;     &#x2F;&#x2F; java中native函数的名称，不用携带路径     const char* nam">
 <meta property="og:type" content="article">
 <meta property="og:title" content="动态注册JNI函数">
 <meta property="og:url" content="http://hidiwiki.github.io/2022/03/12/%E5%8A%A8%E6%80%81%E6%B3%A8%E5%86%8CJNI%E5%87%BD%E6%95%B0/index.html">
 <meta property="og:site_name" content="哈哈迪的小站">
-<meta property="og:description" content="系统 ：基于Android 9版本 ：初版作成  动态注册JNI函数一、动态注册的概念所谓的动态注册就是使用JNINativeMethod的结构体来记录Java方法和Native方法的映射关系，不用方法名来查找Native方法，其定义如下： typedef struct &amp;#123;     &#x2F;&#x2F; java中native函数的名称，不用携带路径     const char* name;">
+<meta property="og:description" content="系统 ：基于Android 9版本 ：初版作成  [TOC] 动态注册JNI函数一、动态注册的概念所谓的动态注册就是使用JNINativeMethod的结构体来记录Java方法和Native方法的映射关系，不用方法名来查找Native方法，其定义如下： typedef struct &amp;#123;     &#x2F;&#x2F; java中native函数的名称，不用携带路径     const char* nam">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-03-12T10:25:02.000Z">
-<meta property="article:modified_time" content="2022-03-12T10:26:25.171Z">
+<meta property="article:modified_time" content="2022-03-25T13:34:51.542Z">
 <meta property="article:author" content="Liu Haidi">
 <meta property="article:tag" content="JNI">
 <meta name="twitter:card" content="summary">
@@ -516,7 +516,7 @@
     </div>
     <div class="article-meta">
         
-            发布时间 : <time class="date" title='最后更新: 2022-03-05 20:56:57'>2021-04-06 16:13</time>
+            发布时间 : <time class="date" title='最后更新: 2022-03-25 21:34:52'>2021-04-06 16:13</time>
         
     </div>
     <div class="article-meta">
@@ -747,7 +747,7 @@ public int adjustSystemUiVisibilityLw(int visibility) &#123;
     <p><span class="copy-title">字数:</span><span class="post-count">1.3k</span></p>
     <p><span class="copy-title">本文作者:</span><a  title="Liu Haidi">Liu Haidi</a></p>
     <p><span class="copy-title">发布时间:</span>2021-04-06, 16:13:47</p>
-    <p><span class="copy-title">最后更新:</span>2022-03-05, 20:56:57</p>
+    <p><span class="copy-title">最后更新:</span>2022-03-25, 21:34:52</p>
     <span class="copy-title">原始链接:</span><a class="post-url" href="/2021/04/06/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3SystemUIVisibility(%E4%BA%8C)/" title="深入理解SystemUiVisibility(二)">http://hidiwiki.github.io/2021/04/06/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3SystemUIVisibility(%E4%BA%8C)/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">&#34;署名-非商用-相同方式共享 4.0&#34;</a> 转载请保留原文链接及作者。
@@ -950,9 +950,13 @@ public int adjustSystemUiVisibilityLw(int visibility) &#123;
     /* 背景图样式 */
     
     #post {
-        background: url(/img/bg.jpg);
+        background: url(/img/bg_right.jpg);
     }
     
+    
+    #post .index {
+        background: url(/img/bg_right.jpg);
+    }
     
 
 
@@ -969,8 +973,8 @@ public int adjustSystemUiVisibilityLw(int visibility) &#123;
         top: 0;
         width: 100%;
         height: 100%;
-        opacity: 0.8;
-        background: url("https://raw.githubusercontent.com/hidiwiki/picgo/main/pic/database/art_bg.jpg");
+        opacity: 1;
+        background: url("/img/bg_list.jpg");
         background-repeat: no-repeat;
         background-position: 50% 0;
         -ms-background-size: cover;
