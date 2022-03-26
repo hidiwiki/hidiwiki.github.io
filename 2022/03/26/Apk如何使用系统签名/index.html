@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>hello-world | 哈哈迪的小站</title>
-  <meta name="keywords" content=" hexo ">
-  <meta name="description" content="hello-world | 哈哈迪的小站">
+  <title>Apk如何使用系统签名 | 哈哈迪的小站</title>
+  <meta name="keywords" content=" 签名 ">
+  <meta name="description" content="Apk如何使用系统签名 | 哈哈迪的小站">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="系统 ：基于ubuntu21版本 ：初版作成  [TOC] Apk如何使用系统签名一、概述两种方式，第一种方式：使用signapk.jar签名apk，第二种方式：使用Android Studio签名apk 二、使用signapk.jar签名apk 为了后续方便操作，在源码根目录下新建一个文件夹signapk(名字任意) mkdir signapk   在源码中找到signapk.jar，将其拷贝">
 <meta property="og:type" content="article">
@@ -517,9 +517,9 @@
 </aside>
 <div id="post">
     <div class="pjax">
-        <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-Apk如何使用系统签名" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">hello-world</h1>
+        <h1 class="article-title">Apk如何使用系统签名</h1>
     
     <div class="article-meta">
         
@@ -529,9 +529,9 @@
             <i class="iconfont icon-category"></i>
             
             
-            <a  data-rel="开发环境">开发环境</a> > 
+            <a  data-rel="android开发">android开发</a> > 
             
-            <a  data-rel="开发环境&lt;---&gt;博客搭建">博客搭建</a>
+            <a  data-rel="android开发&lt;---&gt;signature">signature</a>
             
         </span>
         
@@ -539,19 +539,19 @@
         <span class="tag">
             <i class="iconfont icon-tag"></i>
             
-            <a class="color5">hexo</a>
+            <a class="color3">签名</a>
             
         </span>
         
     </div>
     <div class="article-meta">
         
-            发布时间 : <time class="date" title='最后更新: 2022-03-05 20:44:33'>2021-04-06 16:13</time>
+            发布时间 : <time class="date" title='最后更新: 2022-03-26 19:09:42'>2022-03-26 19:06</time>
         
     </div>
     <div class="article-meta">
         
-        <span>字数:124</span>
+        <span>字数:889</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -570,7 +570,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Quick-Start"><span class="toc-text">Quick Start</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Create-a-new-post"><span class="toc-text">Create a new post</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Run-server"><span class="toc-text">Run server</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Generate-static-files"><span class="toc-text">Generate static files</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Deploy-to-remote-sites"><span class="toc-text">Deploy to remote sites</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%87%E7%AB%A0%E6%A0%87%E9%A2%98"><span class="toc-text">文章标题</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Apk%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E7%B3%BB%E7%BB%9F%E7%AD%BE%E5%90%8D"><span class="toc-text">Apk如何使用系统签名</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E6%A6%82%E8%BF%B0"><span class="toc-text">一、概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E4%BD%BF%E7%94%A8signapk-jar%E7%AD%BE%E5%90%8Dapk"><span class="toc-text">二、使用signapk.jar签名apk</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E4%BD%BF%E7%94%A8Android-Studio%E7%AD%BE%E5%90%8Dapk"><span class="toc-text">三、使用Android Studio签名apk</span></a></li></ol></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -586,32 +586,95 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>系统 ：基于ubuntu 21<br>版本 ：初版作成</p>
+        <hr>
+<p>系统 ：基于ubuntu21<br>版本 ：初版作成</p>
 <hr>
-<hr>
-<p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre><code class="bash">$ hexo new &quot;My New Post&quot;
+<p><div class='inner-toc'><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Apk%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E7%B3%BB%E7%BB%9F%E7%AD%BE%E5%90%8D"><span class="toc-text">Apk如何使用系统签名</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E6%A6%82%E8%BF%B0"><span class="toc-text">一、概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E4%BD%BF%E7%94%A8signapk-jar%E7%AD%BE%E5%90%8Dapk"><span class="toc-text">二、使用signapk.jar签名apk</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E4%BD%BF%E7%94%A8Android-Studio%E7%AD%BE%E5%90%8Dapk"><span class="toc-text">三、使用Android Studio签名apk</span></a></li></ol></li></ol></div></p>
+<h1 id="Apk如何使用系统签名"><a href="#Apk如何使用系统签名" class="headerlink" title="Apk如何使用系统签名"></a>Apk如何使用系统签名</h1><h2 id="一、概述"><a href="#一、概述" class="headerlink" title="一、概述"></a>一、概述</h2><p>两种方式，第一种方式：使用signapk.jar签名apk，第二种方式：使用Android Studio签名apk</p>
+<h2 id="二、使用signapk-jar签名apk"><a href="#二、使用signapk-jar签名apk" class="headerlink" title="二、使用signapk.jar签名apk"></a>二、使用signapk.jar签名apk</h2><ol>
+<li><p>为了后续方便操作，在源码根目录下新建一个文件夹<code>signapk</code>(名字任意)</p>
+<pre><code class="PowerShell">mkdir signapk
 </code></pre>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre><code class="bash">$ hexo server
+</li>
+<li><p>在源码中找到signapk.jar，将其拷贝到<code>signapk</code>目录下, signapk.jar的路径如下：</p>
+<pre><code class="PowerShell">android/prebuilts/sdk/tools/lib/signapk.jar
+
+# 或者
+android/out/host/linux-x86/framework/signapk.jar
 </code></pre>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre><code class="bash">$ hexo generate
+</li>
+<li><p>在源码中找到平台签名文件<code>platform.pk8</code>和<code>platform.x509.pem</code>，路径如下(不同厂商路径不一样)：</p>
+<pre><code class="PowerShell">android/build/target/product/security/
 </code></pre>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre><code class="bash">$ hexo deploy
+</li>
+<li><p>把需要签名的APK放到<code>signapk</code>路径下</p>
+<pre><code class="PowerShell">android/signapk/app-debug.apk
 </code></pre>
-<h3 id="文章标题"><a href="#文章标题" class="headerlink" title="文章标题"></a>文章标题</h3><pre><code class="xml">title: hello-world
-date: 2021-04-06 16:13:47
-categories:
-- 开发环境
-- 博客搭建 (二级分类)
-tags:
-- hexo
-updated:2021-04-06 16:13:47
-permalink:
+<p>signapk的目录结构如下</p>
+<pre><code class="PowerShell">./
+├── app-debug.apk
+├── platform.pk8
+├── platform.x509.pem
+└── signapk.jar
 </code></pre>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+</li>
+<li><p>做完以上步骤后，如果在<code>signapk</code>路径下执行以下命令，会有问题，执行以下命令，这里有点坑，不能在<code>signapk</code>目录下，否则会报以下错误</p>
+<pre><code class="PowerShell">Exception in thread &quot;main&quot; java.lang.ExceptionInInitializerError
+  at org.conscrypt.OpenSSLBIOInputStream.&lt;init&gt;(OpenSSLBIOInputStream.java:34)
+  at org.conscrypt.OpenSSLX509Certificate.fromX509PemInputStream(OpenSSLX509Certificate.java:119)
+  at org.conscrypt.OpenSSLX509CertificateFactory$1.fromX509PemInputStream(OpenSSLX509CertificateFactory.java:220)
+  at org.conscrypt.OpenSSLX509CertificateFactory$1.fromX509PemInputStream(OpenSSLX509CertificateFactory.java:216)
+  at org.conscrypt.OpenSSLX509CertificateFactory$Parser.generateItem(OpenSSLX509CertificateFactory.java:94)
+  at org.conscrypt.OpenSSLX509CertificateFactory.engineGenerateCertificate(OpenSSLX509CertificateFactory.java:272)
+  at java.base/java.security.cert.CertificateFactory.generateCertificate(CertificateFactory.java:355)
+  at com.android.signapk.SignApk.readPublicKey(SignApk.java:184)
+  at com.android.signapk.SignApk.main(SignApk.java:1007)
+Caused by: java.lang.IllegalArgumentException: Failed to load any of the given libraries: [conscrypt_openjdk_jni-linux-x86_64, conscrypt_openjdk_jni-linux-x86_64-fedora, conscrypt_openjdk_jni]
+  at org.conscrypt.NativeLibraryLoader.loadFirstAvailable(NativeLibraryLoader.java:160)
+  at org.conscrypt.NativeCryptoJni.init(NativeCryptoJni.java:49)
+  at org.conscrypt.NativeCrypto.&lt;clinit&gt;(NativeCrypto.java:53)
+  ... 9 more
+</code></pre>
+<pre><code class="PowerShell">java -jar signapk.jar platform.x509.pem platform.pk8 app-debug.apk signapp.apk
+</code></pre>
+<p>报错的原因是缺少<code>conscrypt_openjdk_jni-linux-x86_64</code>, <code>conscrypt_openjdk_jni-linux-x86_64-fedora</code>, <code>conscrypt_openjdk_jni</code>这几个包，这些包在<code>prebuilts/sdk/tools/linux/lib64</code>目录下，如果电脑的位数为32位，则需要引用<code>prebuilts/sdk/tools/linux/lib</code>,指定路径使用参数 -Djava.library.path，完整命令如下</p>
+<pre><code class="PowerShell">java -Xmx512m -Djava.library.path=&quot;prebuilts/sdk/tools/linux/lib64&quot; -jar ./signapk/signapk.jar ./signapk/platform.x509.pem ./signapk/platform.pk8 ./signapk/app-debug.apk ./signapk/signapp.apk
+</code></pre>
+<blockquote>
+<p>注意，这里有坑，一定不能在signapk目录下执行以上目标，不然会报<code>段错误</code>，原因未知</p>
+</blockquote>
+</li>
+<li><p>执行完以上命令后，如果不出意外，会在<code>signapk</code>目录下生成一个signapp.apk，该apk即为签名后的apk</p>
+</li>
+<li><p>如果在<code>AndroidManifest.xml</code>中未指定<code>sharedUserId</code>, 则apk为platform apk，如果想要apk为 system app， 则需要在<code>AndroidManifest.xml</code>中指定<code>sharedUserId</code></p>
+<pre><code class="xml">android:sharedUserId=&quot;android.uid.system&quot;
+</code></pre>
+</li>
+</ol>
+<p>注意事项</p>
+<p>如果之前已经安装了未签名的app,需要先卸载，命令如下</p>
+<pre><code class="Bash">adb uninstall com.lhd.testapp
+</code></pre>
+<h2 id="三、使用Android-Studio签名apk"><a href="#三、使用Android-Studio签名apk" class="headerlink" title="三、使用Android Studio签名apk"></a>三、使用Android Studio签名apk</h2><p>3.1 文件准备</p>
+<ul>
+<li>/build/target/product/security/platform.pk8</li>
+<li>/build/target/product/security/platform.x509.pem</li>
+</ul>
+<p>3.2 合成keystore</p>
+<p>为了调试开发方便我们需要将这两个文件生成为keystore文件，这里需要使用到一个工具<a target="_blank" rel="noopener" href="https://github.com/getfatday/keytool-importkeypair">keytool-importkeypair</a>， 该工具可以把两个文件合成一个keystore文件</p>
+<p>把上面两个文件拷贝到keytool目录下，执行以下命令，</p>
+<pre><code class="Bash">./keytool-importkeypair -k ~/.android/debug.keystore -p android -pk8 platform.pk8 -cert platform.x509.pem -alias platform
+</code></pre>
+<p>命令执行完以后，就会在当前目录下生成一个<em>debug.keystore</em>文件</p>
+<ul>
+<li>alias 别名 ： platform</li>
+<li>-p 密码 ： android</li>
+</ul>
+<p>3.3 使用keystore文件签名</p>
+<p>为了方便，可以把上面的keystore文件拷贝到android studio 的project文件夹下，当然如果知道keystore路径，这一步可以不做</p>
+<p>打开Android studio, 点击File&gt;Project Structure下，选择Modules选项&gt; Signing Config，配置如下</p>
+<p><img src="https://s2.loli.net/2022/03/26/nMw4xI5FJmqvg3p.png" alt="Android Studio配置"></p>
+<p>做完以上配置后，app的系统签名就完成了，此时，即可重新编译app，即为签名的app</p>
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 liu_haidy@163.com </span>
@@ -621,12 +684,12 @@ permalink:
 
 
 <div class="article_copyright">
-    <p><span class="copy-title">文章标题:</span>hello-world</p>
-    <p><span class="copy-title">字数:</span><span class="post-count">124</span></p>
+    <p><span class="copy-title">文章标题:</span>Apk如何使用系统签名</p>
+    <p><span class="copy-title">字数:</span><span class="post-count">914</span></p>
     <p><span class="copy-title">本文作者:</span><a  title="Liu Haidi">Liu Haidi</a></p>
-    <p><span class="copy-title">发布时间:</span>2021-04-06, 16:13:47</p>
-    <p><span class="copy-title">最后更新:</span>2022-03-05, 20:44:33</p>
-    <span class="copy-title">原始链接:</span><a class="post-url" href="/2021/04/06/hello-world/" title="hello-world">http://hidiwiki.github.io/2021/04/06/hello-world/</a>
+    <p><span class="copy-title">发布时间:</span>2022-03-26, 19:06:46</p>
+    <p><span class="copy-title">最后更新:</span>2022-03-26, 19:09:42</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2022/03/26/Apk%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E7%B3%BB%E7%BB%9F%E7%AD%BE%E5%90%8D/" title="Apk如何使用系统签名">http://hidiwiki.github.io/2022/03/26/Apk%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E7%B3%BB%E7%BB%9F%E7%AD%BE%E5%90%8D/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">&#34;署名-非商用-相同方式共享 4.0&#34;</a> 转载请保留原文链接及作者。
     </p>
