@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>动态注册JNI函数 | 哈哈迪的小站</title>
-  <meta name="keywords" content=" JNI ">
-  <meta name="description" content="动态注册JNI函数 | 哈哈迪的小站">
+  <title>从MVP到MVVM过程分析 | 哈哈迪的小站</title>
+  <meta name="keywords" content=" MVP , MVVM ">
+  <meta name="description" content="从MVP到MVVM过程分析 | 哈哈迪的小站">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="系统 ：基于Android 10版本 ：初版作成  [TOC] 从MVP到MVVM过程分析一、基本概念经过前文的分析，我们知道MVP模式存在以下缺陷：    Presenter作为中间层，与View之间的通信大多数通过回调的方式，如果存在多个View共同监听同一个Presenter，会造成接口浪费    Presenter如果做耗时操作，在此期间，View可能被销毁，也即是Presenter无法">
 <meta property="og:type" content="article">
@@ -562,9 +562,9 @@
 </aside>
 <div id="post">
     <div class="pjax">
-        <article id="post-动态注册JNI函数" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-从MVP到MVVM过程分析" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">动态注册JNI函数</h1>
+        <h1 class="article-title">从MVP到MVVM过程分析</h1>
     
     <div class="article-meta">
         
@@ -576,7 +576,7 @@
             
             <a  data-rel="android开发">android开发</a> > 
             
-            <a  data-rel="android开发&lt;---&gt;JNI编程">JNI编程</a>
+            <a  data-rel="android开发&lt;---&gt;Jetpack">Jetpack</a>
             
         </span>
         
@@ -584,19 +584,21 @@
         <span class="tag">
             <i class="iconfont icon-tag"></i>
             
-            <a class="color4">JNI</a>
+            <a class="color4">MVP</a>
+            
+            <a class="color5">MVVM</a>
             
         </span>
         
     </div>
     <div class="article-meta">
         
-            发布时间 : <time class="date" title='最后更新: 2022-03-25 21:34:51'>2022-03-12 18:25</time>
+            发布时间 : <time class="date" title='最后更新: 2022-04-04 20:53:53'>2022-04-04 20:52</time>
         
     </div>
     <div class="article-meta">
         
-        <span>字数:828</span>
+        <span>字数:2.6k</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -615,7 +617,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E6%B3%A8%E5%86%8CJNI%E5%87%BD%E6%95%B0"><span class="toc-text">动态注册JNI函数</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%8A%A8%E6%80%81%E6%B3%A8%E5%86%8C%E7%9A%84%E6%A6%82%E5%BF%B5"><span class="toc-text">一、动态注册的概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81Java%E5%B1%82%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="toc-text">二、Java层的实现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E5%AE%9E%E7%8E%B0JNI-OnLoad%E6%96%B9%E6%B3%95"><span class="toc-text">三、实现JNI_OnLoad方法</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BB%8EMVP%E5%88%B0MVVM%E8%BF%87%E7%A8%8B%E5%88%86%E6%9E%90"><span class="toc-text">从MVP到MVVM过程分析</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="toc-text">一、基本概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E6%B7%BB%E5%8A%A0%E7%9B%91%E5%90%AC%E5%99%A8"><span class="toc-text">二、添加监听器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E6%A8%A1%E6%8B%9F%E8%80%97%E6%97%B6%E6%93%8D%E4%BD%9C"><span class="toc-text">三、模拟耗时操作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E6%84%9F%E7%9F%A5%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><span class="toc-text">四、感知生命周期</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-ILifecycle%E6%8E%A5%E5%8F%A3"><span class="toc-text">4.1 ILifecycle接口</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-LifecycleProvider"><span class="toc-text">4.2 LifecycleProvider</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-ILifecycleOwner%E6%8E%A5%E5%8F%A3"><span class="toc-text">4.3 ILifecycleOwner接口</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-4-%E8%AE%A9%E6%95%B0%E6%8D%AE%E6%84%9F%E7%9F%A5%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><span class="toc-text">4.4 让数据感知生命周期</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E6%80%BB%E7%BB%93"><span class="toc-text">五、总结</span></a></li></ol></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -632,134 +634,438 @@
     <div class="article-entry" itemprop="articleBody">
       
         <hr>
-<p>系统 ：基于Android 9<br>版本 ：初版作成</p>
+<p>系统 ：基于Android 10<br>版本 ：初版作成</p>
 <hr>
-<p><div class='inner-toc'><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E6%B3%A8%E5%86%8CJNI%E5%87%BD%E6%95%B0"><span class="toc-text">动态注册JNI函数</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%8A%A8%E6%80%81%E6%B3%A8%E5%86%8C%E7%9A%84%E6%A6%82%E5%BF%B5"><span class="toc-text">一、动态注册的概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81Java%E5%B1%82%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="toc-text">二、Java层的实现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E5%AE%9E%E7%8E%B0JNI-OnLoad%E6%96%B9%E6%B3%95"><span class="toc-text">三、实现JNI_OnLoad方法</span></a></li></ol></li></ol></div></p>
-<h1 id="动态注册JNI函数"><a href="#动态注册JNI函数" class="headerlink" title="动态注册JNI函数"></a>动态注册JNI函数</h1><h2 id="一、动态注册的概念"><a href="#一、动态注册的概念" class="headerlink" title="一、动态注册的概念"></a>一、动态注册的概念</h2><p>所谓的动态注册就是使用<code>JNINativeMethod</code>的结构体来记录Java方法和Native方法的映射关系，不用方法名来查找Native方法，其定义如下：</p>
-<pre><code class="c">typedef struct &#123;
-    // java中native函数的名称，不用携带路径
-    const char* name;
-    // Java函数的签名信息，用字符串表示，是参数类型和返回值类型的组合
-    const char* signature;
-    // JNI层对应函数的函数指针，为void*
-    void* fnPtr;
-&#125; JNINativeMethod;
-</code></pre>
-<p>实现动态注册的方式只需要两个函数就可以完成，如下</p>
-<pre><code class="c++">// className为对应的Java的类名，JNINativeMethod使用的函数不包含全路径，所有需要指定包名+类名
-jclass clazz = (*env)-&gt;FindClass(env, className);
-
-// 调用JNIEnv的RegisterNatives函数，注册关联关系
-(*env)-&gt;RegisterNatives(env, clazz, gMethods, numMethods);
-</code></pre>
-<p>还有一个问题，什么时候完成的注册呢？</p>
-<p>答案是当Java代码调用<code>System.loadLibrary()</code>完成动态库的加载后，紧接着后调用动态库中的<code>JNI_OnLoad</code>的函数，如果有，就调用<code>RegisterNatives()</code>完成映射表的注册，因此，我们需要在<code>libXXX_JNI.so</code>库中实现<code>JNI_OnLoad</code>函数，下面我们具体操作一下</p>
-<h2 id="二、Java层的实现"><a href="#二、Java层的实现" class="headerlink" title="二、Java层的实现"></a>二、Java层的实现</h2><p>Java层主要是做了三件事完成了JNI的调用</p>
+<p><div class='inner-toc'><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BB%8EMVP%E5%88%B0MVVM%E8%BF%87%E7%A8%8B%E5%88%86%E6%9E%90"><span class="toc-text">从MVP到MVVM过程分析</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="toc-text">一、基本概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E6%B7%BB%E5%8A%A0%E7%9B%91%E5%90%AC%E5%99%A8"><span class="toc-text">二、添加监听器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E6%A8%A1%E6%8B%9F%E8%80%97%E6%97%B6%E6%93%8D%E4%BD%9C"><span class="toc-text">三、模拟耗时操作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E6%84%9F%E7%9F%A5%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><span class="toc-text">四、感知生命周期</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-ILifecycle%E6%8E%A5%E5%8F%A3"><span class="toc-text">4.1 ILifecycle接口</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-LifecycleProvider"><span class="toc-text">4.2 LifecycleProvider</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-ILifecycleOwner%E6%8E%A5%E5%8F%A3"><span class="toc-text">4.3 ILifecycleOwner接口</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-4-%E8%AE%A9%E6%95%B0%E6%8D%AE%E6%84%9F%E7%9F%A5%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><span class="toc-text">4.4 让数据感知生命周期</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E6%80%BB%E7%BB%93"><span class="toc-text">五、总结</span></a></li></ol></li></ol></div></p>
+<h1 id="从MVP到MVVM过程分析"><a href="#从MVP到MVVM过程分析" class="headerlink" title="从MVP到MVVM过程分析"></a>从MVP到MVVM过程分析</h1><h2 id="一、基本概念"><a href="#一、基本概念" class="headerlink" title="一、基本概念"></a>一、基本概念</h2><p>经过前文的分析，我们知道MVP模式存在以下缺陷：</p>
 <ul>
-<li>加载动态库，假设JNI动态库的名称为<code>libHelloWorld_jni.so</code>，则通常情况下使用如下方式进行加载：</li>
+<li><p>  Presenter作为中间层，与View之间的通信大多数通过回调的方式，如果存在多个View共同监听同一个Presenter，会造成接口浪费</p>
+</li>
+<li><p>  Presenter如果做耗时操作，在此期间，View可能被销毁，也即是Presenter无法感知View的生命周期</p>
+</li>
+<li><p>  Presenter更新UI时不一定在主线程，需要转线程操作</p>
+</li>
 </ul>
-<pre><code class="java">static &#123;
-    System.loadLibrary(&quot;XXX_JNI&quot;);
+<p>例如，构造一个音乐播放的app(模拟播放音乐)，基本画面如下</p>
+<p><img src="https://raw.githubusercontent.com/hidiwiki/picgo/main/pic/mvc_mvp_mvvm/mvp_mvvmmvp_mvvm%E5%B8%83%E5%B1%80%E5%9B%BE.png"></p>
+<p>使用MVP模式的App架构如下</p>
+<p><img src="https://raw.githubusercontent.com/hidiwiki/picgo/main/pic/mvc_mvp_mvvm/mvp_mvvmMVP%E5%9F%BA%E6%9C%AC%E6%9E%B6%E6%9E%84.png"></p>
+<p>图中，View层包含Activity和一个悬浮窗Window（Activity模拟），向Presenter层注册回调以监听播放器状态，同步更新画面，其中接口Callback定义如下：</p>
+<pre><code class="java">public interface IPlayerCallBack &#123;
+
+    void onTitleChange(String title);
+
+    void onProgressChange(int current);
+
+    void onPlayerPlay();
+
+    void onPlayerPause();
+
+    void onCoverChange(String cover);
 &#125;
 </code></pre>
-<ul>
-<li>声明本地方法，本地方法通过<code>native</code>关键字进行指定</li>
-</ul>
-<pre><code class="java">public native String getString();
-</code></pre>
-<ul>
-<li>完成上述两个步骤后就可以像调用Java方法一样调用native方法</li>
-</ul>
-<p>Android中给了我们如何编写JNI的sample，路径如下，我们以此为参考完成本次实验</p>
-<pre><code class="shell">aosp-11/development/samples/SimpleJNI
-</code></pre>
-<p>Java层我们不做修改了，直接使用原生Sample，如下：</p>
-<pre><code class="java">package com.example.android.simplejni;
+<p>View层收到这些回调后更新UI，同时用户操作View产生事件，通知Presenter层控制音乐播放，如暂停、上一曲、下一曲等，具体代码可以参考gitee仓库，tag为v1.0，基于以上的缺陷，我们进行逐步改进</p>
+<h2 id="二、添加监听器"><a href="#二、添加监听器" class="headerlink" title="二、添加监听器"></a>二、添加监听器</h2><p>消除接口冗余问题的一个思路是以UI进行驱动开发，UI需要什么数据，Presenter层就提供什么数据，各个画面根据需要去监听各自的数据，当数据发生变更时，更新UI，这里封装一个容器<code>DataContainer</code>方便UI进行数据的监听（仅用于演示，请忽略代码质量）</p>
+<pre><code class="java">public class DataContainer&lt;T&gt; &#123;
 
-import android.app.Activity;
-import android.os.Bundle;
-import android.widget.TextView;
+    private List&lt;IDataListener&lt;T&gt;&gt; mListenerList = new ArrayList&lt;&gt;();
 
-public class SimpleJNI extends Activity &#123;
-    /** Called when the activity is first created. */
+    public T mValue = null;
+
+    public void setValue(T value) &#123;
+        mValue = value;
+        for (IDataListener&lt;T&gt; listener : mListenerList) &#123;
+            listener.onChange(value);
+        &#125;
+    &#125;
+
+    public DataContainer(T value) &#123;
+        mValue = value;
+    &#125;
+
+    public DataContainer() &#123;
+        mValue = null;
+    &#125;
+
+    public void addListener(IDataListener&lt;T&gt; l) &#123;
+        if (mListenerList.contains(l)) &#123;
+            return;
+        &#125;
+        mListenerList.add(l);
+    &#125;
+
+&#125;
+</code></pre>
+<p>其中，用到的接口<code>IDataListener</code>代码如下：</p>
+<pre><code class="java">public interface IDataListener&lt;T&gt; &#123;
+    void onChange(T value);
+&#125;
+</code></pre>
+<p>使用时，只需要在Presenter中把数据放入对应的<code>DataContainer</code>中即可</p>
+<h2 id="三、模拟耗时操作"><a href="#三、模拟耗时操作" class="headerlink" title="三、模拟耗时操作"></a>三、模拟耗时操作</h2><p>实际操作时，Model层请求数据不会在主线程中进行，而且也不会立即返回，如网络请求等，接下来模拟一个请求音乐列表的例子，并逐步解决存在的问题</p>
+<ol>
+<li> Model层负责请求网络，获取音乐列表</li>
+</ol>
+<pre><code class="java">public void loadMusicByPage(int page, int size) &#123;
+    List&lt;Music&gt; list = new ArrayList&lt;&gt;();
+    new Thread(new Runnable() &#123;
+        @Override
+        public void run() &#123;
+            for (int i = 0; i &lt; size; i++) &#123;
+                String name = &quot;music_&quot; + i;
+                String cover = &quot;cover_&quot; + i;
+                String url = &quot;url_&quot; + i;
+                list.add(new Music(name, cover, url));
+            &#125;
+            mCallback.onSuccess(list);
+        &#125;
+    &#125;).start();
+&#125;
+
+public interface OnLoadMusicResult &#123;
+    void onSuccess(List&lt;Music&gt; list);
+    void onError(String msg, int code);
+&#125;
+</code></pre>
+<p>请求的数据在Model层与Presenter层之间通过接口<code>OnLoadMusicResult</code>返回到Presenter层</p>
+<p>2. Presenter把请求的数据放入DataContainer中，供View层监听</p>
+<pre><code class="java">public DataContainer&lt;List&lt;Music&gt;&gt; mMusicList = new DataContainer&lt;&gt;();
+
+public DataContainer&lt;LoadState&gt; mLoadState = new DataContainer&lt;&gt;();
+</code></pre>
+<p>3. View层监听Presenter层中的数据（关心的数据），更新UI</p>
+<pre><code class="java">mMusicPresenter.mMusicList.addListener(new IDataListener&lt;List&lt;Music&gt;&gt;() &#123;
     @Override
-    public void onCreate(Bundle savedInstanceState) &#123;
+    public void onChange(List&lt;Music&gt; value) &#123;
+        String name = Thread.currentThread().getName();
+    &#125;
+&#125;);
+
+mMusicPresenter.mLoadState.addListener(new IDataListener&lt;MusicPresenter.LoadState&gt;() &#123;
+    @Override
+    public void onChange(MusicPresenter.LoadState value) &#123;
+        Log.d(&quot;lhd&quot;, &quot;Load state = &quot; + value);
+    &#125;
+&#125;);
+</code></pre>
+<p>从上面的代码来看，从Model层返回的数据在子线程中，并不能更新UI，接下来我们先解决一个这个问题，修改<code>DataContainer</code>，完成线程的切换</p>
+<p>在<code>DataContainer</code>的<code>setValue()</code>方法中，做一下判断，如果当前线程是主线程，直接通知listener即可，如果不是，切换线程</p>
+<p>如何判断是不是主线程，通过以下方式</p>
+<pre><code class="java">private boolean isMainThread() &#123;
+    return Looper.getMainLooper().getThread() == Thread.currentThread();
+&#125;
+</code></pre>
+<p>如何完成线程的切换？</p>
+<p>在Application中创建一个静态Handler，然后通过<code>post</code>方法切换线程</p>
+<pre><code class="java">public class App extends Application &#123;
+
+    public static Handler mHandler;
+
+    @Override
+    public void onCreate() &#123;
+        super.onCreate();
+        mHandler = new Handler();
+    &#125;
+&#125;
+</code></pre>
+<blockquote>
+<p>别忘了在Manifest中指定Application为自定义的App</p>
+</blockquote>
+<p>完成后的效果如下</p>
+<pre><code class="java">public void setValue(T value) &#123;
+    mValue = value;
+    // 如果是主线程,直接回调
+    if (isMainThread()) &#123;
+        for (IDataListener&lt;T&gt; listener : mListenerList) &#123;
+            listener.onChange(value);
+        &#125;
+        return;
+    &#125;
+    // 如果不是主线程，切换线程
+    App.mHandler.post(new Runnable() &#123;
+        @Override
+        public void run() &#123;
+            for (IDataListener&lt;T&gt; listener : mListenerList) &#123;
+                listener.onChange(value);
+            &#125;
+        &#125;
+    &#125;);
+&#125;
+</code></pre>
+<h2 id="四、感知生命周期"><a href="#四、感知生命周期" class="headerlink" title="四、感知生命周期"></a>四、感知生命周期</h2><p>解决了接口冗余问题，线程切换问题，MVP模式目前还存在一个比较重要的问题，Presenter或Model层无法感知View层的生命周期，原因前文已经分析过了，在此不再赘述，本节我们来看一下如何解决这个问题</p>
+<h3 id="4-1-ILifecycle接口"><a href="#4-1-ILifecycle接口" class="headerlink" title="4.1 ILifecycle接口"></a>4.1 ILifecycle接口</h3><p>将生命周期抽象出一套接口，然后Presenter层实现该接口</p>
+<pre><code class="java">public interface ILifecycle &#123;
+    void onCreate();
+    void onStart();
+    void onResume();
+    void onPause();
+    void onStop();
+    void onDestroy();
+&#125;
+</code></pre>
+<p>在MusicListActivity的各个生命周期中去通知Presenter，但是这样拓展性太差，如果另一个Activity也需要提供相应的生命周期，也需要这么做，因此，我们抽取出BaseActivity，在其中完成通知动作，其他activity继承BaseActivity即可</p>
+<pre><code class="java">public class BaseActivity extends AppCompatActivity &#123;
+
+    private List&lt;ILifecycle&gt; mLifeCycleListenerList = new ArrayList&lt;&gt;();
+
+
+    public void addLifeCycleListener(ILifecycle lifecycle) &#123;
+        if (mLifeCycleListenerList.contains(lifecycle)) &#123;
+            return;
+        &#125;
+        mLifeCycleListenerList.add(lifecycle);
+    &#125;
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) &#123;
         super.onCreate(savedInstanceState);
-        TextView tv = new TextView(this);
-        int sum = Native.add(2, 3);
-        tv.setText(&quot;2 + 3 = &quot; + Integer.toString(sum));
-        setContentView(tv);
-    &#125;
-&#125;
-
-class Native &#123;
-    static &#123;
-        // The runtime will add &quot;lib&quot; on the front and &quot;.o&quot; on the end of
-        // the name supplied to loadLibrary.
-        System.loadLibrary(&quot;simplejni&quot;);
+        for (ILifecycle life : mLifeCycleListenerList) &#123;
+            life.onCreate();
+        &#125;
     &#125;
 
-    static native int add(int a, int b);
+    @Override
+    protected void onStart() &#123;
+        super.onStart();
+        ...
+    &#125;
+
+    ...
 &#125;
 </code></pre>
-<h2 id="三、实现JNI-OnLoad方法"><a href="#三、实现JNI-OnLoad方法" class="headerlink" title="三、实现JNI_OnLoad方法"></a>三、实现JNI_OnLoad方法</h2><p>JNI_OnLoad()方法是JVM在加载完动态库之后，回调JNI库中的方法，在这个方法中，我们可以进行Java和Native中相应方法的映射，即映射表的动态注册，实现如下</p>
-<pre><code class="c++">jint JNI_OnLoad(JavaVM* vm, void* /*reserved*/)
-&#123;
-    UnionJNIEnvToVoid uenv;
-    uenv.venv = NULL;
-    jint result = -1;
-    JNIEnv* env = NULL;
-    
-    ALOGI(&quot;JNI_OnLoad&quot;);
+<p>修改后的class图如下：</p>
+<p><img src="https://raw.githubusercontent.com/hidiwiki/picgo/main/pic/mvc_mvp_mvvm/mvp_mvvmMVP%E6%94%B9%E8%BF%9B_ILifecycle.png"></p>
+<p>这样做虽然Activity可以提供生命周期的通知，但是其他View则还是不能灵活的提供生命周期，接下来我们继续优化，LifecycleProvider出场</p>
+<h3 id="4-2-LifecycleProvider"><a href="#4-2-LifecycleProvider" class="headerlink" title="4.2 LifecycleProvider"></a>4.2 LifecycleProvider</h3><p><code>LifecycleProvider</code>用于管理所有的<code>ILifeCycle</code>，之前写在<code>BaseActivity</code>中的一些逻辑提取到<code>LifecycleProvider</code>中</p>
+<pre><code class="java">public class LifecycleProvider &#123;
 
-    if (vm-&gt;GetEnv(&amp;uenv.venv, JNI_VERSION_1_4) != JNI_OK) &#123;
-        ALOGE(&quot;ERROR: GetEnv failed&quot;);
-        goto bail;
-    &#125;
-    env = uenv.env;
+    private LifeState mCurrentLifeState;
 
-    if (registerNatives(env) != JNI_TRUE) &#123;
-        ALOGE(&quot;ERROR: registerNatives failed&quot;);
-        goto bail;
+    private List&lt;ILifecycle&gt; mLifeCycleListenerList = new ArrayList&lt;&gt;();
+
+    public void addLifeCycleListener(ILifecycle lifecycle) &#123;
+        if (mLifeCycleListenerList.contains(lifecycle)) &#123;
+            return;
+        &#125;
+        mLifeCycleListenerList.add(lifecycle);
     &#125;
-    
-    result = JNI_VERSION_1_4;
-    
-bail:
-    return result;
+
+    public void unregisterLifecycleListener(ILifecycle lifecycle) &#123;
+        if (!mLifeCycleListenerList.contains(lifecycle)) &#123;
+            return;
+        &#125;
+        mLifeCycleListenerList.remove(lifecycle);
+    &#125;
+
+    public void updateLifeState(LifeState state) &#123;
+        if (state == LifeState.STATE_CREATE) &#123;
+            dispatchCreateState();
+        &#125; else if (state == LifeState.STATE_START) &#123;
+            dispatchStartState();
+        &#125; else if (state == LifeState.STATE_RESUME) &#123;
+            dispatchResumeState();
+        &#125; else if (state == LifeState.STATE_STOP) &#123;
+            dispatchStopState();
+        &#125; else if (state == LifeState.STATE_PAUSE) &#123;
+            dispatchPauseState();
+        &#125; else if (state == LifeState.STATE_DESTORY) &#123;
+            dispatchDestroyState();
+        &#125;
+    &#125;
+
+    private void dispatchCreateState() &#123;
+        for (ILifecycle life : mLifeCycleListenerList) &#123;
+            life.onCreate();
+        &#125;
+    &#125;
+
+    ...
+
 &#125;
 </code></pre>
-<p>在该回调中，我们又调用了<code>registerNatives()</code>方法，实现如下：</p>
-<pre><code class="cpp">static int registerNatives(JNIEnv* env)
-&#123;
-  if (!registerNativeMethods(env, classPathName,
-                 methods, sizeof(methods) / sizeof(methods[0]))) &#123;
-    return JNI_FALSE;
-  &#125;
-
-  return JNI_TRUE;
-&#125;
-
-
-static int registerNativeMethods(JNIEnv* env, const char* className,
-    JNINativeMethod* gMethods, int numMethods)
-&#123;
-    jclass clazz;
-
-    clazz = env-&gt;FindClass(className);
-    if (clazz == NULL) &#123;
-        ALOGE(&quot;Native registration unable to find class &#39;%s&#39;&quot;, className);
-        return JNI_FALSE;
+<p>经过上面的改造，我们又发现了另外一个问题，Presenter的监听是在View中完成的，如下：</p>
+<pre><code class="java">public class MusicListActivity extends BaseActivity &#123;
+    
+    ...
+    
+      @Override
+    protected void onCreate(Bundle savedInstanceState) &#123;
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_music_list);
+        ...
+        mMusicPresenter = MusicPresenter.getInstance();
+        // mProvider在BaseActivity中创建
+        mProvider.addLifeCycleListener(mMusicPresenter);
+        ...
     &#125;
-    if (env-&gt;RegisterNatives(clazz, gMethods, numMethods) &lt; 0) &#123;
-        ALOGE(&quot;RegisterNatives failed for &#39;%s&#39;&quot;, className);
-        return JNI_FALSE;
-    &#125;
-
-    return JNI_TRUE;
 &#125;
 </code></pre>
-<p>在registerNativeMethods()方法中，完成了上述所说的两件事：<code>FindClass()</code> 和<code>RegisterNatives()</code></p>
+<p>修改后的class图如下：</p>
+<p><img src="https://raw.githubusercontent.com/hidiwiki/picgo/main/pic/mvc_mvp_mvvm/mvp_mvvmMVP%E6%94%B9%E8%BF%9B_LifycycleProvider.png"></p>
+<p>也即是把整个Presenter全部注册给了LifeCycleProvider，这样做还是不够灵活，如果Presenter层的内部类需要监听View的生命周期，那就只能通过Presenter把生命周期进行转接给内部类了，而且Presenter类必须要实现ILifeCycle接口，有没有可能把注册的主动权交个Presenter呢？答案是肯定的，Presenter根据需要注册自己或其内部类或其他，ILifecycleOwner出场</p>
+<h3 id="4-3-ILifecycleOwner接口"><a href="#4-3-ILifecycleOwner接口" class="headerlink" title="4.3 ILifecycleOwner接口"></a>4.3 ILifecycleOwner接口</h3><p>具体方案如下</p>
+<ul>
+<li><p>  将注册的过程移动到Presenter中进行，因此需要把LifeCycleProvider提供给Presenter，当然可以直接在创建Presenter时，把LifeCycleProvider直接传递给Presenter，这里采用一种适配性更好的方式</p>
+</li>
+<li><p>  提供一个ILifecycleOwner接口，让BaseActivity实现，用于Presenter提取LifecycleProvider，Presenter拿到ILifecycleOwner后，通过getProvider()获取LifeCycleProvider然后进行注册</p>
+</li>
+</ul>
+<blockquote>
+<p>在此情况下，Presenter无法使用单例模式，后面再继续改进</p>
+</blockquote>
+<p>ILifecycleOwner的定义如下</p>
+<pre><code class="java">public interface ILifecycleOwner &#123;
+    LifecycleProvider getProvider();
+&#125;
+</code></pre>
+<p>BaseActivity实现ILifeCycleOwner接口</p>
+<pre><code class="java">public class BaseActivity extends AppCompatActivity implements ILifecycleOwner &#123;
+
+    public LifecycleProvider mProvider = new LifecycleProvider();
+
+    @Override
+    public LifecycleProvider getProvider() &#123;
+        return mProvider;
+    &#125;
+    ...
+&#125;
+</code></pre>
+<p>子Activity继承BaseActivity，在创建Presenter时，将ILifecycleOwner传给Presenter</p>
+<pre><code class="java">    public MusicPresenter(ILifecycleOwner owner) &#123;
+        mMusicModel = new MusicModel(mMusicResult);
+        // Presenter将自己或其他内部类注册给Provider
+        owner.getProvider().addLifeCycleListener(this);
+    &#125;
+</code></pre>
+<p>修改后的class图如下所示</p>
+<p><img src="https://raw.githubusercontent.com/hidiwiki/picgo/main/pic/mvc_mvp_mvvm/mvp_mvvmMVP%E6%94%B9%E8%BF%9B_ILifecycleOwner.png"></p>
+<h3 id="4-4-让数据感知生命周期"><a href="#4-4-让数据感知生命周期" class="headerlink" title="4.4 让数据感知生命周期"></a>4.4 让数据感知生命周期</h3><p>上面我们实现了让Presenter可以感知View的生命周期，下面我们把DataContainer也具备感知View的生命周期的功能，让View在用户可见的周期内更新UI</p>
+<p>改造<code>DataContainer</code>，与Presenter一样，在传入ILifecycleOwner，拿到LifecycleProvider，将自己注册到LifecycleProvider</p>
+<pre><code class="java">    public void addListener(ILifecycleOwner owner, IDataListener&lt;T&gt; l) &#123;
+        // owner.getProvider().addLifeCycleListener(this);
+        if (mListenerList.contains(l)) &#123;
+            return;
+        &#125;
+        mListenerList.add(l);
+    &#125;
+</code></pre>
+<p>如果这样做，会发现：</p>
+<ul>
+<li><p>  有多个View监听该DataContainer，因此需要管理器ILifecycleOwner</p>
+</li>
+<li><p>  DataContainer必须要实现ILifecycle接口，注册进LifecycleProvider中</p>
+</li>
+</ul>
+<p>首先我们来解决第一个问题，在<code>DataContainer</code>中维护一个HashMap，以<code>IDataListener&lt;T&gt;</code>为Key，以ILifecycleOwner为Value</p>
+<pre><code class="java">private HashMap&lt;IDataListener&lt;T&gt;, LifecycleProvider&gt; mProviderMap = new HashMap&lt;&gt;();
+
+public void addListener(ILifecycleOwner owner, IDataListener&lt;T&gt; l) &#123;
+    mProviderMap.put(l, owner.getProvider());
+    if (mListenerList.contains(l)) &#123;
+        return;
+    &#125;
+    mListenerList.add(l);
+&#125;
+</code></pre>
+<p>进行判断：更新<code>DataContainer</code>时，从Provider中拿到当前的LifeState，如果大于<code>STATE_START</code>再更新</p>
+<pre><code class="java">public void setValue(T value) &#123;
+    mValue = value;
+    if (isMainThread()) &#123;
+        for (IDataListener&lt;T&gt; listener : mListenerList) &#123;
+            dispatchValue(value, listener);
+        &#125;
+        return;
+    &#125;
+    App.mHandler.post(new Runnable() &#123;
+        @Override
+        public void run() &#123;
+            for (IDataListener&lt;T&gt; listener : mListenerList) &#123;
+                dispatchValue(value, listener);
+            &#125;
+        &#125;
+    &#125;);
+&#125;
+
+private void dispatchValue(T value, IDataListener&lt;T&gt; listener) &#123;
+    LifecycleProvider provider = mProviderMap.get(listener);
+    if (provider != null
+            &amp;&amp; provider.isAtLeast(LifeState.STATE_START)) &#123;
+        listener.onChange(value);
+    &#125;
+&#125;
+</code></pre>
+<p>解决完上面的第一个问题，我们再来看一下第二个问题：</p>
+<blockquote>
+<p><code>DataContainer</code>必须要实现ILifecycle接口，注册进LifecycleProvider中</p>
+</blockquote>
+<p><code>ILifecycle</code>接口定义了七个生命周期，<code>DataContainer</code>大多数都用不到，为了更好的解决第二个问题，我们对<code>ILifecycle</code>改造一下，如下：</p>
+<pre><code class="java">public interface ILifecycle &#123;
+    void onViewLifeStateChanged(LifeState state);
+&#125;
+</code></pre>
+<p>用一个抽象类AbsLifecycle实现<code>ILifecycle</code>接口</p>
+<pre><code class="java">public abstract class AbsLifeCycle implements ILifecycle &#123;
+
+    public void onCreate() &#123;
+
+    &#125;
+
+    public void onStart() &#123;
+
+    &#125;
+
+    public void onResume() &#123;
+
+    &#125;
+
+    public void onPause() &#123;
+
+    &#125;
+
+    public void onStop() &#123;
+
+    &#125;
+
+    public void onDestroy() &#123;
+
+    &#125;
+
+    @Override
+    public abstract void onViewLifeStateChanged(LifeState state);
+&#125;
+</code></pre>
+<p>之前使用ILifecycle接口的，现在换成AbsLifecycle抽象类</p>
+<p>在<code>DataContainer</code>中定义一个内部类继承AbsLifecycle，然后实现<code>onViewLifeStateChanged</code>方法，在state为Destroy时，清除对应的<code>LifecycleOwner</code></p>
+<pre><code class="java">class DataListenerWraper extends AbsLifeCycle &#123;
+
+    private IDataListener&lt;T&gt; dataListener;
+
+    public DataListenerWraper(IDataListener&lt;T&gt; l) &#123;
+        dataListener = l;
+    &#125;
+
+    @Override
+    public void onViewLifeStateChanged(LifeState state) &#123;
+        if (state == LifeState.STATE_DESTORY) &#123;
+            mProviderMap.remove(dataListener);
+        &#125;
+    &#125;
+&#125;
+</code></pre>
+<p>addListener时将<code>IDataListener&lt;T&gt; listener</code>封装成<code>DataListenerWraper</code>，如下</p>
+<pre><code class="java">public void addListener(ILifecycleOwner owner, IDataListener&lt;T&gt; l) &#123;
+    mProviderMap.put(l, owner.getProvider());
+
+    DataListenerWraper wraper = new DataListenerWraper(l);
+    owner.getProvider().addLifeCycleListener(wraper);
+
+    if (mListenerList.contains(l)) &#123;
+        return;
+    &#125;
+    mListenerList.add(l);
+&#125;
+</code></pre>
+<h2 id="五、总结"><a href="#五、总结" class="headerlink" title="五、总结"></a>五、总结</h2><p>完成以上修复后，我们会惊讶地发现，我们把MVP模式转化成了MVVM模式，后面我们会继续分析原生提供的一些套件用于实现MVVM模式，比如Lifecycle，LiveData等，其原理和上面的基本一致</p>
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 liu_haidy@163.com </span>
@@ -769,12 +1075,12 @@ static int registerNativeMethods(JNIEnv* env, const char* className,
 
 
 <div class="article_copyright">
-    <p><span class="copy-title">文章标题:</span>动态注册JNI函数</p>
-    <p><span class="copy-title">字数:</span><span class="post-count">854</span></p>
+    <p><span class="copy-title">文章标题:</span>从MVP到MVVM过程分析</p>
+    <p><span class="copy-title">字数:</span><span class="post-count">2.7k</span></p>
     <p><span class="copy-title">本文作者:</span><a  title="Liu Haidi">Liu Haidi</a></p>
-    <p><span class="copy-title">发布时间:</span>2022-03-12, 18:25:02</p>
-    <p><span class="copy-title">最后更新:</span>2022-03-25, 21:34:51</p>
-    <span class="copy-title">原始链接:</span><a class="post-url" href="/2022/03/12/%E5%8A%A8%E6%80%81%E6%B3%A8%E5%86%8CJNI%E5%87%BD%E6%95%B0/" title="动态注册JNI函数">http://hidiwiki.github.io/2022/03/12/%E5%8A%A8%E6%80%81%E6%B3%A8%E5%86%8CJNI%E5%87%BD%E6%95%B0/</a>
+    <p><span class="copy-title">发布时间:</span>2022-04-04, 20:52:21</p>
+    <p><span class="copy-title">最后更新:</span>2022-04-04, 20:53:53</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2022/04/04/%E4%BB%8EMVP%E5%88%B0MVVM%E8%BF%87%E7%A8%8B%E5%88%86%E6%9E%90/" title="从MVP到MVVM过程分析">http://hidiwiki.github.io/2022/04/04/%E4%BB%8EMVP%E5%88%B0MVVM%E8%BF%87%E7%A8%8B%E5%88%86%E6%9E%90/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">&#34;署名-非商用-相同方式共享 4.0&#34;</a> 转载请保留原文链接及作者。
     </p>
