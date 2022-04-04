@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Android Log子系统(一) | 哈哈迪的小站</title>
-  <meta name="keywords" content=" log ">
-  <meta name="description" content="Android Log子系统(一) | 哈哈迪的小站">
+  <title>SurfaceView用法总结 | 哈哈迪的小站</title>
+  <meta name="keywords" content=" View , SurfaceView ">
+  <meta name="description" content="SurfaceView用法总结 | 哈哈迪的小站">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="系统 ：基于Android 10版本 ：初版作成  [TOC] 一、基本概念SurfaceView是一个组件，可用于在View层次结构中嵌入其他合成层，与普通View不同，SurfaceView采用独立的线程进行渲染 默认情况下，新创建的 Surface 放置在应用界面 Surface 的后面。可以替换默认的 Z 轴顺序，将新的 Surface 放在前面。 当需要渲染特别复杂的图形时，使用Sur">
 <meta property="og:type" content="article">
@@ -628,9 +628,9 @@
 </aside>
 <div id="post">
     <div class="pjax">
-        <article id="post-Android-Log子系统-一" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-SurfaceView用法总结" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">Android Log子系统(一)</h1>
+        <h1 class="article-title">SurfaceView用法总结</h1>
     
     <div class="article-meta">
         
@@ -640,9 +640,9 @@
             <i class="iconfont icon-category"></i>
             
             
-            <a  data-rel="android开发">android开发</a> > 
+            <a  data-rel="App开发">App开发</a> > 
             
-            <a  data-rel="android开发&lt;---&gt;Log子系统">Log子系统</a>
+            <a  data-rel="App开发&lt;---&gt;View的使用">View的使用</a>
             
         </span>
         
@@ -650,19 +650,21 @@
         <span class="tag">
             <i class="iconfont icon-tag"></i>
             
-            <a class="color4">log</a>
+            <a class="color5">View</a>
+            
+            <a class="color2">SurfaceView</a>
             
         </span>
         
     </div>
     <div class="article-meta">
         
-            发布时间 : <time class="date" title='最后更新: 2022-03-05 20:43:04'>2022-03-05 18:18</time>
+            发布时间 : <time class="date" title='最后更新: 2022-04-04 22:02:56'>2022-04-04 21:51</time>
         
     </div>
     <div class="article-meta">
         
-        <span>字数:1.9k</span>
+        <span>字数:2.4k</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -681,7 +683,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81Log%E7%B3%BB%E7%BB%9F%E6%A1%86%E6%9E%B6"><span class="toc-text">一、Log系统框架</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%86%85%E6%A0%B8Log%E4%BF%A1%E6%81%AF"><span class="toc-text">二、内核Log信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81Log%E5%A5%97%E6%8E%A5%E5%AD%97"><span class="toc-text">三、Log套接字</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81Log%E7%BC%93%E5%86%B2%E5%8C%BA"><span class="toc-text">四、Log缓冲区</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81logcat-%E5%91%BD%E4%BB%A4%E4%BD%BF%E7%94%A8"><span class="toc-text">五、logcat 命令使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81events%E7%BC%93%E5%86%B2%E5%8C%BAlog%E6%9F%A5%E7%9C%8B"><span class="toc-text">六、events缓冲区log查看</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81Logwrapper%E5%91%BD%E4%BB%A4"><span class="toc-text">七、Logwrapper命令</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="toc-text">一、基本概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81SurfaceView%E7%9A%84API%E6%80%BB%E7%BB%93"><span class="toc-text">二、SurfaceView的API总结</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-SurfaceView%E4%BD%BF%E7%94%A8%E6%AD%A5%E9%AA%A4"><span class="toc-text">2.1 SurfaceView使用步骤</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-SurfaceView%E7%9A%84%E5%85%B3%E9%94%AE%E6%96%B9%E6%B3%95"><span class="toc-text">2.2 SurfaceView的关键方法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81SurfaceView-%E5%92%8C-Activity-%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><span class="toc-text">三、SurfaceView 和 Activity 生命周期</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81SurfaceView%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="toc-text">四、SurfaceView的使用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-%E6%99%AE%E9%80%9AView%E7%9A%84%E7%BB%98%E5%88%B6"><span class="toc-text">4.1 普通View的绘制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-SurfaceView%E7%9A%84%E7%BB%98%E5%88%B6"><span class="toc-text">4.2 SurfaceView的绘制</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E8%A7%86%E9%A2%91%E6%92%AD%E6%94%BE"><span class="toc-text">五、视频播放</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81Surface%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="toc-text">六、Surface的使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E6%91%84%E5%83%8F%E5%A4%B4%E9%A2%84%E8%A7%88"><span class="toc-text">七、摄像头预览</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -700,165 +702,253 @@
         <hr>
 <p>系统 ：基于Android 10<br>版本 ：初版作成</p>
 <hr>
-<p><div class='inner-toc'><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81Log%E7%B3%BB%E7%BB%9F%E6%A1%86%E6%9E%B6"><span class="toc-text">一、Log系统框架</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%86%85%E6%A0%B8Log%E4%BF%A1%E6%81%AF"><span class="toc-text">二、内核Log信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81Log%E5%A5%97%E6%8E%A5%E5%AD%97"><span class="toc-text">三、Log套接字</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81Log%E7%BC%93%E5%86%B2%E5%8C%BA"><span class="toc-text">四、Log缓冲区</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81logcat-%E5%91%BD%E4%BB%A4%E4%BD%BF%E7%94%A8"><span class="toc-text">五、logcat 命令使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81events%E7%BC%93%E5%86%B2%E5%8C%BAlog%E6%9F%A5%E7%9C%8B"><span class="toc-text">六、events缓冲区log查看</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81Logwrapper%E5%91%BD%E4%BB%A4"><span class="toc-text">七、Logwrapper命令</span></a></li></ol></div></p>
-<h2 id="一、Log系统框架"><a href="#一、Log系统框架" class="headerlink" title="一、Log系统框架"></a>一、Log系统框架</h2><p>Log系统框架如下图所示</p>
-<p><img src="https://raw.githubusercontent.com/hidiwiki/picgo/main/pic/database/androidLog%E6%A1%86%E6%9E%B6.jpg" alt="Log系统框架图"></p>
-<p>android 5.0以前，Log系统的缓冲区存在于内核空间中，之后上移至logd进程中，存在于用户空间，其他进程通过liblog库与logd进程进行socket通信，以此将该进程内的log信息写入logd的缓存中，或者从logd中读取log信息.</p>
-<p>常用Log等级有以下5个级别</p>
-<p>  （1）V  ：Verbose表示啰嗦，对应的log等级为VERVOSE。采用该等级的log，任何消息都会输出。</p>
-<p>  （2）D ：Debugb表示调试，对应的log等级为DEBUG。采用该等级的log，除了VERBOSE级别的log外，剩余的4个等级的log都会被输出。</p>
-<p>  （3）I   :  information，为一般提示性的消息，对应的log等级为INFO。采用该等级的log，不会输出VERBOSE和DEBUG信息，只会输出剩余3个等级的信息。</p>
-<p>  （4）W：warning警告信息，一般用于系统提示开发者需要优化android代码等场景，对应的等级为WARN。该级别log，只会输出WARN和ERROR的信息。</p>
-<p>  （5）E : error错误信息，一般用于输出异常和报错信息。该级别的log，只会输出该级别信息。系统在输出crassh等致命信息的时候，都会采用该级别的log。</p>
-<p>另外还有两种不常用：</p>
-<p>（6）F：Fatal，致命错误</p>
-<p>（7）S：Silent（suppress all output），静默，压制所有输出</p>
-<h2 id="二、内核Log信息"><a href="#二、内核Log信息" class="headerlink" title="二、内核Log信息"></a>二、内核Log信息</h2><p>内核的log由内核产生，一般比较重要的信息是启动信息，查看启动信息可以通过<code>dmesg</code>命令进行查看，dmesg 打印内核启动过程的所有信息，如下</p>
-<pre><code class="bash">130|generic_x86_64:/ # dmesg |tail 
-[15017.195157] healthd: battery l=100 v=5000 t=25.0 h=2 st=4 c=900000 fc=300000 cc=10 chg=
-[15617.195174] healthd: battery l=100 v=5000 t=25.0 h=2 st=4 c=900000 fc=300000 cc=10 chg=
-[16217.195146] healthd: battery l=100 v=5000 t=25.0 h=2 st=4 c=900000 fc=300000 cc=10 chg=
-[16817.195140] healthd: battery l=100 v=5000 t=25.0 h=2 st=4 c=900000 fc=300000 cc=10 chg=
-[17417.195397] healthd: battery l=100 v=5000 t=25.0 h=2 st=4 c=900000 fc=300000 cc=10 chg=
-[18017.195150] healthd: battery l=100 v=5000 t=25.0 h=2 st=4 c=900000 fc=300000 cc=10 chg=
-[18617.195154] healthd: battery l=100 v=5000 t=25.0 h=2 st=4 c=900000 fc=300000 cc=10 chg=
-[19217.195192] healthd: battery l=100 v=5000 t=25.0 h=2 st=4 c=900000 fc=300000 cc=10 chg=
-[19237.836153] logd: logdr: UID=0 GID=0 PID=1874 b tail=0 logMask=80 pid=0 start=0ns timeout=0ns
-[19817.195223] healthd: battery l=100 v=5000 t=25.0 h=2 st=4 c=900000 fc=300000 cc=10 chg=
-</code></pre>
-<p>dmesg仅输出启动过程的内核信息，如果想要打印实时的内核信息，可以使用<code>cat /proc/kmsg </code>命令，与 dmesg 有不同， 第一次执行 cat /proc/kmsg 打印到目前位置的所有内核信息，再次执行/proc/kmsg,就是最新的信息了，Linux 系统中，如果我们有 root 权限，可以直接 echo 信息到/dev/kmsg，这样在 dmesg 中就会出现我们的 echo的信息，如下：</p>
-<pre><code class="bash"># 首先在后台执行cat
-cat /proc/kmsg &amp;
+<p><div class='inner-toc'><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="toc-text">一、基本概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81SurfaceView%E7%9A%84API%E6%80%BB%E7%BB%93"><span class="toc-text">二、SurfaceView的API总结</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-SurfaceView%E4%BD%BF%E7%94%A8%E6%AD%A5%E9%AA%A4"><span class="toc-text">2.1 SurfaceView使用步骤</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-SurfaceView%E7%9A%84%E5%85%B3%E9%94%AE%E6%96%B9%E6%B3%95"><span class="toc-text">2.2 SurfaceView的关键方法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81SurfaceView-%E5%92%8C-Activity-%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><span class="toc-text">三、SurfaceView 和 Activity 生命周期</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81SurfaceView%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="toc-text">四、SurfaceView的使用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-%E6%99%AE%E9%80%9AView%E7%9A%84%E7%BB%98%E5%88%B6"><span class="toc-text">4.1 普通View的绘制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-SurfaceView%E7%9A%84%E7%BB%98%E5%88%B6"><span class="toc-text">4.2 SurfaceView的绘制</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E8%A7%86%E9%A2%91%E6%92%AD%E6%94%BE"><span class="toc-text">五、视频播放</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81Surface%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="toc-text">六、Surface的使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E6%91%84%E5%83%8F%E5%A4%B4%E9%A2%84%E8%A7%88"><span class="toc-text">七、摄像头预览</span></a></li></ol></div></p>
+<h2 id="一、基本概念"><a href="#一、基本概念" class="headerlink" title="一、基本概念"></a>一、基本概念</h2><p>SurfaceView是一个组件，可用于在View层次结构中嵌入其他合成层，与普通View不同，SurfaceView采用独立的线程进行渲染</p>
+<p>默认情况下，新创建的 Surface 放置在应用界面 Surface 的后面。可以替换默认的 Z 轴顺序，将新的 Surface 放在前面。</p>
+<p>当需要渲染特别复杂的图形时，使用SurfaceView会很有帮助，使用 SurfaceView 进行渲染时，SurfaceFlinger 会直接将缓冲区合成到屏幕上。如果没有 SurfaceView，需要将缓冲区合成到屏幕外的 Surface，然后该 Surface 会合成到屏幕上，而使用 SurfaceView 进行渲染可以省去额外的工作。</p>
+<h2 id="二、SurfaceView的API总结"><a href="#二、SurfaceView的API总结" class="headerlink" title="二、SurfaceView的API总结"></a>二、SurfaceView的API总结</h2><h3 id="2-1-SurfaceView使用步骤"><a href="#2-1-SurfaceView使用步骤" class="headerlink" title="2.1 SurfaceView使用步骤"></a>2.1 SurfaceView使用步骤</h3><ol>
+<li><p>首先要继承SurfaceView，实现SurfaceHolder.Callback接口如下</p>
+<pre><code class="java">private SurfaceHolder.Callback mCallback = new SurfaceHolder.Callback() &#123;
 
-# 向/dev/kmsg中写入字符串&quot;test&quot;, &lt;3&gt;表示log的等级
-echo &quot;&lt;3&gt; test&quot; &gt; /dev/kmsg
+    @Override
+    public void surfaceCreated(@NonNull SurfaceHolder holder) &#123;
+        // Surface创建时触发，一般在这个函数开启绘图线程
+        //（新的线程，不要再这个线程中绘制Surface）
+        mIsDrawing = true;
+        mThread.start();
+    &#125;
 
-# 输出如下
-generic_x86_64:/dev # &lt;11&gt;[20225.409975]  test
-</code></pre>
-<h2 id="三、Log套接字"><a href="#三、Log套接字" class="headerlink" title="三、Log套接字"></a>三、Log套接字</h2><p>/dev/socket/logd ： SOCK_STREAM 提供的是可靠的流数据（类比于 TCP），<br>/dev/socket/logdr ： SOCK_SEQPACKET 则提供可靠的基于包的数据（可靠的 UDP），<br>/dev/socket/logdw： SOCK_DGRAM 可以用 UDP 来类比，不可靠的包传输。<br>这三个 socket 的功能如下：<br>socket logd: 用于外接受控制命令<br>客户端通过 logdr 读取 log 数据。使用 seqpacket，可以让用户在可靠地读取数据的同时，一次读取一条 log<br>客户端通过 logdw 写入 log 数据。由于类型是 dgram，在非常繁忙的时候，log 可能会丢失。但是，这可以避免<br>客户端阻塞在写 log 的调用上</p>
-<h2 id="四、Log缓冲区"><a href="#四、Log缓冲区" class="headerlink" title="四、Log缓冲区"></a>四、Log缓冲区</h2><p>radio：查看包含无线装置/电话相关消息的缓冲区。<br>events：查看已经过解译的二进制系统事件缓冲区消息。<br>main：查看主日志缓冲区（默认），不包含系统和崩溃日志消息。<br>system：查看系统日志缓冲区（默认）。<br>crash：查看崩溃日志缓冲区（默认）。<br>all：查看所有缓冲区。<br>default：报告 main、system 和 crash 缓冲区。</p>
-<h2 id="五、logcat-命令使用"><a href="#五、logcat-命令使用" class="headerlink" title="五、logcat 命令使用"></a>五、logcat 命令使用</h2><p>通过logcat命令输出log的基本格式如下</p>
-<table>
-<thead>
-<tr>
-<th>日期</th>
-<th>时间</th>
-<th>进程号</th>
-<th>线程号</th>
-<th>Log等级</th>
-<th>TAG</th>
-<th>信息</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>03-05</td>
-<td>09:51:17.344</td>
-<td>270</td>
-<td>270</td>
-<td>I</td>
-<td>boot_progress_start:</td>
-<td>20568</td>
-</tr>
-</tbody></table>
-<p>logcat的常用命令</p>
-<p>输出特定缓冲区内的log</p>
-<pre><code class="shell">logcat -b &lt;buffer&gt; : 指定输出缓冲区
+    @Override
+    public void surfaceChanged(@NonNull SurfaceHolder holder, int format,
+                               int width, int height) &#123;
+        // surface大小或格式发生变化时触发，在surfaceCreated调用后
+        // 该函数至少会被调用一次
+    &#125;
 
-# 输出events log
-logcat -b events
-
-# 输出kernel log,需要root权限
-logcat -b kernel 
-
-# 指定多个缓冲区
-logcat -b events，system
-
-# 输出所有缓冲区的log
-logcat -b all
-</code></pre>
-<p>过滤出特定级别的TAG</p>
-<pre><code class="shell"># 输出TAG为phone，且log级别为E的log
-logcat -s &quot;phone:E&quot;
-
-# 同时输出 phone标签的Error以上级别和WifiHW 标签 的 Debug 以上级别的日志。
-# *:S : 如果没有 *S 就会输出错误， 最后一个元素 *:S 将所有标记的优先级设为“静默”，
-# 从而确保系统仅显示带有“WifiHW”和“phone”标记的日志消息。
-logcat -s phone:E WifiHW:D *:S
-</code></pre>
-<p>综合的用法</p>
-<pre><code class="shell">logcat -b main,system,crash -v threadtime -v usec -v printable -D -f /sdcard/logcat.log -r 512 -n 2
-</code></pre>
-<ul>
-<li>-b : 指定输出main，system，crash三个缓冲区的log</li>
-<li>-v ：指定输出的格式</li>
-<li>-D：不在屏幕输出</li>
-<li>-f ：把log输出到<code>/sdcard/logcat.log</code>文件中</li>
-<li>-r ：循环输出，如果缓冲区中log的大小超过512字节，就将其写入文件</li>
-<li>-n ：文件的命名在<code>0~2</code>中间循环</li>
-</ul>
-<p>参数总结</p>
-<table>
-<thead>
-<tr>
-<th>参数</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>-b <buffer></td>
-<td>加载可供查看的备用log缓冲区，例如events或radio，默认情况下使用main，system，crash缓冲区</td>
-</tr>
-<tr>
-<td>-c, –clear</td>
-<td>清空所选的缓冲区并退出，默认缓冲区集为main、system和crash，如果需要清空所有，可以使用<code>-b all -c</code></td>
-</tr>
-<tr>
-<td>-e <expr>, –regex=<expr></td>
-<td>只输出与<expr>相匹配的log信息，<expr>是正则表达式</td>
-</tr>
-<tr>
-<td>-f <filename></td>
-<td>将log信息输出写入到<filename>，默认为stdout</td>
-</tr>
-<tr>
-<td>-g，–buffer-size</td>
-<td>输出指定日志缓冲区的大小并退出</td>
-</tr>
-<tr>
-<td>-d</td>
-<td>将log信息显示在屏幕上并退出</td>
-</tr>
-<tr>
-<td>-v</td>
-<td>设置log信息的输出格式，默认格式为threadtime</td>
-</tr>
-<tr>
-<td>–pid=<pid></td>
-<td>只输出指定<pid>进程的log信息</td>
-</tr>
-</tbody></table>
-<h2 id="六、events缓冲区log查看"><a href="#六、events缓冲区log查看" class="headerlink" title="六、events缓冲区log查看"></a>六、events缓冲区log查看</h2><p>events缓冲区中log的作用：</p>
-<ul>
-<li><p>用于记录Process，CPU，ActivityManager，WindowManager，Power，Notification等相关信息</p>
-</li>
-<li><p>events log 类别在编译后存放在<code>system/etc/event-log-tags</code>文件中，其语法定义在源码目录下<code>system/core/logcat/event.logtags</code>文件中</p>
-<pre><code class="shell">Despription are in the format
+    @Override
+    public void surfaceDestroyed(@NonNull SurfaceHolder holder) &#123;
+        // 销毁时触发，一般不可见时就会销毁
+    &#125;
+&#125;;
 </code></pre>
 </li>
-</ul>
-<p>使用案例</p>
-<p>查看Android系统启动时间，使用如下命令</p>
-<pre><code class="shell">logcat -b events |grep boot
-</code></pre>
-<h2 id="七、Logwrapper命令"><a href="#七、Logwrapper命令" class="headerlink" title="七、Logwrapper命令"></a>七、Logwrapper命令</h2><p>对于一些第三方的库，其中的Log信息大多数采用printf之类的标准函数进行输出，这类log无法被记录到Android log系统中，只要是由于init进程会把0，1，2三个fd指向到/dev/null，其他进程都是由init fork出来的，所以标准输出和标准错误输出都会继承自父进程，所以默认也都不会打印出来</p>
-<p>Android提供了<code>logwrapper</code>程序来重定向log的输出，重定向的log可以使用<code>logcat</code>查看，使用方法如下：</p>
-<pre><code class="shell"># 将ps命令的输出（标准输出）信息重定向到用户空间log系统中
-logwrapper ps -elf
+<li><p>利用getHolder()获取SurfaceHolder对象，调用SurfaceHolder.addCallback添加回调</p>
+</li>
+<li><p>SurfaceHolder.lockCanvas 获取Canvas对象并锁定画布，调用Canvas绘图</p>
+</li>
+<li><p>SurfaceHolder.unlockCanvasAndPost 结束锁定画布，提交改变。</p>
+</li>
+</ol>
+<h3 id="2-2-SurfaceView的关键方法"><a href="#2-2-SurfaceView的关键方法" class="headerlink" title="2.2 SurfaceView的关键方法"></a>2.2 SurfaceView的关键方法</h3><p>作如下布局，在SurfaceView上，放置一个button，效果图如下：</p>
+<img src="/home/lhd/%E5%9B%BE%E7%89%87/blog/surfaceview/SurfaceView_2.png" style="zoom:50%;" />
 
-# 将ps命令的输出（标准输出）信息重定向到内核log系统中
-logwrapper -k ps -elf 
+<blockquote>
+<p>SurfaceView的背景默认为黑色</p>
+</blockquote>
+<p><strong>setZOrderOnTop(boolean onTop)</strong></p>
+<p>在上一章节，我们知道，默认情况下，SurfaceView的Surface放置在应用界面 Surface的后面。可以替换默认的 Z 轴顺序，将新的 Surface 放在前面。而调整Surface的Z轴顺序的方法即为<code>setZOrderOnTop(boolean onTop)</code>，通过<code>dumpsys SurfaceFlinger</code>来查看Surface的层级，在没设置以前，层级关系如下：</p>
+<pre><code class="shell">Display 8141241408256768 HWC layers:
+---------------------------------------------------------------------------
+ Layer name
+           Z |  Window Type |  Comp Type |  Transform |   Disp Frame (LTRB)
+---------------------------------------------------------------------------
+ SurfaceView - com.iauto.surfaceview/com.iauto.surfaceview.MainActivity#0
+  rel     -2 |            0 |     DEVICE |          0 |    0  210 1080 1523
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ com.iauto.surfaceview/com.iauto.surfaceview.MainActivity#0
+  rel      0 |            1 |     DEVICE |          0 |    0    0 1080 1920
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ StatusBar#0
+  rel      0 |         2000 |     DEVICE |          0 |    0    0 1080   63
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ NavigationBar0#0
+  rel      0 |         2019 |     DEVICE |          0 |    0 1794 1080 1920
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+...
+
++ ContainerLayer (ccbc372 com.iauto.surfaceview/
+                                com.iauto.surfaceview.MainActivity#0)
+        ...
+      zOrderRelativeOf=none
+
+...
+
++ EffectLayer (Background for -SurfaceView
+                        - com.iauto.surfaceview/com.iauto.surfaceview.MainActivity#0)
+        ...
+      parent=SurfaceView - com.iauto.surfaceview/com.iauto.surfaceview.MainActivity#0
+      zOrderRelativeOf=com.iauto.surfaceview/com.iauto.surfaceview.MainActivity#0
 </code></pre>
+<p>从上面dump出来的信息我们可以看出，默认情况下，SurfaceView相对于父容器的层级低2级，调用<code>setZOrderOnTop()</code>方法设置为true后，层级调整如下</p>
+<pre><code class="shell">---------------------------------------------------------------------------
+ Layer name
+           Z |  Window Type |  Comp Type |  Transform |   Disp Frame (LTRB)
+---------------------------------------------------------------------------
+ com.iauto.surfaceview/com.iauto.surfaceview.MainActivity#0
+  rel      0 |            1 |     DEVICE |          0 |    0    0 1080 1920
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ SurfaceView - com.iauto.surfaceview/com.iauto.surfaceview.MainActivity#0
+  rel      1 |            0 |     DEVICE |          0 |    0  210 1080 1523
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ StatusBar#0
+  rel      0 |         2000 |     DEVICE |          0 |    0    0 1080   63
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ NavigationBar0#0
+  rel      0 |         2019 |     DEVICE |          0 |    0 1794 1080 1920
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+</code></pre>
+<p>调整之后，SurfaceView比父容器高一个层级，在其之上1个层级</p>
+<blockquote>
+<p>注意：这里调整层级，指的是layer的层级发生变化，并非布局的层级发生变化，调用<code>setZOrderOnTop()</code>方法把SurfaceView显示在父窗口之前，但是点击Button，Button依然可以收到Touch事件，其原理还没搞懂，此处存疑</p>
+<p>试着解释以下：touch事件的派发是按view-hiechxxxx，从上往下寻找，按优先级进行派发，由于在布局上，我们把SurfaceView 放置在Button之下，所以，Button应该先收到Touch事件</p>
+</blockquote>
+<p>调整之后，显示的效果如下所示：</p>
+<img src="/home/lhd/%E5%9B%BE%E7%89%87/blog/surfaceview/surfaceview_3.png" style="zoom:50%;" />
+
+<p>从上图可以看出，SurfaceView把Button盖住了，但此时，点击Button的位置，依然是button先收到touch事件，点击Button外，SurfaceView才可以正常收到Touch事件，将SurfaceView的层级调高后，如何把后面的Button显示出来呢？一般来说，设置SurfaceView为透明，把后面的主界面显示出来，但如果播放视频，camera预览貌似并不好使</p>
+<pre><code class="java">getHolder().setFormat(PixelFormat.TRANSLUCENT);
+</code></pre>
+<p>设置之后的效果如下所示：</p>
+<img src="/home/lhd/%E5%9B%BE%E7%89%87/blog/surfaceview/surfaceview_4.png" style="zoom:50%;" />
+
+<p><strong>setZOrderMediaOverlay()</strong></p>
+<p>该方法的作用是如果有两个SurfaceView，其中一个SurfaceView如果设置了<code>setZOrderMediaOverlay(true)</code>，则它的层级会比另一个要高，但依然会在主界面之下，<code>dumpsys SurfaceFlinger</code>输出层级关系如下：</p>
+<pre><code class="shell">---------------------------------------------------------------------------
+ Layer name
+           Z |  Window Type |  Comp Type |  Transform |   Disp Frame (LTRB)
+---------------------------------------------------------------------------
+ SurfaceView - com.iauto.surfaceview/com.iauto.surfaceview.MainActivity#0
+  rel     -1 |            0 |     DEVICE |          0 |    0  210 1080 1523
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ com.iauto.surfaceview/com.iauto.surfaceview.MainActivity#0
+  rel      0 |            1 |     DEVICE |          0 |    0    0 1080 1920
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ StatusBar#0
+  rel      0 |         2000 |     DEVICE |          0 |    0    0 1080   63
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ NavigationBar0#0
+  rel      0 |         2019 |     DEVICE |          0 |    0 1794 1080 1920
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+</code></pre>
+<p>两个方法设置完层级关系之后的效果对比如下：</p>
+<img src="/home/lhd/%E5%9B%BE%E7%89%87/blog/surfaceview/surfaceview_5.png" style="zoom:50%;" />
+
+<p><strong>SurfaceHolder</strong><br>SurfaceView的双缓冲的机制非常消耗系统内存，Android规定SurfaceView不可见时，会立即销毁SurfaceView的SurfaceHolder，以达到节约系统资源的目的，所以需要利用SurfaceHolder的回调函数对SurfaceHolder进行维护</p>
+<h2 id="三、SurfaceView-和-Activity-生命周期"><a href="#三、SurfaceView-和-Activity-生命周期" class="headerlink" title="三、SurfaceView 和 Activity 生命周期"></a>三、SurfaceView 和 Activity 生命周期</h2><p>当使用 SurfaceView 时，请使用主界面线程之外的线程渲染 Surface。</p>
+<p>对于具有 SurfaceView 的 Activity，存在两个单独但相互依赖的状态机：</p>
+<ul>
+<li>应用 <code>onCreate</code>/<code>onResume</code>/<code>onPause</code></li>
+<li>已创建/更改/销毁的 Surface</li>
+</ul>
+<p>当 Activity 启动时，您将按以下顺序获得回调：</p>
+<ol>
+<li><code>onCreate()</code></li>
+<li><code>onResume()</code></li>
+<li><code>surfaceCreated()</code></li>
+<li><code>surfaceChanged()</code></li>
+</ol>
+<p>如果点击“BACK/HOME”，生命周期如下：</p>
+<ol>
+<li><code>onPause()</code></li>
+<li><code>surfaceDestroyed()</code>（在 Surface 消失前调用）</li>
+</ol>
+<p>从home回到前台</p>
+<ol>
+<li>surfaceCreated</li>
+<li>surfaceChanged</li>
+</ol>
+<blockquote>
+<p><strong>可以总结为，SurfaceView只要回后台，Surface就会被销毁</strong></p>
+</blockquote>
+<h2 id="四、SurfaceView的使用"><a href="#四、SurfaceView的使用" class="headerlink" title="四、SurfaceView的使用"></a>四、SurfaceView的使用</h2><h3 id="4-1-普通View的绘制"><a href="#4-1-普通View的绘制" class="headerlink" title="4.1 普通View的绘制"></a>4.1 普通View的绘制</h3><p>普通View的绘制在<code>onDraw()</code>方法中进行的，时机是每次的Vsync，要使系统回调<code>onDraw()</code>方法，View自己要在合适的时机调用<code>invalidata()</code>,告诉系统该View加入回调队列，下一次Vsync到来时系统才会回调<code>onDraw()</code>方法，Vsync的频率一般为60HZ，因此，View的绘制必须要在16.7ms内完成，否则就会卡顿，出现跳帧现象，测试如下：</p>
+<p>每次点击屏幕，在点击位置绘制2000个同心圆，观察现象，代码如下：</p>
+<pre><code class="java">@Override
+public void onTouchEvent(MotionEvent event) &#123;
+    centerX = event.getX();
+    centerY = event.getY();
+    invalidate();//标记下次Vsync调用onDraw回调
+    return super.onTouchEvent(event);
+&#125;
+
+@Override
+public void onDraw(Canvas canvas) &#123;
+    super.onDraw(canvas);
+    for (int i = 0; i &lt; 2000; i++) &#123;
+        paint.color = xxx;
+        canvas.drawCircle(centerX, centerY, i / 5, paint);
+    &#125;
+&#125;
+</code></pre>
+<p>单次点击，绘制会造成明显延迟卡顿，且很容易发生ANR，截取的log如下：</p>
+<pre><code class="shell">2022-03-22 12:01:43.798 10571-10593/com.iauto.surfaceview I/OpenGLRenderer: Davey! duration=1915ms; Flags=2, IntendedVsync=21900073767515, Vsync=21900073767515, OldestInputEvent=0, NewestInputEvent=0, ...
+</code></pre>
+<p>从上面的log我们可以看出，存在丢帧的现象</p>
+<h3 id="4-2-SurfaceView的绘制"><a href="#4-2-SurfaceView的绘制" class="headerlink" title="4.2 SurfaceView的绘制"></a>4.2 SurfaceView的绘制</h3><p>绘制同样的图形，使用SurfaceView绘制不会影响主线程的绘制</p>
+<p>多次点击后，发现上几次点击的图形不会被系统立刻清除，可以使用如下方式进行清空</p>
+<pre><code class="java">// 在绘制之前先绘制一次黑色
+Canvas canvas = holder.lockCanvas();
+canvas.drawColor(Color.BLACK);
+// 之后再进行有效的绘制
+</code></pre>
+<h2 id="五、视频播放"><a href="#五、视频播放" class="headerlink" title="五、视频播放"></a>五、视频播放</h2><p>Android系统为我们准备了VideoView控件用于播放视频，该控件其实是封装了SurfaceView和MediaPlayer，功能相对简单，简单用法如下</p>
+<pre><code class="java">VideoView videoView = findViewById(R.id.videoView);
+videoView.setVideoURI(Uri.parse(&quot;android.resource://&quot;
+                                + getPackageName() + &quot;/&quot; +R.raw.video));
+// 显示控制条
+videoView.setMediaController(new MediaController(this));
+videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() &#123;
+    @Override
+    public void onPrepared(MediaPlayer mp) &#123;
+        // 控制播放属性
+    &#125;
+&#125;);
+videoView.start();
+</code></pre>
+<p>使用该控件会有一个问题，Activity暂停再回到前台，无法实现无缝切换，会黑屏一段时间，时间长短取决于视频的加载速度，主要原因是，VideoView过早的释放了MediaPlayer，再次进入前台，重新创建一个MediaPlayer，所以会导致一段黑屏，这个问题我们使用SurfaceView来进行解决，方式可以有两个：</p>
+<ul>
+<li><p>方式一：重写VideoView，延迟MediaPlayer的释放时间</p>
+</li>
+<li><p>方式二：将MediaPlayer放入一个ViewModel中进行维护</p>
+</li>
+</ul>
+<p>我们采用方式二进行改进，ViewModel的生命周期比Activity的要长，不会随着屏幕旋转或退到后台而销毁，因此可以利用这一特性，用一个ViewModel来保存MediaPlayer，通过ViewModel来管理MediaPlayer的生命周期，sample code我已上传至github，请通过如下方式访问 ：传送门，另外还需要注意以下几点：</p>
+<ul>
+<li><p>实现一个MediaPlayer子类，继承自LifecycleObserver，然后和Activity绑定，即可实现回后台自动暂停，前台恢复播放</p>
+<pre><code class="java">public class MyMediaPlayer extends MediaPlayer implements LifecycleObserver &#123;
+
+    @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
+    public void pausePlayer() &#123;
+        pause();
+    &#125;
+
+    @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
+    public void resumePlayer() &#123;
+        if (!isPlaying()) &#123;
+            start();
+        &#125;
+    &#125;
+&#125;
+</code></pre>
+</li>
+<li><p>读取存储卡的权限问题，读取存储卡，我们一般在<code>Manifest</code>中申请如下两个权限：</p>
+<pre><code class="xml">&lt;uses-permission android:name=&quot;android.permission.WRITE_EXTERNAL_STORAGE&quot;/&gt;
+&lt;uses-permission android:name=&quot;android.permission.READ_EXTERNAL_STORAGE&quot;/&gt;
+</code></pre>
+<p>申请了以上两个权限，再去读取存储，发现还是没有权限，原因是这两个权限属于危险权限，必须要动态申请才可以</p>
+</li>
+</ul>
+<h2 id="六、Surface的使用"><a href="#六、Surface的使用" class="headerlink" title="六、Surface的使用"></a>六、Surface的使用</h2><p>SurfaceView中维护了一块Surface，理论上，只要和这个Surface进行绑定，我们即可绘制任意我们像绘制的画面，本样例我们实现这样的功能</p>
+<ul>
+<li><p>创建一个Presentation和SurfaceView，取出SurfaceView中的Surface，传入Presentation，两者绑定，SurfaceView即可显示Presentation中的内容</p>
+</li>
+<li><p>创建一个VirtualDisplay，取出SurfaceView中的Surface，传入VirtualDisplay中，我们在startActivity()方法中，指定Activity启动到VirtualDisplay上，效果如下所示：</p>
+<p><img src="/home/lhd/%E5%9B%BE%E7%89%87/blog/surfaceview/surfaceview_6.png"></p>
+</li>
+</ul>
+<p>这样的实现会有一个问题，点击了Second Activity之后，Activity没有响应，原因是点击的是SurfaceView，不是Second Activity，为了达到Second Activity可以点击的效果，可以向SurfaceView注册一个监听，通知Activity触摸事件，上面的Presentation也是一样</p>
+<p>Sample Code已上传至github：传送门</p>
+<h2 id="七、摄像头预览"><a href="#七、摄像头预览" class="headerlink" title="七、摄像头预览"></a>七、摄像头预览</h2><p>未完待续…</p>
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 liu_haidy@163.com </span>
@@ -868,12 +958,12 @@ logwrapper -k ps -elf
 
 
 <div class="article_copyright">
-    <p><span class="copy-title">文章标题:</span>Android Log子系统(一)</p>
-    <p><span class="copy-title">字数:</span><span class="post-count">1.9k</span></p>
+    <p><span class="copy-title">文章标题:</span>SurfaceView用法总结</p>
+    <p><span class="copy-title">字数:</span><span class="post-count">2.5k</span></p>
     <p><span class="copy-title">本文作者:</span><a  title="Liu Haidi">Liu Haidi</a></p>
-    <p><span class="copy-title">发布时间:</span>2022-03-05, 18:18:29</p>
-    <p><span class="copy-title">最后更新:</span>2022-03-05, 20:43:04</p>
-    <span class="copy-title">原始链接:</span><a class="post-url" href="/2022/03/05/Android-Log%E5%AD%90%E7%B3%BB%E7%BB%9F-%E4%B8%80/" title="Android Log子系统(一)">http://hidiwiki.github.io/2022/03/05/Android-Log%E5%AD%90%E7%B3%BB%E7%BB%9F-%E4%B8%80/</a>
+    <p><span class="copy-title">发布时间:</span>2022-04-04, 21:51:49</p>
+    <p><span class="copy-title">最后更新:</span>2022-04-04, 22:02:56</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2022/04/04/SurfaceView%E7%94%A8%E6%B3%95%E6%80%BB%E7%BB%93/" title="SurfaceView用法总结">http://hidiwiki.github.io/2022/04/04/SurfaceView%E7%94%A8%E6%B3%95%E6%80%BB%E7%BB%93/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">&#34;署名-非商用-相同方式共享 4.0&#34;</a> 转载请保留原文链接及作者。
     </p>
